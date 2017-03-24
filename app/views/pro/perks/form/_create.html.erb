@@ -1,0 +1,76 @@
+<div class="dashboard-create-perk">
+  <div class="mobile-menu-overlay hidden"></div>
+  <%= image_tag('logopouce.png', class: 'logo-title') %>
+  <span class="view-title">Créer un bon plan</span>
+
+  <!-- CARDS PERK -->
+  <%= render "pro/perks/form/cards_perk" %>
+
+  <!-- Card INSPIRATION -->
+<!--   <div class="type-card" id="perk-inspiration">
+    <div class="type-title">
+      <span>En manque d'inspiration !</span>
+      <span class="type-category">Quelques exemples...</span>
+    </div>
+    <div class="type-inspiration">
+      <ul>
+        <li id="perk-example-appel"><a><i class="fa fa-gift"></i></a></li>
+        <li id="perk-example-durable"><a><i class="fa fa-repeat"></i></a></li>
+        <li id="perk-example-flash"><a><i class="fa fa-bolt"></i></a></li>
+      </ul>
+    </div>
+  </div> -->
+
+  <!-- FORMS PERK -->
+  <%= render "pro/perks/form/forms_perk", action: 'create', submit_label: 'Créer votre bon plan'%>
+
+
+  <!-- Exemple Perk APPEL -->
+<!--   <div class="perk-example-appel perk-form-card">
+    <div class="perk-form-title">
+      <i class="fa fa-times close-create"></i>
+      <span>Idées de Bons plans de bienvenue</span>
+      <span class="type-category">Aquisition</span>
+    </div>
+    <div class="type-example">
+      <ul>
+        <li><%#= image_tag "exemple-perk-appel-naturome.png"%></li>
+        <li><%#= image_tag "exemple-perk-appel-wan.png"%></li>
+      </ul>
+    </div>
+  </div> -->
+
+  <!-- Exemple Perk DURABLE -->
+<!--   <div class="perk-example-durable perk-form-card">
+    <div class="perk-form-title">
+      <i class="fa fa-times close-create"></i>
+      <span>Idées de Bons plans flash</span>
+      <span class="type-category">Fidélisation</span>
+    </div>
+    <div class="type-example">
+      <ul>
+        <li><%#= image_tag "exemple-perk-appel-naturome.png"%></li>
+        <li><%#= image_tag "exemple-perk-appel-wan.png"%></li>
+      </ul>
+    </div>
+  </div> -->
+
+  <!-- Exemple Perk FLASH -->
+ <!--  <div class="perk-example-flash perk-form-card">
+    <div class="perk-form-title">
+      <i class="fa fa-times close-create"></i>
+      <span>Idées de Bons plans flash</span>
+      <span class="type-category">Activation</span>
+    </div>
+    <div class="type-example">
+      <ul>
+        <li><%#= image_tag "exemple-perk-appel-naturome.png"%></li>
+        <li><%#= image_tag "exemple-perk-appel-wan.png"%></li>
+      </ul>
+    </div>
+  </div> -->
+
+</div>
+
+<!-- CREATE PERK CONFIRMATION -->
+<%= render "pro/perks/form/done" %>

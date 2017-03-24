@@ -1,0 +1,5 @@
+<div class="impersonate-business">
+  <%= form_tag pro_business_impersonation_path(current_business), class: "form-inline", id: "impersonate-form" do %>
+    <%= select_tag(:impersonate_id, options_from_collection_for_select(current_business.collection_supervising, :id, :name, selected: session[:impersonate_id]), prompt: "Sélectionner un commerce", class: dropdown_search) %>
+  <% end %>
+</div>

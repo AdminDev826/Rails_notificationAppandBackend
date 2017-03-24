@@ -1,0 +1,11 @@
+<!-- COMPONENT | CARD CAUSE -->
+<div class="card-cause" style="background-image: url('<%= cause.picture.url(:card) %>');">
+  <div class="disque-item item-category" style="background-color: <%= cause.cause_category.color %>;">
+    <%= image_tag cause.cause_category.picture %>
+  </div>
+  <span><%= cause.name %></span>
+  <p><%= truncate(cause.description, length: 190) %></p>
+  <div class="disque-item item-logo">
+    <%= image_tag cause.logo %>
+  </div>
+</div>

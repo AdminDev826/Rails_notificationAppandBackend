@@ -1,0 +1,11 @@
+// TO KEEP
+.modal-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+@media only screen and (max-width: 480px) and (orientation : portrait) {
+  #nomobile {
+    display: none;
+  }
+}

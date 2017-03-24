@@ -1,0 +1,68 @@
+<div class="use-overlay hidden">
+  <div class="flip-container-mobile">
+    <div class="flipper-mobile">
+      <!-- FRONT CARD-->
+      <figure class="front">
+        <!-- CLOSE BUTTON-->
+        <button type="button" class="close-button">&times;</button>
+        <!-- ILLUSTRATION-->
+        <div class="wrapper">
+          <%= render "shared/icons/thumb_like" %>
+        </div>
+        <span class="business-name"><%= @perk.business.name %></span>
+        <!-- ITINARY -->
+        <div class="itinary">
+          <%= link_to "http://maps.google.com/maps", class: "", id:"link-map", disabled: true, data: { locale: I18n.locale, destination: { latitude: latitude, longitude: longitude } }, :target => "_blank" do %>
+            <i class="fa fa-location-arrow"></i><abbr><%= street %>, <%= zipcode %> <%= city %></abbr>
+          <% end %>
+        </div>
+        <div class="container-legend">
+          <% if @perk.appel %>
+            <p>Attention, ce bon plan est valable une seule fois, n’accédez à votre carte qu’une fois en magasin !</p>
+          <% else %>
+            <p>À montrer en magasin !</p>
+          <% end %>
+        </div>
+        <!-- SHOW MEMBER CARD -->
+        <div class="container-code">
+          <div class="show-card">
+            <%= simple_form_for :use, url: perk_uses_path(params[:perk_id]), method: :post, remote: true, authenticity_token: true do |f| %>
+              <%= f.input :perk_id, as: :hidden, input_html: {value: params[:perk_id]} %>
+              <%= f.submit "J'accède à ma carte", class: "btn-show-card" %>
+            <% end %>
+          </div>
+        </div>
+      </figure>
+
+      <!-- BACK CARD -->
+      <figure class="back">
+        <!-- MEMBER CARD -->
+        <div class="member-card">
+          <div class="validation-date">
+            <span>Le <%= I18n.l DateTime.now.to_date, format: :short %> <%= DateTime.now.year %></span>
+          </div>
+
+          <div class="logo">
+            <%= image_tag 'logo-classic.png' %>
+          </div>
+
+          <div class="member-info">
+            <%= image_tag (current_user.picture? ? current_user.picture.url(:avatar) : "profile.png"), class: "img-circle user"%>
+            <% if current_user.name.present? %>
+              <span class="user"><%= current_user.name %></span>
+            <% else %>
+              <span class="user"><%= current_user.first_name %> <%= current_user.last_name %></span>
+            <% end %>
+            <% if current_user.cause_id.present? %>
+                <span class="cause"><%= current_user.cause.name %></span>
+                <%= image_tag (current_user.cause.logo), class: "img-circle cause" %>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- FEEDBACK USE -->
+        <!-- <div class="container-feedback"></div> -->
+      </figure>
+    </div>
+  </div>
+</div>

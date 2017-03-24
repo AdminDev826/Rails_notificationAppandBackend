@@ -1,0 +1,71 @@
+<div class="perk-modal-mobile-member hidden" style="border-top: 8px solid <%= @business.business_category.color %>;">
+  <div class="perk-modal-close-mobile-member" style="color: <%= @business.business_category.color %>;border: 3px solid <%= @business.business_category.color %>;">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </div>
+
+  <div class="perk-modal-member-header">
+    <div class="member-header-text"><%= "Les bons plans de #{@business.name}" %></div>
+  </div>
+
+  <% @business.perks_in_time.each do |perk| %>
+
+    <div class="mapboxv2">
+      <div class="pmls-modal perk-<%= @business.id %>-<%= perk.id %>">
+          <i class="fa fa-plus"></i>
+      </div>
+
+      <div class="mv2-photo" style="background-image: url('<%= @business.picture.url(:thumb) %>');"></div>
+
+      <div class="mv2-content">
+
+        <div class="mv2-content-top" style="background-color: <%= @business.business_category.color %>;">
+          <div class="mv2-content-top-top">
+            <div class="mv2-content-top-top-text" style="font-size: 12px;"><%= perk.name %></div>
+          </div>
+          <div class="mv2-content-top-bottom"></div>
+        </div>
+
+        <div class="mv2-content-bottom" style="background-color: <%= @business.business_category.color %>;">
+
+          <div class="mv2-content-bottom-left" style="background-color: rgba(55,55,55,0.2);">
+            <div class="little-perk-logo">
+              <%= image_tag perk.business.business_category.picture, size: "10x10" %>
+            </div>
+            <div class="business-on-perk"><%= @business.name %></div>
+          </div>
+
+          <div class="mv2-content-bottom-right" style="background-color: rgba(55,55,55,0.2);">
+            <div class="asso-card-red-heart-v2">
+              <%= image_tag "icons/heart.svg" %>
+            </div>
+            <div class="asso-firstblock-text-v2"><%= @business.sign_in_count %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render "businesses/mobileshow_perk", perk: perk %>
+
+    <% content_for :perk_dynamic do %>
+
+      <script>
+
+        $(document).ready(function() {
+          $(".perk-<%= @business.id %>-<%= perk.id %>").click(function() {
+          $(".perk-modal-dynamic-<%= @business.id %>-<%= perk.id %>").removeClass("hidden");
+          });
+        });
+
+        $(document).ready(function() {
+          $('.closed-perk-on-modal').click(function() {
+          $(".perk-modal-dynamic-<%= @business.id %>-<%= perk.id %>").addClass('hidden');
+          });
+        });
+
+      </script>
+
+    <% end %>
+
+  <% end %>
+
+</div>

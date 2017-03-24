@@ -1,0 +1,36 @@
+.signup-container {
+  padding: 50px 30px 20px 30px;
+
+
+  .choose-cause,
+  .signup-plan,
+  .signup-payment {
+    width: 100%;
+  }
+
+  .signup-cause {
+
+    .change-cause {
+
+      .card-cause span {
+        text-align: left;
+      }
+
+      .slick-arrow,
+      .user-button {
+        margin: 0;
+        border: none;
+        outline: none;
+        font-weight: 600;
+        border-radius: 3px;
+      }
+
+      .slick-arrow {
+        padding: 0;
+        font-size: 0;
+      }
+    }
+  }
+}
+
+

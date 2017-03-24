@@ -1,0 +1,44 @@
+<div class="popup-overlay hidden">
+  <div class="popup-container cause-confirmation">
+    <div class="close-popup"><i class="fa fa-times"></i></div>
+    <div class="wrapper">
+      <!-- ILLUSTRATION-->
+      <%= render 'shared/icons/heart' %>
+    </div>
+    <span>Vous allez faire quelque chose de chouette !</span>
+    <p>
+      En validant votre choix, vous allez soutenir
+      <span class="cause-name"></span>
+    </p>
+
+    <%= simple_form_for(current_user, url: member_update_cause_path, remote: false, authenticity_token: true, html: { method: :put, id: :update_cause_id }) do |f| %>
+      <%= f.input :cause_id, as: :hidden %>
+      <%= f.submit "Valider", class: "user-button cause-validated" %>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+      $(".close-popup").click(function (e) {
+        e.preventDefault();
+        $(".popup-overlay").toggleClass('hidden');
+      });
+
+      $(".cause-validated").click(function () {
+        <% if controller_path == "causes" %>
+          // EVENT AMPLITUDE : USER_C_CAUSE_VALIDATED
+          amplitude.logEvent('USER_C_CAUSE_VALIDATED');
+        <% else %>
+          // EVENT AMPLITUDE : USER_C_PROFILE_MYCAUSE_VALIDATED
+          amplitude.logEvent('USER_C_PROFILE_MYCAUSE_VALIDATED');
+        <% end %>
+      });
+    });
+
+  </script>
+
+<% end %>

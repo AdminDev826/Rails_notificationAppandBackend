@@ -1,0 +1,333 @@
+<%= content_for(:title) do %>
+<%= @business.name %>
+<% end %>
+<%= content_for(:description) do %>
+Consultez vos chiffres
+<% end %>
+
+<div class="container-fluid admin">
+  <!-- DISCLAIMER IF INACTIVE BUSINESS -->
+  <% if !current_business.active &&
+    (request.referer == nil ||
+     request.referer.include?("/pro/sign_up") ||
+     request.referer.include?("/pro/sign_in")) %>
+    <%= render "pro/dashboard/shared/welcome_inactive" %>
+  <% end %>
+  <!-- ACOUNT -->
+  <!-- Sub Menu Sidebar -->
+  <% if current_business.supervisor %>
+    <%= render "pro/dashboard/shared/supervisor_sidebar" %>
+  <% else %>
+    <%= render "pro/dashboard/shared/sidebar" %>
+  <% end %>
+
+  <div class="dashboard">
+    <div class="data-container">
+      <% if current_business.supervisor && !current_impersonation %>
+        <%= render 'components/popups/supervisor_without_impersonate' %>
+      <% else %>
+        <% if device_type != :mobile %>
+          <div id="welcome-desktop">
+            <!-- DESKTOP VIEW | CARDS -->
+            <div class="business-into" style="background-image: url('<%= @business.picture.present? ? @business.picture.url(:card) : image_url('cover-business.jpg') %>');">
+              <% if !@business.active %>
+                <span class="business-message">Votre compte sera bientôt activé !</span>
+              <% end %>
+              <% if @business.leader_picture.present? %>
+                <%= image_tag @business.leader_picture.url(:avatar), class: 'business-owner' %>
+              <% else %>
+                <%= image_tag 'default_pic.png', class: 'business-owner' %>
+              <% end %>
+              <span class="business-name"><%= @business.name %></span>
+              <span class="business-location"><i class="fa fa-map-marker"></i><%= @business.city %></span>
+            </div>
+            <div class="business-presentation">
+              <!-- BUSINESS | DESCRIPTION -->
+              <span>Description</span>
+              <% if @business.description.present? %>
+                <p><%= @business.description %></p>
+              <% else %>
+                <div class="no-content small">
+                  <div class="wrapper">
+                     <%= render "shared/icons/pencil" %>
+                  </div>
+                  <div class="no-information">
+                    <p>Nos membres adoreraient en savoir plus sur votre activité.</p>
+                    <%= link_to pro_business_profile_path(current_business) do %>
+                      Je les informe
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+              <!-- OWNER | DESCRIPTION -->
+              <span>Qui se cache derrière ?</span>
+              <% if @business.leader_description.present? %>
+                <p><%= @business.leader_description %></p>
+              <% else %>
+                <div class="no-content small">
+                  <div class="wrapper">
+                     <%= render "shared/icons/pencil" %>
+                  </div>
+                   <div class="no-information">
+                    <p>Présentez-vous et provoquez de nouvelles rencontres !</p>
+                    <%= link_to pro_business_profile_path(current_business) do %>
+                      Je me présente
+                    <% end %>
+                  </div>
+                </div>
+              <%end %>
+
+              <div class="business-links">
+                <!-- LINKS | WEB -->
+                <ul class="profile-items">
+                  <span>Sur le web </span>
+                  <% if @business.email.present? %>
+                    <li>
+                      <i class="fa fa-envelope business-icon"></i><i><%= @business.email %></i>
+                    </li>
+                  <% end %>
+                  <% if @business.url.present? %>
+                    <li>
+                      <i class="fa fa-globe business-icon"></i><i><%= @business.url %></i>
+                    </li>
+                  <% end %>
+                </ul>
+                <!-- LINKS | SOCIAL NETWORKS -->
+                <ul class="network-items">
+                  <span>Vos réseaux</span>
+                  <% if @business.facebook.present? %>
+                    <li>
+                      <a href="http://facebook.com/<%= @business.facebook %>" class="link-facebook-business business-icon-container" target="_blank">
+                        <i class="fa fa-facebook business-icon"></i>
+                      </a>
+                    </li>
+                  <% else %>
+                    <li>
+                      <i class="fa fa-facebook network-inactive"></i>
+                    </li>
+                  <% end %>
+                  <% if @business.twitter.present? %>
+                    <li>
+                      <a href="http://twitter.com/<%= @business.twitter %>" class="link-instagram-business business-icon-container" target="_blank">
+                        <i class="fa fa-twitter business-icon"></i>
+                      </a>
+                    </li>
+                  <% else %>
+                    <li>
+                      <i class="fa fa-twitter network-inactive"></i>
+                    </li>
+                  <% end %>
+                  <% if @business.instagram.present? %>
+                    <li>
+                      <a href="http://instagram.com/<%= @business.instagram %>" class="link-instagram-business business-icon-container" target="_blank">
+                        <i class="fa fa-instagram business-icon"></i>
+                      </a>
+                    </li>
+                  <% else %>
+                    <li>
+                      <i class="fa fa-instagram network-inactive"></i>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <ul class="data-desktop">
+            <span class="data-title">Resumé de votre activité</span>
+            <li id="data-create">
+              <% if @business.perks.count == 0 %>
+                <span class="number number-inactive"><%= @business.perks.count %></span>
+                <span class="label number-inactive">Bons plans créés</span>
+              <% else %>
+                <span class="number"><%= @business.perks.count %></span>
+                <span class="label">Bons plans créés</span>
+              <% end %>
+            </li>
+            <li id="data-views">
+              <% if @business.perks_views_count == 0 %>
+                <span class="number number-inactive"><%= @business.perks_views_count %></span>
+                <span class="label number-inactive">Nombre total<br>de vues</span>
+              <% else %>
+                <span class="number"><%= @business.perks_views_count %></span>
+                <span class="label">Nombre total<br>de vues</span>
+              <% end %>
+            </li>
+            <li id="data-used">
+              <% if @business.perks_uses_count == 0 %>
+                <span class="number number-inactive"><%= @business.perks_uses_count %></span>
+                <span class="label number-inactive">Bons plans utlisés</span>
+              <% else %>
+                <span class="number"><%= @business.perks_uses_count %></span>
+                <span class="label">Bons plans utlisés</span>
+              <% end %>
+            </li>
+            <li id="data-users">
+              <% if @business.perks_new_users == 0 %>
+                <span class="number number-inactive"><%= @business.perks_new_users %></span>
+                <span class="label number-inactive">Nouveaux clients</span>
+              <% else %>
+                <span class="number"><%= @business.perks_new_users %></span>
+                <span class="label">Nouveaux clients</span>
+              <% end %>
+            </li>
+          </ul>
+          <!-- BLOCK 3 | PERKS LIST -->
+          <div class="list-perks">
+            <span class="list-title">Vos bons plans récents <%= link_to new_pro_business_perk_path(current_business) do %><i class="fa fa-plus"></i><% end %>
+            </span>
+            <% if @perks.count == 0 %>
+              <div class="no-content big">
+                <div class="wrapper">
+                  <%= render "shared/icons/wand" %>
+                </div>
+                <div class="no-information">
+                  <span>Créez votre premier bon plan</span>
+                  <p>Vous deviendrez visible auprès de notre communauté aussitôt l'activation de votre premier bon plan effectuée.</p>
+                  <%= link_to new_pro_business_perk_path(current_business), class: 'popup-button' do %>
+                    C'est parti !
+                  <% end %>
+                </div>
+              </div>
+            <% else %>
+              <ul>
+                <% @business.perks.active.last(3).each do |perk| %>
+                  <li class="perk-item">
+                    <div class="perk-show">
+                      <%= link_to edit_pro_perk_path(perk), class: "" do %>
+                        <div class="perk-show-title">
+                          <span><%= perk.name %></span>
+                        </div>
+                        <ul class="perk-stats">
+                          <li>Vues :<strong><%= perk.nb_views %></strong></li>
+                          <li>Utilisations :<strong><%= perk.uses.count %></strong></li>
+                          <li>Clients :<strong><%= perk.uses.select(:user_id).distinct.count %></strong></li>
+                        </ul>
+                        <i class="fa fa-angle-right"></i>
+                      <% end %>
+                    </div>
+                    <!-- PERK PREVIEW -->
+                    <div class="perk-preview">
+                      <%= link_to business_path(@business, perk_id: perk.id), target: "_blank" do %>
+                        <i class="fa fa-eye"></i>
+                        <span>Aperçu</span>
+                      <% end %>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+          </div>
+          <!-- END DESKTOP VIEW -->
+        <% else %>
+
+          <!-- MOBILE VIEW -->
+          <div id="welcome-mobile">
+            <div class="mobile-title title-home">
+              <%= image_tag('logopouce.png', class: '') %>
+              <span>Bienvenue <%= @business.name %></span>
+            </div>
+            <div class="business-into" style="background-image: url('<%= @business.picture.url(:card) %>');">
+              <% if @business.leader_picture.present? %>
+                <%= image_tag @business.leader_picture.url(:avatar), class: 'business-owner' %>
+              <% else %>
+                <%= image_tag 'default_pic.png', class: 'business-owner' %>
+              <% end %>
+              <% if !@business.active %>
+                <span class="business-message">Votre compte sera bientôt activé !</span>
+              <% end %>
+              <span class="business-name"><%= @business.name %></span>
+              <span class="business-location"><i class="fa fa-map-marker"></i><%= @business.city %></span>
+            </div>
+            <!-- SLICK | FRAME & ITEMS -->
+            <div class="business-dashboard">
+              <ul class="data-mobile">
+                <li>
+                  <span class="number"><%= @business.perks.count %></span>
+                  <span class="label">Bons plans créés</span>
+                </li>
+                <li>
+                  <span class="number"><%= @business.perks_uses_count %></span>
+                  <span class="label">Bons plans utilisés</span>
+                </li>
+                <li>
+                  <span class="number"><%= @business.perks_views_count %></span>
+                  <span class="label">Nombre total de vues</span>
+                </li>
+                <li>
+                  <span class="number"><%= @business.perks_new_users %></span>
+                  <span class="label">Nombre nouveaux clients</span>
+                </li>
+              </ul>
+              <div class="business-container">
+                <div class="business-presentation">
+                  <!-- BUSINESS | DESCRIPTION -->
+                  <span>Description</span>
+                  <% if @business.description.present? %>
+                    <p><%= @business.description %></p>
+                  <% end %>
+                  <!-- OWNER | DESCRIPTION -->
+                  <% if @business.leader_description.present? %>
+                    <span>Qui se cache derrière ?</span>
+                    <p><%= @business.leader_description %></p>
+                  <%end %>
+                  <!-- LINKS | WEB -->
+                  <span>Sur le web </span>
+                  <ul>
+                    <% if @business.email.present? %>
+                      <li>
+                        <i class="fa fa-envelope business-icon"></i><i><%= @business.email %></i>
+                      </li>
+                    <% end %>
+                    <% if @business.url.present? %>
+                      <li>
+                        <i class="fa fa-globe business-icon"></i><i><%= @business.url %></i>
+                      </li>
+                    <% end %>
+                  </ul>
+                  <!-- LINKS | SOCIAL NETWORKS -->
+                  <span>Vos réseaux</span>
+                  <ul>
+                    <% if @business.facebook.present? %>
+                      <li>
+                        <a href="http://facebook.com/<%= @business.facebook %>" class="link-facebook-business business-icon-container" target="_blank">
+                          <i class="fa fa-facebook business-icon"></i>
+                        </a>
+                      </li>
+                    <% end %>
+                    <% if @business.twitter.present? %>
+                      <li>
+                        <a href="http://twitter.com/<%= @business.twitter %>" class="link-instagram-business business-icon-container" target="_blank">
+                          <i class="fa fa-twitter business-icon"></i>
+                        </a>
+                      </li>
+                    <% end %>
+                    <% if @business.instagram.present? %>
+                      <li>
+                        <a href="http://instagram.com/<%= @business.instagram %>" class="link-instagram-business business-icon-container" target="_blank">
+                          <i class="fa fa-instagram business-icon"></i>
+                        </a>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END MOBILE VIEW -->
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% content_for(:after_js) do %>
+  <script>
+
+    $(document).ready(function() {
+      $(".close-button").click(function() {
+        $('.done-overlay').addClass('hidden');
+      });
+    });
+
+  </script>
+<% end %>

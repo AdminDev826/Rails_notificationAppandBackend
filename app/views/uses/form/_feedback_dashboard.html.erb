@@ -1,0 +1,34 @@
+<div class="feedback-overlay hidden">
+  <div class="container-query">
+    <p>Avez-vous appréciez le bon plan
+      <br><strong><%= use.perk.name %></strong>
+      <br>proposé par <strong><%= use.perk.business.name %></strong> ?
+    </p>
+    <div class="container-answer">
+      <div class="answer like">
+        <%= simple_form_for :use, url: perk_use_path(use.perk_id, use.id), method: :put, remote: true, authenticity_token: true do |f| %>
+          <%= f.input :feedback, as: :hidden, input_html: { value: true } %>
+          <%= f.input :like, as: :hidden, input_html: { value: true } %>
+          <button class:"like" type:"submit"><%= render "shared/icons/heart_like" %></button>
+          <p>J'aime</p>
+        <% end %>
+      </div>
+      <div class="answer unlike">
+        <%= simple_form_for :use, url: perk_use_path(use.perk_id, use.id), method: :put, remote: true, authenticity_token: true do |f| %>
+          <%= f.input :feedback, as: :hidden, input_html: { value: true } %>
+          <%= f.input :unlike, as: :hidden, input_html: { value: true } %>
+          <button class:"unlike" type:"submit"><%= render "shared/icons/heart_unlike" %></button>
+        <% end %>
+        <p>J'aime pas</p>
+      </div>
+      <div class="answer unused">
+        <%= simple_form_for :use, url: perk_use_path(use.perk_id, use.id), method: :put, remote: true, authenticity_token: true do |f| %>
+          <%= f.input :feedback, as: :hidden, input_html: { value: true } %>
+          <%= f.input :unused, as: :hidden, input_html: { value: true } %>
+          <button class:"unused" type:"submit"><%= render "shared/icons/unused" %></button>
+        <% end %>
+        <p>Non utilisé</p>
+      </div>
+    </div>
+  </div>
+</div>

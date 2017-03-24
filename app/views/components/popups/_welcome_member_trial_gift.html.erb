@@ -1,0 +1,34 @@
+<div class="use-overlay">
+  <div class="flip-container-mobile">
+    <div class="flipper-mobile">
+      <!-- FRONT CARD-->
+      <figure class="front">
+        <!-- ILLUSTRATION-->
+        <div class="wrapper">
+          <i><%= image_tag 'icons/present.svg' %></i>
+        </div>
+        <!-- TEXT -->
+        <div class="container-code gentleman">
+          <span>Félicitations !</span>
+          <p><strong><%= user_offering.first_name.capitalize + " " + user_offering.last_name.capitalize %></strong> t'a offert <strong> <%= beneficiary.nb_month %> mois</strong> d'accès à la plateforme <strong>CforGood</strong> pour une consommation plus positive ! </p>
+            <%= link_to 'A toi de jouer !', "", class: "button-gentleman play-now" %>
+        </div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<% content_for(:after_js) do %>
+  <script>
+
+    $(document).ready(function() {
+
+      $(".play-now").click(function(e) {
+        e.preventDefault();
+        $('.use-overlay').addClass('hidden');
+      });
+
+    });
+
+  </script>
+<% end %>

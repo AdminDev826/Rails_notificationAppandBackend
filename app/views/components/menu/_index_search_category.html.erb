@@ -1,0 +1,39 @@
+<div class="search-category-overlay hidden"></div>
+<div class="search-category">
+  <span id="open-categories"><i class="fa fa-search"></i></span>
+  <form class="controls" id="Filters">
+    <ul class="search-pannel">
+      <!-- GROUPE ONLINE -->
+      <div role="group" class="fieldset-flexbox">
+        <a href="#" data-filter=".online" class="filter-btn current">
+          <li id="online" class="category-item">
+            <div class="container-icon" style="background-color: #8398C2;">
+              <%= image_tag "icons/online.png" %>
+            </div>
+            Voir les e-commerces
+          </li>
+        </a>
+        <!-- RESET TO ALL -->
+        <a href="#" data-filter="" class="filter-btn current">
+          <li id="categories-all" class="category-item">
+            <div class="container-icon" style="background-color: #fff;">
+              <%= image_tag "icons/all.png" %>
+            </div>
+            Toutes les catégories
+          </li>
+        </a>
+        <!-- GROUPE CATEGORIES -->
+        <% BusinessCategory.all.each do |category| %>
+          <a href="#" data-filter="<%= "."+category.id.to_s %>" class="filter-btn current">
+            <li class="category-item">
+              <div class="container-icon" style="background-color: <%= category.color %>;">
+                <%= image_tag category.picture %>
+              </div>
+              <%= category.name %>
+            </li>
+          </a>
+        <% end %>
+      </div>
+    </ul>
+  </form>
+</div>

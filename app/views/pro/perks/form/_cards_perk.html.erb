@@ -1,0 +1,84 @@
+<!-- Card Perk APPEL -->
+<a class="type-card" id="perk-appel">
+  <div class="type-title">
+    <i class="fa fa-gift"></i>
+    <span>Bon Plan de bienvenue</span>
+    <span class="type-category">Acquisition</span>
+  </div>
+  <div class="type-content">
+    <p>Proposez une offre attractive<br>Utilisable 1x par nouveau client</p>
+    <span id="type-create-appel" class="type-create"><i class="fa fa-plus"></i></span>
+  </div>
+</a>
+
+<!-- Card Perk DURABLE -->
+<a class='type-card' id="perk-durable">
+  <div class="type-title">
+    <i class="fa fa-repeat"></i>
+    <span>Bon Plan durable</span>
+    <span class="type-category">Fidélisation</span>
+  </div>
+  <div class="type-content">
+    <p>Fidéliser une nouvelle clientèle<br>Utilisable à l'infini</p>
+    <span id="type-create-durable" class="type-create"><i class="fa fa-plus"></i></span>
+  </div>
+</a>
+
+<!-- Card Perk FLASH -->
+<a class="<%= @business.perks.permanent.count > 0 ? 'type-card' : 'type-card card-indispo' %>" id="perk-flash">
+  <div class="type-title">
+    <i class="fa fa-bolt"></i>
+    <span>Bon Plan flash</span>
+    <span class="type-category">Activation</span>
+  </div>
+  <div class="type-content">
+    <p>Réduire le gaspillage<br>Quantité et temps limité</p>
+    <span id="type-create-flash" class="type-create"><i class="fa fa-plus"></i></span>
+  </div>
+</a>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      // OPEN PERK ON CLICK
+      $(".type-card").on("click", function() {
+        var perkType = $(this).attr('id');
+        $(this).find('.fa-plus').addClass('plus-animation');
+        $('.dashboard-create-perk').scrollTop(0);
+        $(".dashboard-overlay").removeClass('hidden');
+        $("."+perkType).addClass('type-show');
+        $(this).addClass('card-visible').siblings('.type-card').addClass('card-invisible');
+      });
+
+      // // OPEN PERK EXAMPLE ON CLICK
+      // $(".type-inspiration li").on("click", function() {
+      //   var perkExample = $(this).attr('id');
+      //   $('.dashboard-create-perk').scrollTop(0);
+      //   $(".dashboard-overlay").removeClass('hidden');
+      //   $("."+perkExample).addClass('type-show');
+      //   $(this).parents('.type-card').addClass('card-visible').siblings('.type-card').addClass('card-invisible');
+      // });
+
+      // CLOSE PERK ON CLICK
+      $(".close-create").on("click", function(e) {
+        e.preventDefault;
+        $('.fa-plus').removeClass('plus-animation');
+        $(".dashboard-overlay").addClass('hidden');
+        $(".perk-form-card").removeClass('type-show');
+        $('.type-card').removeClass('card-invisible');
+      });
+
+      // REMOVE PERK ON CLICK OUTSIDE THE CARD
+      $(".dashboard-overlay").on("click", function(e) {
+        e.preventDefault;
+        $(this).addClass('hidden');
+        $(".perk-form-card").removeClass('type-show');
+      });
+    });
+
+  </script>
+
+<% end %>

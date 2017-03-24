@@ -1,0 +1,76 @@
+<% content_for :meta_title, "Connexion - CforGood" %>
+<% content_for :meta_description %>
+<% content_for :meta_image %>
+
+<div class="connexion signin" style="background-image: url(<%= image_url('signin-background.jpg') %>);">
+  <span class="sign-title">Connexion</span>
+  <div class="sign-back">
+    <!-- SIGNIN AS USER -->
+    <div class="connect-user" style="<%= device_type == :mobile || params[:business].present? ? 'visibility: visible;' : 'visibility: hidden;' %>">
+      <%= image_tag "citoyen.svg", class: "avatar-citoyen"%>
+      <span>Je suis membre ?</span>
+      <p>Vous êtes un particulier et souhaitez agir à votre échelle.</p>
+      <button type="button" class="btn-user">Se connecter</button>
+    </div>
+    <!-- SIGNIN AS BUSINESS -->
+    <div class="connect-business" style="<%= device_type == :mobile || !params[:business].present? ? 'visibility: visible;' : 'visibility: hidden;' %>">
+      <i><%= render "shared/icons/shop" %></i>
+      <span>Je suis partenaire ?</span>
+      <p>Vous êtes un commerce avec une démarche responsable.</p>
+      <button type="button" class="btn-business">Se connecter</button>
+    </div>
+  </div>
+  <div class="sign-box signin <%= params[:business].present? || ( device_type == :mobile && ( flash[:alert].present? || resource.errors.any? ) ) ? "translate" : "" %>">
+    <div class="close-sign-box"></div>
+    <div class="sign-user <%= params[:business].present? ? "hidden" : "" %>">
+      <!-- SIGNIN FORM USER -->
+      <%= render "devise/sessions/shared/form_signin", resource_name: :user %>
+    </div>
+    <div class="sign-business <%= params[:business].present? ? "" : "hidden" %>">
+      <!-- SIGNIN FORM BUSINESS -->
+      <%= render "devise/sessions/shared/form_signin", resource_name: :business %>
+    </div>
+    <!-- ALREADY SUBSCRIBED -->
+    <div class="already-subscribed">
+      <span class=""> Pas de compte ? <strong><%= link_to t(".connexion", :default => "Je m'inscris"), signup_path %></strong></span>
+    </div>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+
+    $(document).ready(function(){
+
+      $('.close-sign-box').click(function(event) {
+        $('.sign-box').toggleClass('translate');
+      });
+
+      $('.connect-user').click(function(event) {
+        $("#error-code").remove();
+        if (<%= device_type != :mobile %>) {
+          $('.connect-user').attr('style', 'visibility: hidden');
+          $('.connect-business').attr('style', 'visibility: visible');
+        }
+        $('.sign-user').removeClass('hidden');
+        $('.sign-business').addClass('hidden');
+        $('.sign-box').toggleClass('translate');
+      });
+
+      $('.connect-business').click(function(event) {
+        $("#error-code").remove();
+        if (<%= device_type != :mobile %>) {
+          $('.connect-business').attr('style', 'visibility: hidden');
+          $('.connect-user').attr('style', 'visibility: visible');
+        }
+        $('.sign-business').removeClass('hidden');
+        $('.sign-user').addClass('hidden');
+        $('.sign-box').toggleClass('translate');
+      });
+
+    });
+
+  </script>
+<% end %>
+
+

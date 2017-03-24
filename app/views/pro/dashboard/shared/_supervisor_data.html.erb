@@ -1,0 +1,68 @@
+<div class="data-container data-supervisor">
+  <!-- BLOCK MAP -->
+  <div class="supervisor-map">
+    <div id="map-supervisor" style="width: 100%;"></div>
+  </div>
+  <!-- BLOCK METRICS -->
+  <ul class="data-desktop">
+    <span class="data-title">Resumé de votre activité</span>
+    <li id="data-businesses">
+      <% if @business.businesses.count == 0 %>
+        <span class="number number-inactive"><%= @business.businesses.count %></span>
+        <span class="label number-inactive">Nombre de commerces</span>
+      <% else %>
+        <span class="number"><%= @business.businesses.count %></span>
+        <span class="label">Nombre de commerces</span>
+      <% end %>
+    </li>
+     <li id="data-create">
+      <% if @business.businesses_perks.count == 0 %>
+        <span class="number number-inactive"><%= @business.businesses_perks.count %></span>
+        <span class="label number-inactive">Bons plans créés</span>
+      <% else %>
+        <span class="number"><%= @business.businesses_perks.count %></span>
+        <span class="label">Bons plans créés</span>
+      <% end %>
+    </li>
+    <li id="data-used">
+      <% if @business.businesses_perks_uses.count == 0 %>
+        <span class="number number-inactive"><%= @business.businesses_perks_uses.count %></span>
+        <span class="label number-inactive">Bons plans utlisés</span>
+      <% else %>
+        <span class="number"><%= @business.businesses_perks_uses.count %></span>
+        <span class="label">Bons plans utlisés</span>
+      <% end %>
+    </li>
+    <li id="data-users">
+      <% if @business.members.count == 0 %>
+        <span class="number number-inactive"><%= @business.members.count %></span>
+        <span class="label number-inactive">Nombre de membres</span>
+      <% else %>
+        <span class="number"><%= @business.members.count %></span>
+        <span class="label">Nombre de membres</span>
+      <% end %>
+    </li>
+    <li id="data-causes">
+      <% if @business.causes_count == 0 %>
+        <span class="number number-inactive"><%= @business.causes_count %></span>
+        <span class="label number-inactive">Nombre d'associations</span>
+      <% else %>
+        <span class="number"><%= @business.causes_count %></span>
+        <span class="label">Nombre d'associations</span>
+      <% end %>
+    </li>
+    <li id="data-donation">
+      <% if @business.amount_donation == 0 %>
+        <span class="number number-inactive"><%= @business.amount_donation %></span>
+        <span class="label number-inactive">Montant donation</span>
+      <% else %>
+        <span class="number"><%= @business.amount_donation %></span>
+        <span class="label">Montant donation</span>
+      <% end %>
+    </li>
+  </ul>
+</div>
+
+<% content_for :after_js do %>
+  <%= render 'components/map_supervisor', geojson: @geojson, coordinates: [current_business.latitude, current_business.longitude] %>
+<% end %>

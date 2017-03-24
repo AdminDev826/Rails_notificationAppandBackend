@@ -1,0 +1,49 @@
+<ul class="mobile-menu hidden">
+  <!-- BUSINESS DETAILS -->
+  <div class="business-details">
+    <% if current_user.picture.present? %>
+      <%= image_tag avatar_url(current_user) %>
+     <% else %>
+      <%= image_tag "default_pic.png" %>
+    <% end %>
+    <% if current_user.last_name != "" && current_user.last_name != nil %>
+      <span><%= current_user.first_name %> <%= current_user.last_name.chars.first + "." %></span>
+    <% elsif current_user.name != "" && current_user.name != nil %>
+      <span><%= current_user.name.split(" ")[0] %></span>
+    <% end %>
+  </div>
+  <!-- OTHER LINKS -->
+  <li class="<%= active_class(member_user_profile_path(current_user))%>">
+    <%= link_to member_user_profile_path(current_user) do %>
+      <i class="fa fa-user"></i>Mon profil
+    <% end %>
+  </li>
+  <% if device_type == :mobile %>
+    <li class="<%= active_class(member_user_ambassador_path(current_user))%>">
+      <%= link_to member_user_ambassador_path(current_user) do %>
+        <i class="fa fa-user-plus"></i>Espace ambassadeur
+      <% end %>
+    </li>
+    <li class="<%= active_class(member_user_gift_path(current_user)) %>">
+      <%= link_to member_user_gift_path(current_user) do %>
+        <i class="fa fa-gift"></i>Plaisir d'offrir
+      <% end %>
+    </li>
+  <% end %>
+  <li>
+    <%= link_to faq_connect_path do %>
+      <i class="fa fa-question"></i>Aide et conseils
+    <% end %>
+  </li>
+  <li>
+    <%= link_to root_path do %>
+      <i class="fa fa-info-circle"></i>Plus d'infos ?
+    <% end %>
+  </li>
+  <li>
+    <%= link_to destroy_user_session_path, method: :delete do %>
+      <i class="fa fa-power-off sign-out"></i>Se déconnecter
+    <% end %>
+  </li>
+</ul>
+

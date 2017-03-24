@@ -1,0 +1,10 @@
+<div class="container" id="error_explanation">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    Le formulaire contient <%= pluralize(resource.errors.count, "erreur") %>.
+    <ul>
+      <% resource.errors.full_messages.each do |msg| %>
+          <li class="alert-message"><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

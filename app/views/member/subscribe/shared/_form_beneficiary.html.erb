@@ -1,0 +1,83 @@
+<div class="form-card beneficiary">
+  <i class="icon-card"><%= image_tag 'icons/present.png' %></i>
+  <!-- Pack choice -->
+  <span class="signup-message-beneficiary">Quel pack souhaitez-vous choisir ?</span>
+  <div class="container pack-gift">
+    <div class="radio-tile-group">
+      <div class="input-container">
+        <input id="3.15" class="radio-button" type="radio" name="radio" />
+        <div class="radio-tile">
+          <%= image_tag 'icons/present_3month.svg', class: "present-3month" %>
+        </div>
+      </div>
+      <div class="input-container">
+        <input id="6.30" class="radio-button" type="radio" name="radio" />
+        <div class="radio-tile">
+          <%= image_tag 'icons/present_6month.svg' %>
+        </div>
+      </div>
+      <div class="input-container">
+        <input id="12.50" class="radio-button" type="radio" name="radio" checked="checked"/>
+        <div class="radio-tile">
+          <%= image_tag 'icons/present_12month.svg' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <label class="radio-tile-label"><strong>15 € / </strong>3 mois</label>
+  <label class="radio-tile-label"><strong>30 € / </strong>6 mois</label>
+  <label class="radio-tile-label"><strong>50 € / </strong>un an</label>
+  <p class="pack-gift-comment">50% est reversé directement à une association et donc déductible de vos impôts !</p>
+  <!-- Beneficiary input -->
+  <span class="signup-message-beneficiary">À qui souhaitez-vous l'offrir ?</span>
+  <div class="subscription-form">
+    <%= simple_form_for :beneficiary, url: user_beneficiaries_path(current_user), remote: true, html: { id: :new_beneficiary } do |f| %>
+      <div id="error-code">
+        <% if flash[:alert].present? &&  flash[:alert] != "Vous êtes déjà connecté" && %>
+          <%= flash[:alert].humanize  %>
+        <% end %>
+      </div>
+      <%= f.input :first_name, placeholder: 'Prénom', required: true, label: false %>
+      <%= f.input :last_name, placeholder: 'Nom', required: true, label: false %>
+      <%= f.input :email, placeholder: 'Adresse email', required: true, label: false %>
+      <%= f.input :nb_month, as: :hidden, input_html: { value: 12 }  %>
+      <%= f.input :amount, as: :hidden, input_html: { value: 50 } %>
+
+      <p>On s'occupe de tout ! Le 25 décembre, le personne recevra un joli mail qui lui annoncera la bonne nouvelle et lui permettra de s'inscrire pour bénéficier de tous nos avantages immédiatement :)</p>
+
+      <%= f.button :submit, "C'est cadeau !", class: "btn btn-connexion hint--top btn-user-connexion" %>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      $("#new_beneficiary").validate({
+        lang: 'fr',
+        rules: {
+          first_name: {
+            required: true,
+          },
+          last_name: {
+            required: true,
+          },
+          email: {
+            required: true
+          }
+        }
+      });
+
+    $('.radio-button').on('click', function() {
+      $('#beneficiary_nb_month').val($('.radio-button:checked').attr('id').split('.')[0]);
+      $('#beneficiary_amount').val($('.radio-button:checked').attr('id').split('.')[1]);
+    });
+
+    });
+
+</script>
+
+<% end %>

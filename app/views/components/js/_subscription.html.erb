@@ -1,0 +1,169 @@
+<script>
+
+  $(document).ready(function() {
+
+    var valMap = [30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,420,440,460,480,500];
+
+    function afterFiscal(amount, pourcent) {
+      var amountAsso = (amount*(pourcent/100)).toFixed(2);
+      var amountCforgood = (amount - amountAsso);
+      var amountAfter = ((amountAsso * 0.34) + amountCforgood).toFixed(2);
+      return amountAfter;
+    }
+
+    function pourcentAsso(amount, subscription) {
+      if (subscription == "monthly") {
+        if (amount <= 5) {
+          var pourcent = ((50-30.0)*((amount-1)/(5-1)))+30;
+        } else if (amount <= 10) {
+          var pourcent = ((70-50.0)*((amount-5)/(10-5)))+50;
+        } else if (amount <= 15) {
+          var pourcent = ((75-70.0)*((amount-10)/(15-10)))+70;
+        } else if (amount <= 20) {
+          var pourcent = ((77.5-75)*((amount-15)/(20-15)))+75;
+        } else if (amount <= 25) {
+          var pourcent = ((80-77.5)*((amount-20)/(25-20)))+77.5;
+        } else {
+          var pourcent = ((85-80.0)*((amount-25)/(50-25)))+80;
+        }
+      } else {
+        if (amount <= 50) {
+          var pourcent = ((50-30.0)*((amount-30)/(50-30)))+30;
+        } else if (amount <= 100) {
+          var pourcent = ((70-50.0)*((amount-50)/(100-50)))+50;
+        } else if (amount <= 150) {
+          var pourcent = ((75-70.0)*((amount-100)/(150-100)))+70;
+        } else if (amount <= 200) {
+          var pourcent = ((77.5-75)*((amount-150)/(200-150)))+75;
+        } else if (amount <= 250) {
+          var pourcent = ((80-77.5)*((amount-200)/(250-200)))+77.5;
+        } else {
+          var pourcent = ((85-80.0)*((amount-250)/(500-250)))+80;
+        }
+      }
+      return pourcent;
+    }
+
+    function changeValues(amount, subscription) {
+      var pourcent = pourcentAsso(amount, subscription);
+      var outputFiscal = afterFiscal(amount, pourcent);
+      $('#user_amount').val(amount);
+      $('.output-asso').html(pourcent);
+      $('.output-fiscal').html(outputFiscal);
+
+      if (subscription == 'monthly') {
+        $('#range').val(amount.toString());
+      } else {
+        index = valMap.indexOf(amount);
+        $("#slider").slider({
+          max: valMap.length - 1,
+          value: index,
+          slide: function(event, ui) {
+            changeValues(valMap[ui.value], subscription);
+          }
+        });
+      }
+    }
+
+    var amountInit = parseInt($("#user_amount").val());
+    subscriptionInit = $('.switch input:checked').attr('id');
+    var subscription = subscriptionInit;
+
+    changeValues(amountInit, subscriptionInit);
+
+    if (subscription == 'monthly') {
+      $('#range').val(amountInit.toString());
+    } else {
+      var index = valMap.indexOf(amountInit);
+      $("#slider").slider({
+        max: valMap.length - 1,
+        value: index,
+        slide: function(event, ui) {
+          changeValues(valMap[ui.value], subscription);
+        }
+      });
+    }
+//       .each(theArray, function(){
+//   if (closest == null || Math.abs(this - goal) < Math.abs(closest - goal)) {
+//     closest = this;
+//   }
+// });
+
+
+    $('#range').on('input', function() {
+      var value = parseInt(this.value);
+      changeValues(value, subscription);
+    });
+
+    $('#user_amount').on('input', function() {
+      var value = parseInt(this.value);
+      changeValues(value, subscription);
+    });
+
+    $('#monthly').on('click', function() {
+      subscription = 'monthly';
+      changeValues(5, subscription);
+      $('#yearly').attr('checked', false);
+      $('#monthly').attr('checked', true);
+      $('#slider').addClass('hidden');
+      $('#range').removeClass('hidden');
+    });
+
+    $('#yearly').on('click', function() {
+      subscription = 'yearly';
+      changeValues(50, subscription);
+      $('#monthly').attr('checked', false);
+      $('#yearly').attr('checked', true);
+      $('#range').addClass('hidden');
+      $('#slider').removeClass('hidden');
+    });
+
+    $(".signup-plan .signup-prev").on("click", function(e) {
+      e.preventDefault;
+      $(".signup-plan").removeClass("slideup").addClass("ishidden");
+      $(".choose-cause").removeClass("ishidden").addClass("slidedown");
+      $("#signup-breadcrumb").removeClass("slide-2");
+
+      // EVENT AMPLITUDE : USER_C_SIGNUP1_NEXT
+      amplitude.logEvent('USER_C_SIGNUP2_PREV');
+    });
+
+    $(".signup-plan .signup-next").on("click", function() {
+      $(".btn-subscription").click();
+    });
+
+    $(".btn-subscription").on("click", function() {
+      if ( $("#user_code_partner").val() != "") {
+        <% if controller_path == "member/dashboard" %>
+          // EVENT AMPLITUDE : USER_PROFILE_MYSUBSCRIPTION_CODE
+          amplitude.logEvent('USER_PROFILE_MYSUBSCRIPTION_CODE');
+        <% else %>
+          // EVENT AMPLITUDE : USER_C_SIGNUP2_CODE
+          amplitude.logEvent('USER_C_SIGNUP2_CODE');
+        <% end %>
+      }
+      $("#user_subscription").val(subscription == 'monthly' ? 'M' : 'Y');
+      $("#amount_subscription").html($("#user_amount").val());
+      $("#label_subscription").html(subscription == 'monthly' ? 'mois' : 'an');
+      <% if controller_path == "member/dashboard" %>
+        // EVENT AMPLITUDE : USER_C_PROFILE_MYSUBSCRIPTION_OK
+        amplitude.logEvent('USER_C_PROFILE_MYSUBSCRIPTION_OK');
+      <% else %>
+        // EVENT AMPLITUDE : USER_C_SIGNUP2_OK
+        amplitude.logEvent('USER_C_SIGNUP2_OK');
+      <% end %>
+    });
+
+    $(".btn-no-subscription").on("click", function() {
+      <% if controller_path == "member/dashboard" %>
+        // EVENT AMPLITUDE : USER_C_PROFILE_MYSUBSCRIPTION_KO
+        amplitude.logEvent('USER_C_PROFILE_MYSUBSCRIPTION_KO');
+      <% else %>
+        // EVENT AMPLITUDE : USER_C_SIGNUP2_KO
+        amplitude.logEvent('USER_C_SIGNUP2_KO');
+      <% end %>
+    });
+  });
+
+
+</script>

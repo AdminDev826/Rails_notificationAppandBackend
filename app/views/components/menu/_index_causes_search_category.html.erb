@@ -1,0 +1,24 @@
+<div class="search-category-overlay hidden"></div>
+<div class="search-category">
+  <span id="open-categories"><i class="fa fa-search"></i></span>
+  <ul class="search-pannel">
+    <a href="#" data-filter="all" class="filter-btn current">
+      <li id="categories-all" class="category-item is-selected">
+        <div class="container-icon" style="background-color: #fff;">
+          <%= image_tag "icons/all.png" %>
+        </div>
+        Toutes les catégories
+      </li>
+    </a>
+    <% CauseCategory.all.each do |category| %>
+    <a href="#" data-filter="<%= "."+category.id.to_s %>" class="filter-btn current">
+      <li class="category-item">
+        <div class="container-icon" style="background-color: <%= category.color %>;">
+          <%= image_tag category.picture %>
+        </div>
+        <%= category.name %>
+      </li>
+    </a>
+    <% end %>
+  </ul>
+</div>

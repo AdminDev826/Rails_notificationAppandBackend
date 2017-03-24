@@ -1,0 +1,54 @@
+<div class="business-search-index-js-desk hidden">
+
+  <div class="text-count-container">
+    <div class="text-count"></div>
+  </div>
+
+  <div class="bsmd-container">
+    <div id="business-search-modal-desktop">
+      <ul class="list">
+        <% @businesses.each do |business| %>
+          <div class="business-index-card">
+            <div class="bic-left">
+              <div class="bic-photo" style="background-image: url('<%= business.picture %>');"></div>
+            </div>
+            <div class="bic-middle">
+              <div class="bic-middle-top">
+                <div class="business-name-desk"><%= business.name %></div>
+              </div>
+              <div class="bic-middle-bottom">
+                <div class="little-perk-logo" style="background-color:<%= business.business_category.color %> ">
+                  <%= image_tag business.business_category.picture, size: "10x10" %>
+                </div>
+                <div class="category-name category" style="color: grey;"><%= business.business_category.name %></div>
+              </div>
+            </div>
+            <div class="bic-right">
+              <div>+</div>
+            </div>
+          </div>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<% content_for :modal_search_index_desk do %>
+
+  <script>
+
+    var options = {
+      valueNames: [ 'business-name-desk' ]
+    };
+
+    var userList = new List('business-search-modal-desktop', options);
+
+    $('#search-dashboard').keyup(function(){
+      userList.search($(this).val());
+    });
+
+  </script>
+
+<% end %>
+

@@ -1,0 +1,187 @@
+/* -------------------------------------
+ * You killer button SASS module
+ * ------------------------------------- */
+
+
+ .btn-blue {
+  color: #fff !important;
+  background-color: #00CAFF !important;
+  border-color: #00CAFF !important;
+  white-space: nowrap;
+  border-bottom: 2px solid #1692c8 !important;
+  border-radius: 4px;
+  font-weight: 100;
+}
+
+.btn-bluenight {
+  color: #fff !important;
+  background-color: #349ED6 !important;
+  border-color: #349ED6 !important;
+  white-space: nowrap;
+  border-bottom: 2px solid #1692c8 !important;
+  border-radius: 4px;
+  font-weight: 100;
+}
+
+ .btn-green {
+  color: #fff !important;
+  background-color: #80F2A4 !important;
+  border-color: #93F29C !important;
+  white-space: nowrap;
+  border-bottom: 2px solid #7BDA8D !important;
+  border-radius: 4px;
+  font-weight: 100;
+}
+
+ .btn-turquoise {
+  color: #fff !important;
+  background-color: #36D3DA !important;
+  border-color: #36D3DA !important;
+  white-space: nowrap;
+  border-bottom: 2px solid #19A2C2 !important;
+  border-radius: 4px;
+  font-weight: 100;
+}
+
+.btn-white {
+  color: #fff !important;
+  background-color: transparent !important;
+  border-color: white !important;
+  white-space: nowrap;
+  border-bottom: 2px solid rgb(230,230,230) !important;
+  border-radius: 4px;
+  font-weight: 100;
+}
+
+.btn-grey {
+  color: lightgrey !important;
+  background-color: transparent !important;
+  border-color: lightgrey !important;
+  white-space: nowrap;
+  border-bottom: 2px solid rgb(230,230,230) !important;
+  border-radius: 4px;
+  font-weight: 100;
+}
+
+.btn-filter {
+  color: #fff !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border-color: white !important;
+  white-space: nowrap;
+  border-bottom: 2px solid rgb(230,230,230) !important;
+  border-radius: 4px;
+  font-weight: 100;
+}
+
+/* BUTTON CLASSES *************************************/
+
+.button {
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 100;
+
+  -webkit-transition: all, 0.3s, ease-in-out;
+  -o-transition: all, 0.3s, ease-in-out;
+  transition: all, 0.3s, ease-in-out;
+}
+
+.button-turquoise {
+  color: #fff;
+  border: 1px solid #19A2C2;
+  background-color: #36D3DA;
+
+  &:hover {
+    background-color: #19A2C2;
+  }
+}
+
+.button-green {
+  color: #fff;
+  border: 1px solid #39D64B;
+  background-color: #80F2A4;
+
+  &:hover {
+    background-color: #39D64B;
+  }
+}
+
+.button-rouge {
+  color: #fff;
+  border: 1px solid #BF2F2F;
+  background-color: #F74042;
+
+  &:hover {
+    color: #fff;
+    background-color: #BF2F2F;
+  }
+}
+
+.inactive {
+  color: #fff;
+  border: 1px solid #444444;
+  background-color: #222222;
+}
+
+.user-button, .business-button {
+  position: relative;
+  padding: 10px 20px;
+  margin: 0;
+  width: 100%;
+  max-width: 320px;
+  color: #fff;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  @include transition(all, 0.3s, ease-in-out);
+}
+
+.user-button {
+  background-color: $turquoise;
+  &:hover {
+    background-color: #32C4CB;
+  }
+}
+
+.business-button {
+  background-color: #9fd6ae;
+  &:hover {
+    background-color: #8BBD99;
+  }
+}
+
+.button-log {
+  padding: 14px 20px;
+  border-radius: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #9FD6AE;
+  transition: all, 0.3s, ease-in-out;
+
+  &.sign-up {
+    background-color: #36d3da;
+    margin-bottom: 10px;
+
+    &:hover {
+      color: #fff;
+      background-color: #19A2C2;
+    }
+  }
+
+  &.sign-in {
+    background-color: #000;
+    opacity: 0.8;
+
+    &:hover {
+      color: #fff;
+      background-color: #A3A5A8;
+    }
+  }
+}

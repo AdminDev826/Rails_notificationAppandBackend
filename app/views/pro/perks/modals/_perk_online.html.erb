@@ -1,0 +1,54 @@
+<div class="use-overlay hidden">
+  <div class="flip-container-mobile">
+    <div class="flipper-mobile">
+      <!-- FRONT CARD-->
+      <figure class="front">
+        <!-- CLOSE BUTTON-->
+        <button type="button" class="close-button">&times;</button>
+        <!-- ILLUSTRATION-->
+        <div class="wrapper">
+          <%= render "shared/icons/browser" %>
+        </div>
+        <span class="business-name"><%= @perk.business.name %></span>
+        <!-- CTA -->
+        <div class="itinary">
+          <%= link_to "#{@business.url}", class: "send-to-shop", target: "_blank" do %>
+            <i class="fa fa-globe"></i>
+            <% if @business.url.size > 28 %>
+              <abbr><%= truncate(@business.url, length: 28) %></abbr>
+            <% else %>
+              <abbr><%= @business.url %></abbr>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="container-code">
+          <p class="box-code-legend">Copiez ce code pour bénéficier de réductions sur le site du commerçant :</p>
+          <span class="online-code"><%= Perk.find(params[:perk_id]).perk_code.upcase %></span>
+          <% if @perk.appel %>
+            <p class="box-code-legend">Attention, ce bon plan n'est valable qu'une seule fois !</p>
+          <% end %>
+        </div>
+        <%= simple_form_for :use, url: perk_uses_path(params[:perk_id], online: true), method: :post, remote: true, authenticity_token: true, html: { id: :create_use } do |f| %>
+          <%= f.input :perk_id, as: :hidden, input_html: {value: params[:perk_id]} %>
+          <%= f.submit "J'utilise", class: "btn-create-use", :style => "display: none;" %>
+        <% end %>
+      </figure>
+      <!-- BACK CARD -->
+      <figure class="back">
+        <div class="container-feedback"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function(){
+
+      $('.send-to-shop').click(function() {
+        $('.btn-create-use').click();
+      });
+
+    });
+  </script>
+<% end %>

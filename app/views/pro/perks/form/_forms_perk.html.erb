@@ -1,0 +1,293 @@
+<!-- Card Perk APPEL -->
+<div class="perk-appel perk-form-card">
+  <div class="perk-form-title">
+    <i class="fa fa-times close-create"></i>
+    <span>Bon Plan de bienvenue</span>
+    <span class="type-category">Acquisition</span>
+  </div>
+  <div class="type-reminder">
+    <span>Offre valable 1x par nouveau client</span>
+  </div>
+  <%= simple_form_for([:pro, @business, @perk], remote: false) do |f| %>
+    <%= f.error_notification %>
+    <label class="hint--top-right" data-hint="Sélectionnez le moyen d'activation">Utilisation *</label>
+    <div class="select-wrapper" id="detail-appel">
+      <%= f.input :perk_detail_id, label: false, collection: PerkDetail.all, label_method: :description, selected: f.object.perk_detail_id || PerkDetail.find_by_name('carte').id, class: "detail-appel" %>
+    </div>
+    <label class="hint--top-right" data-hint="Quelque chose de court et engageant">Nom du bon plan *</label>
+    <%= f.input :name, label: false, placeholder: "I feel good", required: true, input_html: {maxlength: 35} %>
+    <div class="photo-perk">
+      <label class="hint--top-right" data-hint="Votre bon plan en image !">Photo</label>
+      <div class="picture-container perk-appel-preview">
+        <% if @perk.picture? %>
+          <%= image_tag @perk.picture.url(:thumb), class: 'picture-perk-preview', id: 'perk-appel-preview'%>
+        <% else %>
+          <%= render 'shared/icons/perkpic' %>
+        <% end %>
+      </div>
+      <%= f.input :picture, as: :file, required: false, label: 'Sélectionner une nouvelle image', input_html: {class: :perk_picture, id: :perk_appel_file } %>
+    </div>
+    <label class="hint--top-right" data-hint="Précisez le contenu de votre offre">Description *</label>
+    <%= f.input :description, label: false, placeholder: "Dites-nous tout...", required: true, :input_html => { :rows => 3, maxlength: 220 } %>
+    <div class="<%= action == 'create' || PerkDetail.find(f.object.perk_detail_id).name == "carte" ? 'detail-appel hidden' : 'detail-appel' %>">
+      <label class="hint--top-right" data-hint="Choisissez le code d'accès du bon plan">Code d'accès *</label>
+      <%= f.input :perk_code, label: false, placeholder: "De 5 à 15 lettres ou chiffres", input_html: { minlenght: 5, maxlength: 15 } %>
+    </div>
+    <%= f.input :appel, as: :hidden %>
+    <%= f.input :durable, as: :hidden %>
+    <%= f.input :flash, as: :hidden %>
+    <%= f.button :submit, submit_label, class: "btn-create" %>
+  <% end %>
+</div>
+
+<!-- Card Perk DURABLE -->
+<div class="perk-durable perk-form-card">
+  <div class="perk-form-title">
+    <i class="fa fa-times close-create"></i>
+    <span>Bon plan durable</span>
+    <span class="type-category">Fidélisation</span>
+  </div>
+  <div class="type-reminder">
+    <span>Offre récurrente sans limite d'utilisation</span>
+  </div>
+  <%= simple_form_for([:pro, @business, @perk], remote: true) do |f| %>
+    <%= f.error_notification %>
+    <label class="hint--top-right" data-hint="Sélectionnez le moyen d'activation">Utilisation *</label>
+    <div class="select-wrapper" id="detail-durable">
+      <%= f.input :perk_detail_id, label: false, collection: PerkDetail.all, label_method: :description, selected: f.object.perk_detail_id || PerkDetail.find_by_name('carte').id %>
+    </div>
+    <label class="hint--top-right" data-hint="Quelque chose de court et engageant">Nom du bon plan *</label>
+    <%= f.input :name, label: false, placeholder: "I feel good", required: true , input_html: {maxlength: 35} %>
+    <div class="photo-perk">
+      <label class="hint--top-right" data-hint="Votre bon plan en image !">Photo</label>
+      <div class="picture-container perk-durable-preview">
+        <% if @perk.picture? %>
+          <%= image_tag @perk.picture.url(:thumb), class: 'picture-perk-preview', id: 'perk-durable-preview' %>
+        <% else %>
+          <%= render 'shared/icons/perkpic' %>
+        <% end %>
+      </div>
+      <%= f.input :picture, as: :file, required: false, label: 'Sélectionner une nouvelle image', input_html: {id: :perk_durable_file } %>
+    </div>
+    <label class="hint--top-right" data-hint="Précisez le contenu de votre offre">Description *</label>
+    <%= f.input :description, label: false, placeholder: "Dites-nous tout...", required: true, :input_html => { :rows => 3, maxlength: 220 } %>
+    <div class="<%= action == 'create' || PerkDetail.find(f.object.perk_detail_id).name == "carte" ? 'detail-durable hidden' : 'detail-durable' %>">
+      <label class="hint--top-right" data-hint="Choisissez le code d'accès du bon plan">Code d'accès *</label>
+      <%= f.input :perk_code, label: false, placeholder: "De 5 à 15 lettres ou chiffres", input_html: { minlenght: 5, maxlength: 15 } %>
+    </div>
+    <%= f.input :appel, as: :hidden %>
+    <%= f.input :durable, as: :hidden %>
+    <%= f.input :flash, as: :hidden %>
+    <%= f.button :submit, submit_label, class: "btn-create" %>
+  <% end %>
+</div>
+
+<!-- Form Perk FLASH -->
+<div class="perk-flash perk-form-card">
+  <div class="perk-form-title">
+    <i class="fa fa-times close-create"></i>
+    <span>Bon plan flash</span>
+    <span class="type-category">Activation</span>
+  </div>
+   <div class="type-reminder">
+    <span>Offre limité en temps et quantité</span>
+  </div>
+  <%= simple_form_for([:pro, @business, @perk], remote: true) do |f| %>
+    <%= f.error_notification %>
+    <label class="hint--top-right" data-hint="Sélectionnez le moyen d'activation">Utilisation *</label>
+    <div class="select-wrapper" id="detail-flash">
+      <%= f.input :perk_detail_id, label: false, collection: PerkDetail.all, label_method: :description, selected: f.object.perk_detail_id || PerkDetail.find_by_name('carte').id %>
+    </div>
+    <label class="hint--top-right" data-hint="Quelque chose de court et engageant">Nom du bon plan *</label>
+    <%= f.input :name, label: false, placeholder: "I feel good", required: true , input_html: {maxlength: 35} %>
+    <div class="photo-perk">
+      <label class="hint--top-right" data-hint="Votre bon plan en image !">Photo</label>
+      <div class="picture-container perk-flash-preview">
+        <% if @perk.picture? %>
+          <%= image_tag @perk.picture.url(:thumb), class: 'picture-perk-preview', id: 'perk-flash-preview' %>
+        <% else %>
+          <%= render 'shared/icons/perkpic' %>
+        <% end %>
+      </div>
+      <%= f.input :picture, as: :file, required: false, label: 'Sélectionner une nouvelle image', input_html: {id: :perk_flash_file } %>
+    </div>
+    <label class="hint--top-right" data-hint="Précisez le contenu de votre offre">Description *</label>
+    <%= f.input :description, label: false, placeholder: "Dites-nous tout...", required: true, :input_html => { :rows => 3, maxlength: 220 } %>
+    <label class="hint--top-right" data-hint="Déterminez une période de disponibilité">Période *</label>
+    <%= f.input :start_date_date, as: :string, label: false, placeholder: "Début", input_html: {"data-provide" => "datepicker", "data-date-language" => "fr", value: f.object.start_date.try(:strftime, '%d/%m/%Y') } %>
+    <%= f.input :start_date_hour, collection: pad0(0..23), label: false, selected: pad0(f.object.start_date_hour || 00) %>
+    <%= f.input :start_date_min, collection: pad0([0, 15, 30, 45]), label: false, selected: pad0(f.object.start_date_min || 00) %>
+    <%= f.input :end_date_date, as: :string, label: false, placeholder: "Fin", :input_html => {"data-provide" => "datepicker", "data-date-language" => "fr", value: f.object.end_date.try(:strftime, '%d/%m/%Y') } %>
+    <%= f.input :end_date_hour, collection: pad0(0..23), label: false, selected: pad0(f.object.end_date_hour || 23) %>
+    <%= f.input :end_date_min, collection:  pad0([0, 15, 30, 45]), label: false, selected: pad0(f.object.end_date_min || 00) %>
+    <%= f.input :all_day, label: "Toute la journée", as: :boolean, checked: f.object.all_day %>
+    <label class="hint--top-right" data-hint="Nombre d'activations possibles">Quantité</label>
+    <%= f.input :times, as: :integer, label: false, placeholder: "0" %>
+    <div class="quantity-selector">
+      <button id="quantity-plus" type="button"><i class="fa fa-plus"></i></button>
+      <button id="quantity-minus" type="button"><i class="fa fa-minus"></i></button>
+    </div>
+    <div class="<%= action == 'create' || PerkDetail.find(f.object.perk_detail_id).name == "carte" ? 'detail-flash hidden' : 'detail-flash' %>">
+      <label class="hint--top-right" data-hint="Choisissez le code d'accès du bon plan">Code d'accès *</label>
+      <%= f.input :perk_code, label: false, placeholder: "De 5 à 15 lettres ou chiffres", input_html: { minlenght: 5, maxlength: 15 } %>
+    </div>
+    <%= f.input :appel, as: :hidden %>
+    <%= f.input :durable, as: :hidden %>
+    <%= f.input :flash, as: :hidden %>
+    <%= f.button :submit, submit_label, class: "btn-create" %>
+  <% end %>
+</div>
+
+<% PerkDetail.all.each do |perk_detail| %>
+  <div class="list-perk-detail hidden"><%= perk_detail.name %></div>
+<% end %>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      function setDate() {
+        if ($("#perk_all_day").is(':checked')) {
+          if ($("#perk_start_date_date").val() != "") {
+            $("#perk_end_date_date").val($("#perk_start_date_date").val()).attr("disabled", true);
+          }
+          $("#perk_start_date_hour").val(0).attr("disabled", true);
+          $("#perk_end_date_hour").val(23).attr("disabled", true);
+        } else {
+          $("#perk_end_date_date").attr("disabled", false);
+          $("#perk_start_date_hour").attr("disabled", false);
+          $("#perk_end_date_hour").attr("disabled", false);
+        }
+      }
+
+      // INITITALISATION DATE
+      if (<%= @perk.all_day %>) {
+        setDate();
+      }
+
+      // PERK FLASH - INCREMENT QUANTITY
+      $("#quantity-plus").on("click", function(e) {
+        e.preventDefault();
+        fieldId = $('#perk_times');
+        var currentVal = parseInt($(fieldId).val());
+        if (!isNaN(currentVal)) {
+          $(fieldId).val((currentVal + 1).toString());
+        } else {
+          $(fieldId).val('1');
+        }
+      });
+
+      // PERK FLASH - DECREASE QUANTITY
+      $("#quantity-minus").on("click", function(e) {
+        e.preventDefault();
+        fieldId = $('#perk_times');
+        var currentVal = parseInt($(fieldId).val());
+        if (!isNaN(currentVal) && currentVal > 0) {
+          $(fieldId).val(currentVal - 1);
+        } else {
+          $(fieldId).val(0);
+        }
+      });
+
+      // CODE PERK DEPENDS ON PERK_DETAIL
+      $('.select-wrapper .form-control').on("change", function(e) {
+        e.preventDefault;
+        var detailId = $(this).val() - 1;
+        var classDetailId = $(this).closest('.select-wrapper').attr('id');
+        var detailName = $('.list-perk-detail')[detailId].innerHTML;
+        if(detailName == "email" || detailName == "online") {
+          $("."+classDetailId).removeClass('hidden');
+        }
+        else if (!$("."+classDetailId).hasClass('hidden')) {
+          $("."+classDetailId).addClass('hidden');
+        }
+      });
+
+
+      // SUPPLY BOOLEAN FIELDS
+      $(".type-card").on("click", function(e) {
+        e.preventDefault;
+        var typePerk = $(this).val('div').attr('id');
+
+        if (typePerk == "perk-appel") {
+          $(".perk-appel #perk_appel").val("true");
+          $(".perk-appel #perk_durable").val("false");
+          $(".perk-appel #perk_flash").val("false");
+        }
+        if (typePerk == "perk-durable") {
+          $(".perk-durable #perk_appel").val("false");
+          $(".perk-durable #perk_durable").val("true");
+          $(".perk-durable #perk_flash").val("false");
+        }
+        if (typePerk == "perk-flash") {
+          $(".perk-flash #perk_appel").val("false");
+          $(".perk-flash #perk_durable").val("false");
+          $(".perk-flash #perk_flash").val("true");
+        }
+      });
+
+      // CHECKBOX ALL_DAY
+      $("#perk_all_day").on("click", function(e) {
+        e.preventDefault;
+        if ($("#perk_all_day").is(':checked')) {
+          if ($("#perk_start_date_date").val() != "") {
+            $("#perk_end_date_date").val($("#perk_start_date_date").val());
+          }
+          $("#perk_end_date_date").attr("disabled", true);
+          $("#perk_start_date_hour").val("00").attr("disabled", true);
+          $("#perk_start_date_min").val("00").attr("disabled", true);
+          $("#perk_end_date_hour").val(23).attr("disabled", true);
+          $("#perk_end_date_min").val("00").attr("disabled", true);
+        } else {
+          $("#perk_start_date_date").attr("disabled", false);
+          $("#perk_end_date_date").attr("disabled", false);
+          $("#perk_start_date_hour").attr("disabled", false);
+          $("#perk_end_date_hour").attr("disabled", false);
+          $("#perk_start_date_min").attr("disabled", false);
+          $("#perk_end_date_min").attr("disabled", false);
+        }
+      });
+
+      $("#perk_start_date_date").on("change", function(e) {
+        e.preventDefault;
+        setDate();
+      });
+
+      // PICTURE LOAD PREVIEW
+      function readURL(file, classe) {
+        var reader = new FileReader();
+          reader.onload = function (e) {
+            if ($("#"+classe).attr('src') === undefined) {
+              $(".picture-container."+classe+" svg").remove();
+              $(".picture-container."+classe).append('<img src=" " class="picture-perk-preview" id="'+classe+'">')
+            };
+            $("#"+classe).attr('src', e.target.result);
+          }
+        reader.readAsDataURL(file);
+      }
+
+      $("#perk_appel_file").on("change", function(e) {
+        e.preventDefault();
+        var newFile = document.querySelector('#perk_appel_file').files[0];
+        $("#perk_appel_file").parent().children().html(newFile.name);
+        readURL(newFile, "perk-appel-preview");
+      });
+      $("#perk_durable_file").on("change", function(e) {
+        e.preventDefault();
+        var newFile = document.querySelector('#perk_durable_file').files[0];
+        $("#perk_durable_file").parent().children().html(newFile.name);
+        readURL(newFile, "perk-durable-preview");
+      });
+      $("#perk_flash_file").on("change", function(e) {
+        e.preventDefault();
+        var newFile = document.querySelector('#perk_flash_file').files[0];
+        $("#perk_flash_file").parent().children().html(newFile.name);
+        readURL(newFile, "perk-flash-preview");
+      });
+    });
+
+  </script>
+
+<% end %>

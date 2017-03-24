@@ -1,0 +1,15 @@
+<div class="connexion signup-beneficiary" style="background-image: url(<%= image_url('backgrounds/christmas-greetings.jpg') %>);">
+  <div class="sign-box gift">
+    <!-- Return to SIGNUP -->
+    <%= link_to "", signup_path, class: "close-sign-box" %>
+    <div class="signup-card">
+      <!-- FORM SUBCRIPTION -->
+      <%= render "member/subscribe/shared/form_beneficiary" %>
+      <!-- FORM CARD REGISTRATION -->
+      <div class="gift-payment hidden">
+        <i><%= image_tag 'icons/credit_card.png' %></i>
+        <%= render "member/subscribe/shared/form_payment" %>
+      </div>
+    </div>
+  </div>
+</div>

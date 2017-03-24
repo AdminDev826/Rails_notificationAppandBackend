@@ -1,0 +1,9 @@
+<div class="container-fluid admin">
+  <!-- Sub Menu Sidebar -->
+  <%= render "member/dashboard/shared/sidebar" %>
+  <!-- Content - Statistics -->
+  <div class="dashboard">
+    <% render "shared/form_user_profile", resource: current_user, resource_name: :user  %>
+  </div>
+</div>
+

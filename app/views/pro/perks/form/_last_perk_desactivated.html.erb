@@ -1,0 +1,34 @@
+<div class="popup-overlay last-perk-desactivated hidden">
+  <div class="popup-container delete-perk">
+    <div class="close-popup"><i class="fa fa-times"></i></div>
+    <div class="wrapper">
+      <!-- ILLUSTRATION-->
+      <%= render 'shared/icons/only_danger' %>
+    </div>
+    <span>Hey !</span>
+    <p>Si tu désactives ce bon plan, tu ne seras plus visible sur la carte !!! </p>
+    <p class="id-perk hidden"></p>
+    <button type="submit" id="valid-submit" class="business-button">Valider</button>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function() {
+
+      $(".last-perk-desactivated .close-popup").click(function (e) {
+        e.preventDefault();
+        location.reload();
+      });
+
+      $("#valid-submit").on("click", function (e) {
+        e.preventDefault();
+        var updateForm = $('.id-perk').html();
+        $('#' + updateForm).submit();
+      });
+
+    });
+  </script>
+<% end %>
+
+

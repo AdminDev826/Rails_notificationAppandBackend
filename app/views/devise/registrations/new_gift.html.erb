@@ -1,0 +1,23 @@
+<% content_for :meta_title, "Inscription - CforGood" %>
+<% content_for :meta_description %>
+<% content_for :meta_image %>
+
+<div class="connexion signup" style="background-image: url(<%= request.path == "/signup_trial" ? image_url('signin-background.jpg') : image_url('backgrounds/christmas-greetings.jpg') %>);">
+  <div class="sign-box gift">
+      <!-- Return to SIGNUP -->
+      <%= link_to "", signup_path, class: "close-sign-box" %>
+      <!-- Message -->
+      <% if request.path == "/signup_trial" %>
+        <span class="signup-message-gift">Un mois offert pour découvrir !</span>
+      <% elsif request.path == "/signup_gift" %>
+        <span class="signup-message-gift">Envie d'offrir un cadeau unique ?</span>
+      <% elsif request.path == "/signup_beneficiary" %>
+        <span class="signup-message-gift">Profitez de votre cadeau !</span>
+      <% end %>
+      <!-- Form SIGNUP USER -->
+      <%= render "devise/registrations/shared/form_signup_user", resource: User.new, resource_name: :user %>
+  </div>
+</div>
+
+<!-- MODAL CGU CFORGOOD -->
+<%= render "components/modals/signup_cgu" %>

@@ -1,0 +1,15 @@
+<div class="form-edit-address">
+  <!-- FORM EDIT ADDRESS -->
+  <%= simple_form_for [:pro, current_business, address], remote: true, method: :patch do |f| %>
+    <%= f.input :active, as: :boolean, label: 'Adresse active', checked: f.object.active %>
+    <label class="hint--top-right" data-hint="Quel est votre horaire aujourd'hui ?">Horaire</label>
+    <%= f.input :start_time_hour, label: "De", collection: pad0(0..23), selected: pad0(f.object.start_time_hour), disabled: !f.object.active %>
+    <%= f.input :start_time_min, label: ":", collection: pad0([0, 15, 30, 45]), selected: f.object.start_time_min, disabled: !f.object.active %>
+    <%= f.input :end_time_hour, label: "à", collection: pad0(0..23), selected: pad0(f.object.end_time_hour),disabled: !f.object.active %>
+    <%= f.input :end_time_min, label: ":",collection: pad0([0, 15, 30, 45]), selected: f.object.end_time_min, disabled: !f.object.active %>
+    <%= f.input :street, placeholder: 'Rue', label: 'Adresse *', disabled: !f.object.active %>
+    <%= f.input :zipcode, placeholder: 'Code postal', label: 'Code postal *', disabled: !f.object.active %>
+    <%= f.input :city, placeholder: 'Ville', label: 'Ville *', disabled: !f.object.active %>
+    <%= f.button :submit, "Modifier cette adresse", class: "btn-update", disabled: false  %>
+  <% end %>
+</div>

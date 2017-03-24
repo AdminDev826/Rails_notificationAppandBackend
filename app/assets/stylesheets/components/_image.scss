@@ -1,0 +1,15 @@
+.avatar-citoyen {
+  height: 50px;
+  width: 50px;
+}
+
+.pastille-citoyen {
+  height: 80px;
+  width: 80px;
+}
+
+.avatar-citoyen, .pastille-citoyen {
+  padding: 6px 6px 0 6px;
+  border-radius: 50%;
+  background: #fff;
+}

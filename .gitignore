@@ -1,0 +1,15 @@
+!.keep
+*.DS_Store
+*.swo
+*.swp
+/.bundle
+/.foreman
+/log/*
+/public/system
+/public/assets
+/public/uploads
+/tags
+/tmp/*
+/config/application.yml
+# Ignore application configuration
+/config/application.yml

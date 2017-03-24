@@ -1,0 +1,400 @@
+.admin {
+  padding-top: 0;
+  height: 100vh;
+  overflow: hidden;
+
+  .dashboard {
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #f1f1f1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .mobile-title {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      color: #636363;
+
+      img {
+        width: 25px;
+        margin-right: 5px;
+      }
+    }
+
+    .title-home {
+      padding-left: 0;
+    }
+
+    .logo-title {
+      float: left;
+      width: 25px;
+      margin-right: 5px;
+    }
+
+    .view-title {
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      color: #636363;
+    }
+  }
+
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 250;
+    @include transition(all, 0.3s, ease-in-out);
+  }
+
+  .popup-supervisor {
+    span {
+      padding-top: 0 !important;
+    }
+  }
+
+  /* PERK CREATION CONFIRMATION *************************************************/
+
+  .waiting,
+  .done-overlay,
+  .done-overlay-address {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 200;
+    background-color: rgba(0,0,0,0.6);
+    @include transition(all, 0.3s, ease-in-out);
+
+    .done-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding: 45px 20px 20px;
+      width: 300px;
+      height: 420px;
+      background-color: #fff;
+      border-radius: 3px;
+      z-index: 500;
+
+      .wrapper {
+        padding: 20px 20px 15px;
+        width: 140px;
+        background-color: #9FD6AE;
+        border-radius: 50%;
+
+        .checkmark {
+          stroke: #fff;
+          stroke-dashoffset: 745.74853515625;
+          stroke-dasharray: 745.74853515625;
+          animation: dash 2s ease-out forwards;
+           -webkit-animation-delay: 2s;
+          animation-delay: 1s;
+        }
+
+        @keyframes dash {
+          0% {
+            stroke-dashoffset: 745.74853515625;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+      }
+
+      span {
+        padding-top: 30px;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 20px;
+        text-align: center;
+
+        small {
+          font-size: 15px;
+          text-transform: none;
+          color: #636363;
+        }
+      }
+
+      p {
+        margin: 0;
+        padding: 20px 10px;
+        font-size: 12px;
+        color: #636363;
+        text-align: center;
+      }
+
+      a {
+        position: absolute;
+        padding: 10px 0;
+        margin: 0;
+        width: 100%;
+        left: 0px;
+        bottom: 0;
+        background-color: #f4f4f4;
+        border-radius: 0 0 3px 3px;
+        text-align: center;
+        font-size: 12px;
+        color: #636363;
+        text-decoration: underline;
+
+        &:hover, &:active, &:focus {
+          color: #636363;
+        }
+      }
+    }
+  }
+}
+
+.address-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 200;
+  background-color: rgba(0,0,0,0.6);
+  @include transition(all, 0.3s, ease-in-out);
+  overflow-y: scroll;
+
+  .address-container,
+  .address-edit-overlay {
+    position: absolute;
+    left: 50%;
+    transform:translateX(-50%);
+    padding: 45px 20px 20px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 3px;
+    z-index: 500;
+
+    .close-button {
+      position: absolute;
+      color: #636363;
+      background: transparent;
+      border: none;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      outline: none;
+      z-index: 600;
+    }
+  }
+
+  .address-container {
+    top: 60px;
+    height: 430px;
+  }
+  .address-edit-overlay {
+    top: 30px;
+  }
+}
+
+.waiting {
+  // background-image: url('cover-landing-business.jpg');
+  left: 0 !important;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: bottom;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.65;
+    background: -webkit-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* Chrome 10+, Saf5.1+ */
+    background: -moz-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* FF3.6+ */
+    background: -ms-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* IE10 */
+    background: -o-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* Opera 11.10+ */
+    background: linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* W3C */
+  }
+}
+
+
+
+@media only screen and (min-width:769px){
+  .admin {
+    height: 100vh;
+    overflow: hidden;
+
+    .done-overlay,
+    .done-overlay-address {
+      left: 15%;
+    }
+
+    .dashboard {
+      position: relative;
+      left: 0;
+      width: 100%;
+      top: 0;
+      height: 100vh;
+      background-color: #f1f1f1;
+      overflow-y: scroll;
+      .ambassador {
+        background-color: #fff;
+      }
+
+      .mobile-title {
+        display: none;
+      }
+
+      .logo-title {
+        display: none;
+      }
+
+      .view-title {
+        display: none;
+      }
+    }
+  }
+}
+
+// ADD TO CROP IMAGE //
+.thumb-crop {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+// ADD TO OVERLAY FOR SIGNUP //
+
+.signup-done-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 200;
+  background-color: rgba(0,0,0,0.6);
+  @include transition(all, 0.3s, ease-in-out);
+
+  .done-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 45px 20px 20px;
+    width: 300px;
+    height: 420px;
+    background-color: #fff;
+    border-radius: 3px;
+    z-index: 500;
+
+    .wrapper {
+      padding: 20px 20px 15px;
+      width: 140px;
+      background-color: #9FD6AE;
+      border-radius: 50%;
+
+      .checkmark {
+        stroke: #fff;
+        stroke-dashoffset: 745.74853515625;
+        stroke-dasharray: 745.74853515625;
+        animation: dash 2s ease-out forwards;
+         -webkit-animation-delay: 2s;
+        animation-delay: 1s;
+      }
+
+      @keyframes dash {
+        0% {
+          stroke-dashoffset: 745.74853515625;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+    }
+
+    span {
+      padding-top: 30px;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 20px;
+      text-align: center;
+
+      small {
+        font-size: 15px;
+        text-transform: none;
+        color: #636363;
+      }
+    }
+
+    p {
+      margin: 0;
+      padding: 20px 10px;
+      font-size: 12px;
+      color: #636363;
+      text-align: center;
+    }
+
+    a {
+      position: absolute;
+      padding: 10px 0;
+      margin: 0;
+      width: 100%;
+      left: 0px;
+      bottom: 0;
+      background-color: #f4f4f4;
+      border-radius: 0 0 3px 3px;
+      text-align: center;
+      font-size: 12px;
+      color: #636363;
+      text-decoration: underline;
+
+      &:hover, &:active, &:focus {
+        color: #636363;
+      }
+    }
+  }
+
+  .close-button {
+    position: absolute;
+    color: #636363;
+    background: transparent;
+    border: none;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    outline: none;
+    z-index: 600;
+  }
+
+  &.ko .wrapper{
+    width: initial;
+    background-color: transparent;
+  }
+}
+
+
+@media only screen and (min-width:769px){
+  .signup-done-overlay {
+    .done-overlay {
+      left: 15%;
+    }
+  }
+}

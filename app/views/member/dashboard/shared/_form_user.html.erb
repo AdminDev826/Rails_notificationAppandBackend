@@ -1,0 +1,94 @@
+<div class="form-edit-container">
+  <div class="form-edit">
+    <%= simple_form_for(current_user, url: member_update_profile_path, method: :put, remote: true, authenticity_token: true, html: { id: :form_profile_user, folder: "User" }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="col-1">
+        <label>Photo</label>
+        <div class="picture-container">
+          <% if current_user.picture? %>
+            <%= image_tag current_user.picture.url(:avatar), class: 'user-picture'  %>
+          <% else %>
+            <div class="picture-none">
+              <%= image_tag "citoyen.svg", class: "avatar-citoyen" %>
+            </div>
+          <% end %>
+        </div>
+        <%= f.input :picture, label: 'Sélectionner une nouvelle image'%>
+        <%= f.input :picture_cache, as: :hidden %>
+      </div>
+
+      <div class="col-1">
+        <%= f.input :first_name, placeholder: 'Prénom', required: true, label: 'Prénom' %>
+        <%= f.input :last_name, placeholder: 'Nom', required: true, label: 'Nom' %>
+        <%= f.input :email, placeholder: 'Adresse email', required: true, label: 'Email' %>
+        <%= f.input :birthday, as: :date, label: "Ma date de naissance",
+                  start_year: Date.today.year - 90,
+                  end_year: Date.today.year - 17,
+                  selected: current_user.birthday || Date.today.year - 35,
+                  order: [:day, :month, :year] %>
+        <label>Mon adresse</label>
+        <%= f.input :street, placeholder: 'Rue', required: true, label: false %>
+        <%= f.input :zipcode, placeholder: 'Code postal', required: true, label: false %>
+        <%= f.input :city, placeholder: 'Ville', required: true, label: false %>
+        <%= f.input :password, placeholder: '********', label: "Nouveau mot de passe" %>
+      </div>
+
+      <div class="col-2">
+        <%= f.button :submit, "Sauvegarder", class: "btn btn-turquoise valid-profile" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+      function readURL(input) {
+        var reader = new FileReader();
+          reader.onload = function (e) {
+            if ($('.user-picture').attr('src') === undefined) {
+              $(".picture-none").remove();
+              $('.picture-container').append('<img src=" " class="user-picture" >')
+            };
+            $('.user-picture').attr('src', e.target.result).addClass("thumb-crop");
+          }
+        reader.readAsDataURL(input);
+      }
+      $('#profile-tab').addClass('active');
+      $(".user_picture").on("change", function(e) {
+        e.preventDefault();
+        var newFile = document.querySelector('#form_profile_user input[type=file]').files[0];
+        $(".user_picture").children().html(newFile.name);
+        readURL(newFile);
+      });
+
+      var placesAutocomplete = places({
+        container: document.querySelector('#user_street'),
+        type: 'address',
+        aroundLatLngViaIP: false,
+        templates: {
+          value: function(suggestion) {
+            return suggestion.name;
+          }
+        }
+      });
+
+      placesAutocomplete.on('change', function resultSelected(e) {
+        document.querySelector('#user_city').value = e.suggestion.city || '';
+        document.querySelector('#user_zipcode').value = e.suggestion.postcode || '';
+      });
+
+      $(".valid-profile").on("click", function() {
+        // EVENT AMPLITUDE : USER_C_PROFILE_MYINFO_SAVED
+        amplitude.logEvent('USER_C_PROFILE_MYINFO_SAVED');
+      });
+    });
+
+  </script>
+
+<% end %>
+
+

@@ -1,0 +1,11 @@
+<% if params[:redirect_dashboard] %>
+    // REDIRECTION TO INDEX WHEN COME FROM MAILTO AND ONLINE
+    window.location.href = "<%= member_user_dashboard_path(current_user) %>";
+<% else %>
+    $('.flipper-mobile').toggleClass('flipped');
+    // REDIRECTION TO MEMBER CARD
+    <% params[:id] = @use.id %>
+    $(".container-feedback").html("<%= j(render 'uses/form/feedback') %>");
+    // EVENT AMPLITUDE : USER_PERK_VALIDATED - CARD-MEMBER
+    amplitude.logEvent('USER_PERK_VALIDATED');
+<% end %>

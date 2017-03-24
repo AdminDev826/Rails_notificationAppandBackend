@@ -1,0 +1,57 @@
+<div class="form-edit-container">
+  <div class="form-edit">
+    <%= simple_form_for(@business, url: pro_update_business_path, method: :put, remote: true, authenticity_token: true) do |f| %>
+      <%= f.error_notification %>
+      <div class="col-1">
+        <label>Photo</label>
+        <div class="picture-container">
+          <% if @business.leader_picture? %>
+            <%= image_tag @business.leader_picture.url(:avatar), class: 'picture-owner' %>
+          <% else %>
+            <div class="picture-none">
+              <%= image_tag "citoyen.svg", class: "avatar-citoyen" %>
+            </div>
+          <% end %>
+        </div>
+        <%= f.input :leader_picture, as: :file, required: false, label: 'Sélectionner une nouvelle image' %>
+      </div>
+      <div class="col-1">
+        <%= f.input :leader_first_name, placeholder: 'Prénom', required: true, label: 'Prénom', class: "inline-input" %>
+        <%= f.input :leader_last_name, placeholder: 'Nom', required: true, label: 'Nom', class: "inline-input" %>
+        <%= f.input :leader_description, as: :text, :input_html => { :rows => 6, maxlength: 330 }, placeholder: 'Visible sur mes bons plans', required: true, label: 'Bio' %>
+      </div>
+      <%= f.input :leader_phone, placeholder: '05 56 01 01 01', required: true, label: 'Ligne personnelle', class: "inline-input" %>
+      <%= f.input :leader_email, placeholder: 'Adresse email', required: true, label: 'Email personnel', class: "inline-input" %>
+      <%= f.input :password, placeholder: '********', required: true, label: "Nouveau mot de passe" %>
+      <div class="col-2">
+        <%= f.button :submit, "Sauvegarder" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function() {
+      function readURL(input) {
+        var reader = new FileReader();
+          reader.onload = function (e) {
+            if ( $('#business .picture-owner').attr('src') === undefined) {
+              $("#business .picture-none").remove();
+              $('#business .picture-container').append('<img src=" " class="picture-owner" >')
+            };
+            $('#business .picture-owner').attr('src', e.target.result).addClass("thumb-crop");
+          }
+        reader.readAsDataURL(input);
+      }
+
+      $('#profile-tab').addClass('active');
+      $(".business_leader_picture").on("change", function(e) {
+        e.preventDefault();
+        var newFile = document.querySelector('#business input[type=file]').files[0];
+        $(".business_leader_picture").children().html(newFile.name);
+        readURL(newFile);
+      });
+    });
+  </script>
+<% end %>

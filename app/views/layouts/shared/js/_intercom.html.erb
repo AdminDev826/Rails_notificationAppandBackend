@@ -1,0 +1,43 @@
+<% if business_signed_in? %>
+  <!-- INTERCOM FOR BUSINESS -->
+  <% code_partner = Partner.find_by_email(current_business.email).code_partner if Partner.find_by_email(current_business.email) %>
+  <%= intercom_script_tag({
+    :app_id => ENV['INTERCOM_API_ID'],
+    :user_id => 'B'+current_business.id.to_s,
+    :email => current_business.email,
+    :name => current_business.name,
+    :created_at => current_business.created_at,
+    :widget => { "activator": "#IntercomDefaultWidget" },
+    :custom_data => {
+      'user_type' => 'business',
+      'user_active' => current_business.active,
+      'first_name' => current_business.leader_first_name,
+      'city' => current_business.city,
+      'zipcode' => current_business.zipcode,
+      'perks_all' => current_business.perks.count,
+      'perks_active' => current_business.perks.active.count,
+      'code_partner' => code_partner
+    }
+  }) %>
+
+<% end %>
+
+<% if user_signed_in? && !signup_or_signin_page? %>
+  <!-- INTERCOM FOR USER -->
+  <%= intercom_script_tag({
+    :app_id => ENV['INTERCOM_API_ID'],
+    :user_id => current_user.id,
+    :email => current_user.email,
+    :widget => { "activator": "#IntercomDefaultWidget" },
+    :custom_data => {
+      'user_type' => 'user',
+      'user_active' => current_user.active,
+      'first_name' => current_user.first_name,
+      'user_cause' => current_user.cause.name,
+      'user_member' => current_user.member
+    }
+  }) %>
+
+<% end %>
+
+

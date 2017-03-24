@@ -1,0 +1,36 @@
+<script>
+
+  var geoJson = <%= raw(@geojson.to_json) %>;
+
+  var coordinates = geoJson.features[0].geometry.coordinates;
+
+  mapboxgl.accessToken = '<%= ENV['MAPBOXGL_TOKEN'] %>';
+
+  var map = new mapboxgl.Map({
+    container: "<%= container %>",
+    style: 'mapbox://styles/fredpetris/cikporvjj00p8b5lwovwd3kq9',
+    center: coordinates,
+    interactive: false,
+    zoom: 15
+  });
+
+  map.on('style.load', function () {
+    map.addSource("markers", {
+      "type": "geojson",
+      "data": geoJson
+    });
+
+    map.addLayer({
+      "id": "markers",
+      "type": "symbol",
+      "source": "markers",
+      "interactive": true,
+      "layout": {
+        "icon-image": "{marker-symbol}",
+        "icon-offset": [5,-20]
+      }
+    });
+  });
+
+</script>
+

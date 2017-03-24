@@ -1,0 +1,53 @@
+<div class="business-search-index-js hidden">
+
+  <div class="business-search-close-button">
+    <div>Annuler la recherche</div>
+  </div>
+
+  <div class="bsmd-container-mobile">
+    <div id="business-search-modal">
+
+      <ul class="list">
+        <% @businesses.each do |business| %>
+          <div class="business-index-card">
+            <div class="bic-left">
+              <div class="bic-photo" style="background-image: url('<%= business.picture %>');"></div>
+            </div>
+            <div class="bic-middle">
+              <div class="bic-middle-top">
+                <div class="business-name"><%= business.name %></div>
+              </div>
+              <div class="bic-middle-bottom">
+                <div class="little-perk-logo" style="background-color:<%= business.business_category.color %> ">
+                  <%= image_tag business.business_category.picture, size: "10x10" %>
+                </div>
+                <div class="category-name category" style="color: grey;"><%= business.business_category.name %></div>
+              </div>
+            </div>
+            <div class="bic-right">
+              <div>+</div>
+            </div>
+          </div>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<% content_for :modal_search_index do %>
+
+  <script>
+
+    var options = {
+      valueNames: [ 'business-name' ]
+    };
+
+    var userList = new List('business-search-modal', options);
+
+    $('#search-in-navbar-mobile').keyup(function(){
+      userList.search($(this).val());
+    });
+
+  </script>
+
+<% end %>

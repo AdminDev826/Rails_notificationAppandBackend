@@ -1,0 +1,35 @@
+<div class="container-query-feedback">
+  <p>Avez-vous appréciez ce bon plan ?</p>
+</div>
+<div class="container-answer-feedback">
+  <div class="answer like">
+    <%= simple_form_for :use, url: perk_use_path(params[:perk_id], params[:id]), method: :put do |f| %>
+      <%= f.input :feedback, as: :hidden, input_html: { value: true } %>
+      <%= f.input :like, as: :hidden, input_html: { value: true } %>
+      <button type:"submit"><%= render "shared/icons/heart_like" %></button>
+    <% end %>
+    <% if params[:online].present? %>
+      <p>J'aime</p>
+    <% end %>
+  </div>
+  <div class="answer unlike">
+    <%= simple_form_for :use, url: perk_use_path(params[:perk_id], params[:id]), method: :put do |f| %>
+      <%= f.input :feedback, as: :hidden, input_html: { value: true } %>
+      <%= f.input :unlike, as: :hidden, input_html: { value: true } %>
+      <button type:"submit"><%= render "shared/icons/heart_unlike" %></button>
+    <% end %>
+    <% if params[:online].present? %>
+      <p>J'aime pas</p>
+    <% end %>
+  </div>
+  <% if params[:online].present? %>
+    <div class="answer unused">
+      <%= simple_form_for :use, url: perk_use_path(params[:perk_id], params[:id]), method: :put do |f| %>
+        <%= f.input :feedback, as: :hidden, input_html: { value: true } %>
+        <%= f.input :unused, as: :hidden, input_html: { value: true } %>
+        <button type:"submit"><%= render "shared/icons/unused" %></button>
+        <p>Non utilisé</p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

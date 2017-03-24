@@ -1,0 +1,134 @@
+nav {
+  display: flex;
+  position: fixed;
+  max-width: 100vw;
+  margin-top: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+  margin-top: 0;
+  z-index: 500;
+  @include transition(all 0.3s ease-in-out);
+
+  @media (max-width: 767px) {
+    .container {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  a {
+    font-weight: 600;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+    opacity: .8;
+  }
+
+  a.is-active {
+    color: $turquoise;
+  }
+
+  .nav-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+
+
+    .nav-left {
+      display: flex;
+
+      svg {
+        height: 25px;
+      }
+
+      .logo-mobile {
+        @media (min-width: 766px) {
+          display: none;
+        }
+      }
+
+      .logo-desktop {
+        position: relative;
+        top: 3px;
+
+        @media (max-width: 767px) {
+          display: none;
+        }
+      }
+
+      ul {
+        display: flex;
+        margin-left: 30px;
+        @media (max-width: 768px) {
+          display: none;
+        }
+        li {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+
+  .nav-right {
+    display: flex;
+    margin-right: 15px;
+
+    a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 20px;
+      color: #fff;
+      border-radius: 2px;
+      border: none;
+      min-width: 140px;
+      background: transparent;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-family: $header-font !important;
+      @include transition(background-color 150ms ease-out);
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+      &:hover,
+      &:focus {
+        outline: 0;
+        text-decoration: none;
+      }
+
+      &:not(:disabled) {
+        cursor: pointer;
+      }
+    }
+
+    a.sign-up {
+      margin-right: 10px;
+      background-color: $turquoise;
+
+      &:hover {
+        background-color: $darken-turquoise;
+      }
+    }
+
+    a.sign-in {
+      background-color: $black;
+
+      &:hover {
+        background-color: $grey;
+      }
+    }
+    @media (max-width: 375px) {
+      a.sign-in,
+      a.sign-up {
+        min-width: 100px;
+        max-height: 28px;
+        font-size: 0.6em;
+        padding: 9px 10px;
+      }
+    }
+  }
+}

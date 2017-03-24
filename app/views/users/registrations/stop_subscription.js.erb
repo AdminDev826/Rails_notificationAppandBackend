@@ -1,0 +1,13 @@
+$(".alert").remove();
+
+if (<%= !current_user.errors.any? %>) {
+
+  $('.btn-subscription').val('Me réabonner');
+  $("#user_code_partner").val("").removeAttr('disabled');
+  $(".stop-subscription").addClass("disabled");
+
+} else {
+
+  $(document).find("form").prepend('<%= j render("components/error_messages", resource: current_user, formats: [:html]) %>');
+
+}

@@ -1,0 +1,24 @@
+<!-- LIST PAYMENTS-->
+<div class="list-payments">
+  <div class="form-edit">
+    <div class="row">
+      <div class="dashboard-title">
+        <span class="tab-subtitle">Encore merci pour ton engagement !</span>
+      </div>
+      <table>
+        <% @payments.each do |payment| %>
+          <tr>
+            <td class="contribution-date"><%= I18n.l payment.created_at.to_date, format: :short %> <%= payment.created_at.year %></td>
+            <td class="contribution-cause"><%= payment.cause.name %></td>
+            <td class="contribution-amount"><%= payment.amount %> €</td>
+            <% if payment.done %>
+              <td class="done"><%= image_tag "icons/check_OK.png" %></td>
+            <% else %>
+              <td class="done"><%= image_tag "icons/check_KO.png" %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

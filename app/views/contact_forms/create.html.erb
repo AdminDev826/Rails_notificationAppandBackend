@@ -1,0 +1,26 @@
+<%= content_for(:title) do %>
+  Nous écrire
+<% end %>
+<%= content_for(:description) do %>
+  Nous sommes impatients de vous entendre
+<% end %>
+<div id="contact" class="contact-form">
+  <div class="container-fluid" id="header-cforgood-legal">
+    <div class="row">
+      <div class="page-title" id="page-title-legal">
+        <h1>Contact</h1>
+        <h3>Nous Sommes Impatients De Vous Entendre</h3>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid bg-white text-center" id="form-contact">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 pt-50">
+      <h3 class="black">Merci pour votre message !</h3>
+
+      <h4 class="black">Nous revenons très rapidement vers vous.</h4>
+    </div>
+    <div class="row"></div>
+    <div class="col-xs-6 col-xs-offset-3 mt-50 pb-50">
+      <%= link_to 'Accueil', root_url, :class => 'btn btn-turquoise pl-30 pr-30 pt-10 pb-10'%>
+    </div>
+  </div>

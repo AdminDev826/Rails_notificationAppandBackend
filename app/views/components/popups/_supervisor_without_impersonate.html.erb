@@ -1,0 +1,15 @@
+<div class="popup-overlay">
+  <div class="popup-container no-perks text-center popup-supervisor">
+    <div class="wrapper">
+      <!-- ILLUSTRATION-->
+      <%= render 'shared/icons/wand' %>
+    </div>
+    <span>Sélectionnez un commerce !</span>
+    <p>Pour pouvoir agir en temps que commerce vous devez d'abord en sélectionner un ou en créer un.</p>
+    <%= render "components/select_impersonate_business", dropdown_search: "popup_select_impersonate"%>
+    <p>ou</p>
+    <div>
+      <%= link_to "Créer un commerce", new_pro_business_path, class: "btn business-button" %>
+    </div>
+  </div>
+</div>

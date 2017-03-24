@@ -1,0 +1,34 @@
+<%= content_for(:title) do %>
+  Nous écrire
+<% end %>
+
+<%= content_for(:description) do %>
+  Nous sommes impatients de vous entendre !
+<% end %>
+
+<div id="contact" class="contact-form">
+  <div class="container-fluid" id="header-cforgood-legal">
+    <div class="row">
+      <div class="page-title" id="page-title-legal">
+        <h1>Nous Ecrire</h1>
+        <h3>Nous Sommes Impatients De Vous Entendre</h3>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid bg-white bg-contact pt-30 pb-30" id="form-contact">
+    <!-- Sub Menu NavBar  -->
+    <%= render "pages/shared/tabs_footer_cforgood" %>
+    <!-- FORMULAIRE -->
+    <div class="col-xs-12 col-sm-6 content-legal">
+        <%= simple_form_for @contact_form do |f| %>
+        <%= f.input :name, :label => false, :placeholder => "Nom", :required => true %>
+        <%= f.input :email, :label => false, :placeholder => "Adresse email", :as => :email, :required => true %>
+        <%= f.input :message, :label => false, :placeholder => "Message", :as => :text, :input_html => { :rows => 7 , :style => 'width: 100%'}, :required => true %>
+
+        <!-- <%#= f.input :nickname, :hint => 'Leave this field blank!' %> -->
+        <%= f.button :submit, 'Envoyer', class: "btn-turquoise" %>
+        <% end %>
+    </div>
+  </div>
+
+

@@ -1,0 +1,75 @@
+ <div class="form-card">
+  <!-- SIGNUP FORM BUSINESS -->
+  <div class="subscription-form">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <i><%= render "shared/icons/shop" %></i>
+      <div id="error-code">
+        <%= flash[:alert].humanize unless flash[:alert] == nil %>
+      </div>
+      <%= f.input :name, placeholder: 'Nom commerce', required: true, autofocus: false, label: false %>
+      <%= f.input :email, placeholder: 'Adresse email', required: true, label: false %>
+      <%= f.input :password, placeholder: '********', required: true, label: false %>
+      <%= f.input :city, placeholder: 'Ville', required: true, label: false %>
+      <%= f.input :zipcode, as: :hidden %>
+      <%= f.input :business_category_id, required: true, label: false, collection: BusinessCategory.all, prompt: 'Sélectionnez une catégorie' %>
+
+      <% if supervisor %>
+        <%= f.button :submit, "Inscrire", class: "btn btn-connexion btn-business-connexion" %>
+      <% else %>
+        <p>En cliquant sur <strong>S'inscrire</strong>, vous acceptez les <a type="href" class="" data-toggle="modal" data-target="#modal-cgu"><strong>CGU</strong></a> et certifiez avoir de plus de 18 ans.</p>
+
+        <%= f.button :submit, "s'inscrire", class: "btn btn-connexion btn-business-connexion" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      var placesAutocomplete = places({
+        container: document.querySelector('#business_city'),
+        type: 'city',
+        aroundLatLngViaIP: false,
+        templates: {
+          value: function(suggestion) {
+            return suggestion.name;
+          }
+        }
+      });
+
+      placesAutocomplete.on('change', function resultSelected(e) {
+        document.querySelector('#business_zipcode').value = e.suggestion.postcode || '';
+      });
+
+      $("#new_business").validate({
+        lang: 'fr',
+        rules: {
+          name: {
+            required: true,
+          },
+          city: {
+            required: true,
+          }
+        }
+      });
+
+      $('.btn-business-connexion').on('click', function(e) {
+        if ( $('#business_zipcode').val() == "" || $('#business_zipcode').val() == null ) {
+          e.preventDefault();
+          $("#error-code").html('Sélectionnez une ville existante !');
+        }
+      });
+
+    });
+
+
+  </script>
+
+<% end %>
+
+
+

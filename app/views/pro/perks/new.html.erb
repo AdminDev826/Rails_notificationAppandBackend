@@ -1,0 +1,26 @@
+<%= content_for(:title) do %>
+<%= @business.name %>
+<% end %>
+<%= content_for(:description) do %>
+Créez un nouveau Bon Plan
+<% end %>
+
+<div class="container-fluid admin">
+  <!-- Sub Menu Sidebar -->
+  <% if current_business.supervisor %>
+    <%= render "pro/dashboard/shared/supervisor_sidebar" %>
+  <% else %>
+    <%= render "pro/dashboard/shared/sidebar" %>
+  <% end %>
+  <!-- Content - Statistics -->
+  <div class="dashboard">
+    <% if current_business.supervisor && !current_impersonation %>
+      <%= render 'components/popups/supervisor_without_impersonate' %>
+    <% else %>
+      <div class="dashboard-overlay hidden"></div>
+      <div class="form-perk-container">
+        <%= render 'pro/perks/form/create' %>
+      </div>
+    <% end %>
+  </div>
+</div>

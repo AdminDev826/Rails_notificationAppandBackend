@@ -1,0 +1,36 @@
+<%= javascript_include_tag "application" %>
+
+<!--  JQUERY & GOOGLE MAPS JS API -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+<script src="//cdn.jsdelivr.net/jquery.mixitup/latest/jquery.mixitup.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script>
+<%= render "layouts/shared/js/jquery_validate_fr" %>
+
+<!-- Bootsrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Wootric : survey -->
+<% if user_signed_in? || business_signed_in? %>
+  <%= render "layouts/shared/js/wootric" %>
+<% end %>
+
+<!-- Mapbox GL -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.30.0/mapbox-gl.js'></script>
+
+<!-- Algolia place -->
+<script src="https://cdn.jsdelivr.net/places.js/1/places.min.js"></script>
+
+<!-- Select2 : dropdown search -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+<!-- Geolocalisation -->
+<script>getGeolocation()</script>
+
+<!-- JS SCRIPTS -->
+<%= render "layouts/shared/js/smooth_scroll" %>
+<%= render "layouts/shared/js/typeform" %>
+<%= render "layouts/shared/js/intercom" %>
+

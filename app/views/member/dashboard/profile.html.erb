@@ -1,0 +1,131 @@
+<%= content_for(:title) do %>
+  Profil
+<% end %>
+<%= content_for(:description) do %>
+  Vos informations personnelles
+<% end %>
+
+<%= render "member/dashboard/shared/sidebar" %>
+
+<div class="dashboard-fullpage">
+
+  <div class="dash-fullpage-header">
+    <div class="dash-header-avatar-container">
+      <div class="header-avatar" style="background-image: url(<%= avatar_url(current_user) %>);"></div>
+    </div>
+  </div>
+
+  <div class="dash-fullpage-bottom-container">
+
+    <div class="dash-fullpage-user-name">
+      <div class="user-name"><%= current_user.name %></div>
+      <div class="user-name-tooltip">ABONNE DEPUIS LE 1er NOVEMBRE 2015</div>
+    </div>
+
+    <div class="tabs-dashboard">
+
+      <ul id="menu" class="nav nav-tabs">
+        <li role="profile" class="active">
+          <%= link_to "#profile", role: "tab", data_toggle: "tab" do %>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span>Mes informations</span>
+          <% end %>
+        </li>
+        <li role="profile">
+          <%= link_to "#cause", role: "tab", data_toggle: "tab" do %>
+            <i class="fa fa-heart" aria-hidden="true"></i>
+            <span>Mon association</span>
+          <% end %>
+        </li>
+        <li role="profile">
+          <%= link_to "#subscription", role: "tab", data_toggle: "tab" do %>
+            <i class="fa fa-credit-card" aria-hidden="true"></i>
+            <span>Mon abonnement</span>
+          <% end %>
+        </li>
+        <% if @payments.present? %>
+          <li role="profile">
+            <%= link_to "#list-payments", role: "tab", data_toggle: "tab" do %>
+              <i class="fa fa-list" aria-hidden="true"></i>
+              <span>Mes contributions</span>
+            <% end %>
+          </li>
+        <% end %>
+        <li role="profile">
+          <%= link_to "Vos données bancaires", "#payment", role: "tab", data_toggle: "tab", class: "show-payment hidden" %>
+        </li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane tab-profile active" id="profile">
+          <%= render "member/dashboard/shared/form_user" %>
+        </div>
+        <div role="tabpanel" class="tab-pane tab-profile tab-cause" id="cause">
+          <%= render "member/dashboard/shared/form_cause" %>
+        </div>
+        <div role="tabpanel" class="tab-pane tab-profile tab-payment" id="subscription">
+          <%= render "member/dashboard/shared/form_subscription" %>
+        </div>
+        <div role="tabpanel" class="tab-pane tab-profile hidden" id="payment">
+          <%= render "member/dashboard/shared/form_payment" %>
+        </div>
+        <% if @payments.present? %>
+          <div role="tabpanel" class="tab-pane tab-profile tab-contribution" id="list-payments">
+            <%= render "member/dashboard/shared/list_payments" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      function eventAmplitude() {
+        if ($('#menu li.active a').attr('href') == '#profile') {
+          // EVENT AMPLITUDE USER_PROFILE_MYINFO
+          amplitude.logEvent('USER_PROFILE_MYINFO');
+        } else if ($('#menu li.active a').attr('href') == '#cause') {
+          // EVENT AMPLITUDE USER_PROFILE_MYCAUSE
+          amplitude.logEvent('USER_PROFILE_MYCAUSE');
+        } else if ($('#menu li.active a').attr('href') == '#subscription') {
+          // EVENT AMPLITUDE USER_PROFILE_MYSUBSCRIPTION
+          amplitude.logEvent('USER_PROFILE_MYSUBSCRIPTION');
+        }
+      }
+
+      $("#menu a").click(function (e) {
+        e.preventDefault();
+        $(".alert").remove();
+        $(this).tab('show');
+        $("#menu a.show-payment").addClass('hidden');
+        // $("#menu a.show-payment").tab('hide');
+        eventAmplitude();
+      });
+
+      // store the currently selected tab in the hash value
+      $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+        var id = $(e.target).attr("href").substr(1);
+        window.location.hash = id;
+      });
+
+      // on load of the page: switch to the currently selected tab
+      var hash = window.location.hash;
+      if (hash != "#payment") {
+        $('#menu a[href="' + hash + '"]').tab('show');
+      }
+
+      // EVENT AMPLITUDE USER_PROFILE
+      amplitude.logEvent('USER_PROFILE');
+
+      eventAmplitude();
+
+    });
+
+  </script>
+
+<% end %>

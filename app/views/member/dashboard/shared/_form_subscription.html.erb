@@ -1,0 +1,111 @@
+<!-- FORM SUBSCRIPTION -->
+<div class="form-edit-container offer-form">
+  <div class="signup-plan">
+    <% if current_user.member %>
+      <span>Changer le montant de votre participation <strong>libre</strong> et sans engagement</span>
+    <% else %>
+      <span>Choisir le montant de votre participation <strong>libre</strong> et sans engagement</span>
+    <% end %>
+    <div class="switch">
+      <input id="monthly" type="radio" <%= current_user.subscription == "M" ? checked="checked" : "" %>>
+      <label for="monthly" class="subscription-monthly">Mensuel</label>
+      <input id="yearly" type="radio" <%= current_user.subscription != "M" ? checked="checked"  : "" %>>
+      <label for="yearly" class="subscription-yearly">Annuel
+        <div class="yearly-benefit">
+          <span>2 mois gratuits</span>
+          <span class="more">+</span>
+          <i><%= image_tag("macarte_miniature.png") %></i>
+        </div>
+      </label>
+      <span class="slide-button"></span>
+    </div>
+    <div class="container-fluid">
+      <div class="offer-index">
+        <div class="offer-card">
+          <!-- RANGE SLIDER FOR PRICE -->
+          <div class="offer-price">
+            <!-- Slider Monthly -->
+            <input type="range" name="range" id="range" class="<%= current_user.subscription == 'M' ? 'monthly' : 'monthly hidden' %>" min="1" max="50" value="5"/>
+            <!-- Slider Yearly -->
+            <div id="slider" class="<%= current_user.subscription != 'M' ? 'yearly' : 'yearly hidden' %>"></div>
+            <div class="offer-details">
+              <div class="offer-detail">
+                <output class="output-asso">50</output>
+                <p>Reversé à l'association de votre choix</p>
+              </div>
+              <div class="offer-detail">
+                <output class="output-fiscal">50</output>
+                <p>Coût réel de votre don après déduction fiscale</p>
+              </div>
+            </div>
+          </div>
+          <div class="offer-description">
+            <h5>En moyenne, les membres donnent <strong>7</strong> euros !</h5>
+            <p>PS : Ceci est notre seule source de revenu !</p>
+          </div>
+          <!-- PARTNER CODE -->
+          <%= simple_form_for(current_user, url: member_subscribe_path(current_user), method: :put, remote: true, authenticity_token: true, html: { id: "update_subscription" } ) do |f| %>
+            <div class="code-partner">
+              <%= f.input :code_partner, label: "Code Partenaire", input_html: { value: current_user.code_partner.present? ? f.object.code_partner : "", disabled: current_user.code_partner.present? ? true : false } %>
+            </div>
+
+            <div class="offer-btn">
+              <%= f.input :subscription, as: :hidden, input_html: { value: f.object.subscription || "Y" } %>
+              <%= f.input :amount, label: false, input_html: { value: f.object.amount || 50 } %>
+            </div>
+            <% if current_user.member %>
+              <% if current_user.code_partner.present? %>
+                <%= f.submit "M'abonner", class: "btn-subscription"%>
+              <% else %>
+                <%= f.submit "Sauvegarder", class: "btn-subscription"%>
+              <% end %>
+            <% elsif current_user.date_stop_subscription.present? %>
+              <%= f.submit "Me réabonner", class: "btn-subscription"%>
+            <% else %>
+              <%= f.submit "M'abonner", class: "btn-subscription"%>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="no-subscription">
+        <% if current_user.member %>
+          <%= link_to "Je me désabonne", "#", class: "btn btn-no-subscription stop-subscription" %>
+        <% else %>
+          <%= link_to "Je me désabonne", "#", class: "btn btn-no-subscription stop-subscription disabled" %>
+        <% end %>
+        <% if current_user.amount.present? %>
+          <%= link_to "Mettre à jour mes données bancaires", "#payment", role: "tab", data_toggle: "tab", class: "show-payment btn btn-no-subscription" %>
+        <% else %>
+          <%= link_to "Mettre à jour mes données bancaires", "#payment", role: "tab", data_toggle: "tab", class: "show-payment btn btn-no-subscription disabled" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'components/popups/stop_subscription_validation' %>
+
+<% content_for :after_js do %>
+
+  <%= render 'components/js/subscription' %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      $(".show-payment").on("click", function(e) {
+        e.preventDefault();
+        $("#payment").removeClass('hidden');
+        $("#menu a.show-payment").tab('show');
+      });
+
+      $(".stop-subscription").on("click", function(e) {
+        e.preventDefault();
+        $(".popup-stop-confirmation").removeClass('hidden');
+      });
+
+    });
+
+  </script>
+
+<% end %>

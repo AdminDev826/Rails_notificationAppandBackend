@@ -1,0 +1,15 @@
+if (<%= !@address.errors.any? %>) {
+
+  // DISCLAIMER - DISPLAYED
+  $(".done-overlay-address").removeClass("hidden");
+
+  window.setTimeout(function(){
+    // DISCLAIMER - HIDDEN
+    $(".done-overlay-address").addClass("hidden");
+  }, 3000);
+
+} else {
+
+  $(".alert").remove();
+  $(document).find('#<%= @address.day %>').prepend('<%= j render("components/error_messages", resource: @address, formats: [:html]) %>');
+}

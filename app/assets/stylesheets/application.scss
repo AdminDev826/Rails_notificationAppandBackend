@@ -1,0 +1,28 @@
+/*
+*= require bootstrap-datepicker
+*= require bootstrap-datepicker3
+*/
+
+
+// Graphical variables
+@import "config/variables";
+@import "config/bootstrap_variables";
+@import "config/mixins";
+
+// External libraries
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+// Your CSS
+@import "layout/index";
+@import "components/index";
+@import "devise/devise";
+@import "user/bases";
+@import "devise/edit_form";
+@import "pages/index";
+@import "vendor/index";
+@import "business/index";
+@import "causes/bases";
+@import "pro/bases";
+@import "account/index";

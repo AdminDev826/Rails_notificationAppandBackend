@@ -1,0 +1,21 @@
+<div class="use-overlay hidden">
+  <div class="flip-container-mobile">
+    <div class="flipper-mobile">
+      <!-- FRONT CARD-->
+      <figure class="front">
+        <!-- CLOSE BUTTON-->
+        <button type="button" class="close-button">&times;</button>
+        <!-- ILLUSTRATION-->
+        <div class="wrapper">
+          <%= render "shared/icons/bowtie" %>
+        </div>
+        <!-- CTA-->
+        <div class="container-code gentleman">
+          <span>Oh mince...</span>
+          <p>Ne manquez plus un seul bon plan en devenant membre CforGood !</p>
+          <%= link_to "Je vous rejoins", member_user_profile_path(current_user, anchor: 'subscription'), class: "button-gentleman" %>
+        </div>
+      </figure>
+    </div>
+  </div>
+</div>

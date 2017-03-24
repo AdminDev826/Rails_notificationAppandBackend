@@ -1,0 +1,17 @@
+<% if user_signed_in? %>
+
+  <div class="welcome-user">
+      <% if current_user.picture.present? %>
+        <%= image_tag avatar_url(current_user) %>
+       <% else %>
+        <%= image_tag "default_pic.png" %>
+      <% end %>
+     <span> Bienvenue
+      <% if current_user.last_name.present? %>
+        <%= current_user.first_name %> <%= current_user.last_name.chars.first + "." %>
+      <% elsif current_user.name.present? %>
+        <%= current_user.name.split(" ")[0] %></span>
+      <% end %></span>
+  </div>
+
+<% end %>

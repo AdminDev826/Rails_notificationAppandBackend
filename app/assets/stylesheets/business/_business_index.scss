@@ -1,0 +1,148 @@
+#business-index-header {
+  h1 {
+    margin-top: 10px !important;
+  }
+  img {
+    height: 65px;
+  }
+}
+
+// #bg-business-index {
+//   background-image: image-url("bg-business-index.jpg");
+//   background-position: center center;
+//   background-size: cover;
+//   background-attachment: fixed;
+//   position: relative;
+//   .fa {
+//     font-size: 20px;
+//   }
+// }
+
+.whitebox-business {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  color: rgb(51,51,51);
+  z-index: 2;
+}
+
+#btn-business-category {
+  margin-left: 14%;
+}
+
+#btn-business-CTA {
+  padding-left: 48%;
+}
+
+#business-index {
+  padding-left: 5%;
+  padding-right: 5%;
+
+  .business-card {
+    position: relative;
+    color: white;
+    height: 251px;
+    width: 98%;
+    margin-left: 1%;
+    border: 4px rgba(89, 211, 211, 0.9) solid;
+    border-radius: 10px;
+    &:hover{
+      transition: all 0.2s ease;
+      opacity: 0.9;
+      transform: scale(1.01);
+      }
+    h1 {
+      font-size: 32px;
+      font-weight: 500;
+    }
+  }
+
+  .bg-business-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  #blackbox-business {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: rgb(240, 240, 240);
+    z-index: 2;
+    border-radius: 6px;
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  #info-business {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    padding-bottom: 40px;
+    p {
+      margin: 0;
+    }
+    #business-name {
+      font-size: 27px;
+      bottom: 80px;
+    }
+    #business-city {
+      bottom: 80px;
+      font-size: 16px;
+      strong {
+        font-family: "Open Sans", "sans-serif" !important;
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .blue-colorbar {
+    position: absolute;
+    top: 165px;
+    left: 0;
+    height: 30px;
+    width: 100%;
+    color: white;
+    z-index: 2;
+    font-size: 20px;
+    padding-top: 2px;
+    p {
+      font-size: 23px;
+      font-weight: 400;
+    }
+  }
+}
+
+.map-businesses {
+  border-top: 1px #eee solid;
+}
+
+@media only screen and (max-width: 768px) and (orientation : portrait) {
+  #btn-business-category {
+    margin-left: 6% !important;
+  }
+  #btn-business-CTA {
+    padding-left: 33% !important;
+  }
+  #padding12 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 992px) and (orientation : portrait) {
+  #btn-business-CTA {
+    padding-left: 40% !important;
+  }
+}

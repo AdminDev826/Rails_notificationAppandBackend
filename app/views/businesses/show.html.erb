@@ -1,0 +1,191 @@
+<% content_for :meta_title, @business.name %>
+<% content_for :meta_description, "Découvrez le Bon Plan offert par #{@business.name} !" %>
+<% content_for :meta_image, @perk.picture.present? ? @perk.picture : @business.picture %>
+
+<%= render "member/dashboard/shared/sidebar" %>
+
+<div class="fullpage">
+
+  <div class="fullpage-left-item">
+    <div class="colored-banner" style="background-color: <%= @business.business_category.color %>;">
+      <div class="banner-business-name">
+        <div class="name"><%= @business.name %></div>
+      </div>
+      <div class="banner-business-top-infos">
+        <div class="infos-left">
+          <div class="little-perk-logo">
+            <%= image_tag @business.business_category.picture, size: "10x10" %>
+          </div>
+          <div class="category-name category"><%= @business.business_category.name %></div>
+        </div>
+        <div class="infos-right">
+          <div class="dot-state"></div>
+          <div class="dot-state-name">Ouvert</div>
+        </div>
+      </div>
+      <div class="card-abs-banner">
+        <div class="card-photo" style="background-image: url('<%= @business.picture %>');"></div>
+        <div class="card-bottom-links">
+          <div class="card-bottom-left-item" style="background-color: <%= @business.business_category.color %>;">
+            <div class="card-red-heart">
+              <%= image_tag "icons/heart.svg" %>
+            </div>
+            <div class="firstblock-text"><%= "63 personnes" %></div>
+          </div>
+          <div class="card-bottom-right-item" style="background-color: <%= @business.business_category.color %>;">
+            <div class="cbri-middleblock">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </div>
+            <div class="cbri-endblock">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fullpage-left-item-bottom">
+      <div class="">
+        <div class="title-sub">Leurs engagements</div>
+      </div>
+      <div class="flib-engages">
+        <div class="flib-engages-item">
+          <div class="flib-icon"></div>
+          <div class="flib-text">Eco-responsable</div>
+        </div>
+        <div class="flib-engages-item">
+          <div class="flib-icon"></div>
+          <div class="flib-text">Zéro déchets</div>
+        </div>
+        <div class="flib-engages-item">
+          <div class="flib-icon"></div>
+          <div class="flib-text">Circuit court</div>
+        </div>
+      </div>
+      <div class="">
+        <div class="title-sub">En quelques mots</div>
+      </div>
+      <% if @business.description.present? %>
+        <div class="business-desc">
+          <%= @business.description %>
+        </div>
+      <% else %>
+        <div class="business-desc">Profil en construction</div>
+      <% end %>
+      <div class="">
+        <div class="title-sub">Informations</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fullpage-right-item hidden-xs">
+    <div class="fri-header">
+      <div class="biz-avatar" style="background-image: url('<%= @business.business_category.picture %>');"></div>
+      <div class="title-sub" style="margin-bottom: 0px;">Nos bons plans</div>
+    </div>
+    <div class="perk-card-container">
+      <div class="perk-card">
+        <div class="perk-card-left-item" style="background-color: <%= @business.business_category.color %>;">
+          <div class="perk-card-absolute-photo"></div>
+        </div>
+        <div class="perk-card-right-item">
+          <div class="pcri-container">
+            <div class="pcri-item">
+              <div class="pcri-item-tooltip" style="background-color: <%= @business.business_category.color %>;">
+                <div>OFFERT</div>
+              </div>
+            </div>
+            <div class="pcri-second-item">
+              <div class="pcri-si-text">DEUX CONTENANTS OFFERTS</div>
+            </div>
+            <div class="perk-pseudo-modal-link">J'EN PROFITE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="perk-modal hidden">
+  <div class="perk-modal-close">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </div>
+
+  <div class="perk-modal-header">
+    <div class="perk-modal-icon"></div>
+    <div class="perk-modal-header-text">REJOIGNEZ LA REVOLUTION POSITIVE</div>
+  </div>
+
+  <div class="perk-modal-title-dotted">
+    <div class="perk-modal-yellow-dot">
+      <div>1</div>
+    </div>
+    <div class="perk-modal-title-text">Découvrez votre ville autrement</div>
+  </div>
+
+  <div class="perk-modal-description">
+    Je trouve de nouveaux commerçants responsables, des associations engageées et des événements enthousiasmant chez moi ou dans les autres villes où je me rends.
+  </div>
+
+  <div class="perk-modal-title-dotted">
+    <div class="perk-modal-yellow-dot">
+      <div>2</div>
+    </div>
+    <div class="perk-modal-title-text">J'accède à des reductions exclusives</div>
+  </div>
+
+  <div class="perk-modal-description">
+    Je trouve de nouveaux commerçants responsables, des associations engageées et des événements enthousiasmant chez moi ou dans les autres villes où je me rends.
+  </div>
+
+  <div class="perk-modal-title-dotted">
+    <div class="perk-modal-yellow-dot">
+      <div>3</div>
+    </div>
+    <div class="perk-modal-title-text">Je rejoins une véritable révolution</div>
+  </div>
+
+  <div class="perk-modal-description">
+    Je trouve de nouveaux commerçants responsables, des associations engageées et des événements enthousiasmant chez moi ou dans les autres villes où je me rends.
+  </div>
+
+  <div class="perk-modal-button-signup">
+    <div class="perk-signin-button">JE M'INSCRIS</div>
+  </div>
+
+</div>
+
+<div class="fixed-bottom-container-button">
+  <div class="fixed-bottom-perk-link" style="border-top: 2px solid <%= @business.business_category.color %> ;">
+    <% if current_user.present? && !current_user.member %>
+    <div class="see-perk-button perk-pseudo-modal-link-mobile-member" style="background-color: <%= @business.business_category.color %>;">Voir nos bons plans</div>
+    <% else %>
+    <div class="see-perk-button perk-pseudo-modal-link-mobile" style="background-color: <%= @business.business_category.color %>;">Voir nos bons plans</div>
+    <% end %>
+  </div>
+</div>
+
+<%= render "businesses/mobileshow" %>
+
+<%= render "businesses/mobileshow_member" %>
+
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function(){
+      // $(".use-button-logout").click(function() {
+      //   $('.use-overlay').removeClass('hidden');
+      //   // EVENT AMPLITUDE USER_C_BENEFIT
+      //   amplitude.logEvent('USER_C_BENEFIT_LOGOUT');
+      // });
+
+      // $(".btn-use-button").click(function() {
+      //   // EVENT AMPLITUDE USER_C_BENEFIT
+      //   amplitude.logEvent('USER_C_BENEFIT');
+      // });
+    });
+
+  </script>
+
+<% end %>

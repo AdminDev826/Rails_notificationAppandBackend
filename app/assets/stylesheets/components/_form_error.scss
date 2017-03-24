@@ -1,0 +1,54 @@
+#error-code {
+  margin-top: 15px 0 5px;
+  text-align: center;
+
+  @media only screen and (max-width:768px){
+    position: absolute;
+    left: 0;
+    top: 25%;
+  }
+}
+
+#error-code, span.help-block, label.error {
+  text-transform: none !important;
+  color: orange !important;
+}
+
+#error-code {
+  font-size: 10px !important;
+  font-weight: 200 !important;
+}
+
+span.help-block, label.error {
+  font-size: 8px !important;
+  font-weight: 600 !important;
+}
+
+.alert {
+  position: absolute;
+  background: transparent;
+  border-color: transparent;
+  color: orange;
+  text-align: left;
+}
+
+#error_explanation {
+  z-index: 500;
+
+  li.alert-message {
+    border: none;
+    color: orange;
+    font-size: 12px;
+    font-weight: 100;
+  }
+
+  ul {
+    width: 100%;
+    list-style: none;
+
+    &::before,
+    &::after {
+      border: none;
+    }
+  }
+}

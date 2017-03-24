@@ -1,0 +1,77 @@
+/* -------------------------------------
+ * You killer form SASS module
+ * ------------------------------------- */
+
+/* MAILCHIMP SPECS */
+
+.bot-remover {
+  position: absolute;
+  left: -5000px;
+}
+
+/* HOME NEWSLETTER FORM */
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  padding: 0 20px;
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    width: 430px;
+
+    input {
+      flex: 1;
+      flex-grow: 10;
+      margin-right: 10px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 2px;
+    }
+
+    input[type="email"]:focus {
+      border-color: rgba(126, 239, 104, 0.8);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(25, 162, 194, 1);
+      outline: 0 none;
+    }
+
+    button {
+      flex-grow: 1;
+      border-radius: 2px;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 100;
+      border: 1px solid #19A2C2;
+      background-color: #36D3DA;
+      @include transition(all, .3s, ease-in-out);
+
+      &:hover {
+        background-color: #19A2C2;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width:768px){
+  .newsletter-form {
+    form {
+      display: block;
+      border: 1px solid #19A2C2;
+
+      input {
+        width: 100%;
+        border-radius: 2px 2px 0 0;
+        text-align: center;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 0 0 2px 2px;
+        border: none;
+      }
+    }
+  }
+}

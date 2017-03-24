@@ -1,0 +1,82 @@
+<!-- FORM SELECT CAUSE -->
+<div class="choose-cause">
+  <div class="user-cause">
+  <!-- USER SUPPORT -->
+  <span class="tab-subtitle">Votre engagement</span>
+    <div class="user-support">
+      <div class="user-cause-container" style="background-image: url('<%= current_user.cause.picture.url(:card) %>');">
+
+        <div class="user-cause-content">
+          <div class="pictures-container">
+            <div class="picture-container">
+              <% if current_user.picture? %>
+                <%= image_tag current_user.picture.url(:avatar), class: 'user-picture' %>
+              <% else %>
+                <div class="picture-none">
+                  <%= image_tag "citoyen.svg", class: "avatar-citoyen" %>
+                </div>
+              <% end %>
+            </div>
+            <div class="picture-container-cause">
+              <% if current_user.cause_id.present? %>
+                <%= image_tag current_user.cause.logo.url(:thumb), class: 'cause-picture' %>
+              <% else %>
+                <div class="picture-none">
+                  <%= image_tag "citoyen.svg", class: "avatar-citoyen" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="user-cause-disclaimer">
+            <% if current_user.cause_id.present? %>
+              Vous soutenez actuellement<br><i><%= current_user.cause.name %></i>.
+            <% else %>
+              Choisissez une association à soutenir !
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAUSES CARROUSEL -->
+  <div class="change-cause">
+    <span class="tab-subtitle">Découvrir d'autres causes</span>
+    <div class="causes-carrousel">
+      <!-- Random Causes cards -->
+      <% @cause.each do |cause| %>
+        <% if cause.id != current_user.cause_id && cause.id != ENV['CAUSE_ID_CFORGOOD'].to_i %>
+          <div id="<%= cause.id %>" class="cause-presentation">
+            <%= link_to cause_path(cause), class: "card-frame" do %>
+              <!-- CARD CAUSE -->
+             <%= render partial: 'components/card_cause', locals: { cause: cause } %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <button class="user-button user-button-profile">Soutenir cette cause</button>
+  </div>
+</div>
+
+<%= render 'components/popups/cause_validation' %>
+
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function() {
+      $(".user-button").on("click", function(e) {
+        e.preventDefault;
+        var causeId = $('.cause-presentation.slick-active').val('div').attr('id');
+        var causeName = $('.cause-presentation.slick-active .card-cause span').html();
+        $(".popup-overlay").toggleClass("hidden");
+        $("#user_cause_id").val(causeId);
+        $('.cause-confirmation span.cause-name').html(causeName);
+
+        // EVENT AMPLITUDE : USER_C_PROFILE_MYCAUSE_SUPPORT
+        amplitude.logEvent('USER_C_PROFILE_MYCAUSE_SUPPORT');
+      });
+    });
+  </script>
+<% end %>
+

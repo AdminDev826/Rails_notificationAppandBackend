@@ -1,0 +1,23 @@
+$(".alert").remove();
+
+if (<%= !@business.errors.any? %>) {
+
+  // DISCLAIMER - DISPLAYED
+  $(".done-overlay").removeClass("hidden");
+
+  // REMOVE DELETED SHOP ADDRESS TO REMOVE FROM ADDRESSES_ATTRIBUTES
+  $('.address-shop.deleted').next('input').remove();
+  $('.address-shop.deleted').remove();
+
+
+  window.setTimeout(function(){
+    // DISCLAIMER - HIDDEN
+    $(".done-overlay").addClass("hidden");
+    // window.location.href = "<%#= pro_business_dashboard_path(current_business) %>";
+  }, 3000);
+
+} else {
+
+  $(document).find("form").prepend('<%= j render("components/error_messages", resource: @business, formats: [:html]) %>');
+
+}

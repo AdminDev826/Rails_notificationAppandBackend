@@ -1,0 +1,26 @@
+<div class="use-overlay hidden">
+  <div class="flip-container-mobile">
+    <div class="flipper-mobile">
+      <!-- FRONT CARD-->
+      <figure class="front">
+        <!-- CLOSE BUTTON-->
+        <button type="button" class="close-button">&times;</button>
+        <!-- ILLUSTRATION-->
+        <div class="wrapper">
+          <%= render "shared/icons/backpack" %>
+        </div>
+        <!-- CTA -->
+        <span class="business-name"><%= @perk.business.name %></span>
+        <div class="itinary">
+          <%= link_to "http://maps.google.com/maps", class: "", id:"link-map", disabled: true, data: { locale: I18n.locale, destination: { latitude: latitude, longitude: longitude } }, :target => "_blank" do %>
+            <i class="fa fa-location-arrow"></i><abbr><%= street %>, <%= zipcode %> <%= city %></abbr>
+          <% end %>
+        </div>
+        <div class="container-code">
+          <p class="box-code-legend">Rendez-vous en magasin pour nous rencontrer et profiter du bon plan !</p>
+        </div>
+      </figure>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,22 @@
+<div class="container-fluid flashes">
+  <div class="row">
+    <div class="col-xs-12">
+      <% if notice %>
+        <div class="alert-container text-center">
+          <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <%= notice %>
+          </div>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div class="alert-container text-center">
+          <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <%= alert %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

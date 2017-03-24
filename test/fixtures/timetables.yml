@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: timetables
+#
+#  id         :integer          not null, primary key
+#  address_id :integer
+#  day        :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  start_at   :datetime
+#  end_at     :datetime
+#
+# Indexes
+#
+#  index_timetables_on_address_id  (address_id)
+#
+# Foreign Keys
+#
+#  fk_rails_2a3c38b2e1  (address_id => addresses.id)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

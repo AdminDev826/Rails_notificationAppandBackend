@@ -1,0 +1,12 @@
+<div id="<%= id %>" class="modal-animated hidden">
+  <!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID -->
+  <div class="button-close <%= id %>" >
+    <%= image_tag 'icons/close.svg' %>
+  </div>
+
+  <div class="modal-content">
+    <div class="video-container">
+      <iframe src="<%= source %>" style="<%= style %>"></iframe>
+    </div>
+  </div>
+</div>

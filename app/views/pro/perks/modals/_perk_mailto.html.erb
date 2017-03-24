@@ -1,0 +1,49 @@
+<div class="use-overlay hidden">
+  <div class="flip-container-mobile">
+    <div class="flipper-mobile">
+      <!-- FRONT CARD-->
+      <figure class="front">
+        <!-- CLOSE BUTTON-->
+        <button type="button" class="close-button">&times;</button>
+        <!-- ILLUSTRATION-->
+        <div class="wrapper">
+          <%= render "shared/icons/send_mail" %>
+        </div>
+        <span class="business-name"><%= @perk.business.name %></span>
+        <div class="container-code">
+          <p class="box-code-legend">Envoyez-nous un email pour réserver votre bon plan : </p>
+        </div>
+        <div class="itinary send-mail">
+          <a href='mailto:<%= @business.email %>?subject=Nouvelle demande de bon plan CforGood !&body=Bonjour <%= @business.leader_first_name if @business.leader_first_name.present? %>,%0D%0A<%= @business.name %> semble sympa comme tout !%0D%0AJe souhaiterais bénéficier du bon plan « <%= Perk.find(params[:perk_id]).name.gsub(/%/, "%25").upcase %> » (Code : <%= Perk.find(params[:perk_id]).perk_code %>), pouvez-vous me dire comment procéder ?%0D%0A Merci par avance !%0D%0A<%= current_user.first_name.capitalize if current_user.first_name.present? %> <%= current_user.last_name.capitalize if current_user.last_name.present? %>' class="link-mail-business business-icon-container" target="_blank">
+            <i class="fa fa-envelope"></i><abbr>Ecrivez-nous !</abbr>
+          </a>
+        </div>
+        <div class="container-legend">
+          <% if @perk.appel %>
+            <p>Attention, ce bon plan n'est valable qu'une seule fois !</p>
+          <% end %>
+        </div>
+        <%= simple_form_for :use, url: perk_uses_path(params[:perk_id], online: true), method: :post, remote: true, authenticity_token: true, html: { id: :create_use } do |f| %>
+          <%= f.input :perk_id, as: :hidden, input_html: {value: params[:perk_id]} %>
+          <%= f.submit "J'utilise", class: "btn-create-use", :style => "display: none;" %>
+        <% end %>
+      </figure>
+      <!-- BACK CARD -->
+      <figure class="back">
+        <div class="container-feedback"></div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function(){
+
+      $('.send-mail').click(function() {
+        $('.btn-create-use').click();
+      });
+
+    });
+  </script>
+<% end %>

@@ -1,0 +1,241 @@
+.choose-cause {
+  display: flex;
+  justify-content: space-around;
+
+  .tab-subtitle {
+    margin: 0 0 20px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #636363;
+    font-weight: 600;
+  }
+
+  .user-support {
+    margin: 30px 0;
+
+    .user-cause-container {
+      position: relative;
+      padding: 20px;
+      height: 220px;
+      width: 330px;
+      background-size: cover;
+      border-radius: 3px;
+      margin-top: -10px;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0.3;
+        background-color: #fff;
+      }
+
+      .user-cause-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        bottom: -55px;
+
+        .pictures-container {
+          display: flex;
+          width: 110px;
+          z-index: 1;
+        }
+
+        .user-picture {
+          margin-right: -5px;
+          width: 60px;
+          height: 60px;
+        }
+
+        .cause-picture {
+          margin-left: -5px;
+        }
+
+        img {
+          height: 60px;
+          border-radius: 50%;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .user-cause-disclaimer {
+          position: relative;
+          padding: 10px;
+          margin: 20px 0 0;
+          min-width: 295px;
+          background-color: $turquoise;
+          border-radius: 3px;
+          color: #fff;
+          font-size: 12px;
+          text-align: center;
+
+          i {
+            text-transform: uppercase;
+            font-style: normal;
+            font-weight: 600;
+          }
+
+          &:before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid $turquoise;
+            transform: translateX(-50%);
+          }
+        }
+      }
+    }
+  }
+
+  .user-cause {
+    flex-grow: 1;
+  }
+
+  .change-cause {
+    position: relative;
+    flex-grow: 1;
+
+    .user-button {
+      position: absolute;
+      bottom: 55px;
+      left: 95px;
+      max-width: 236px;
+      font-size: 13px;
+      padding: 8px 20px;
+      text-align: center;
+    }
+  }
+
+  .causes-carrousel {
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+
+    a:active,
+    a:focus, {
+      outline: none;
+    }
+  }
+
+  .slick-slide {
+    margin-top: 30px;
+    width: 330px;
+  }
+
+  .slick-list {
+    order: 1;
+    margin-top: -30px;
+  }
+
+  .slick-arrow,
+  .slick-prev,
+  .slick-prev:hover,
+  .slick-prev:active,
+  .slick-prev:focus,
+  .slick-next,
+  .slick-next:hover,
+  .slick-next:active,
+  .slick-next:focus {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: $turquoise;
+    z-index: 10;
+    bottom: -35px;
+  }
+
+  .slick-prev {
+    order: 2;
+    left: 0px;
+    border-radius: 3px 0 0 3px;
+
+     &:before {
+      font-family: FontAwesome;
+      font-size: 24px;
+      content: '\f104';
+    }
+  }
+
+  .slick-next {
+    order: 3;
+    top: -5px;
+    right: -43px;
+    border-radius: 0 3px 3px 0;
+
+    &:before {
+      font-family: FontAwesome;
+      font-size: 24px;
+      content: '\f105';
+    }
+  }
+
+  .button-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-top: 20px;
+
+    .user-button {
+      margin-top: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width:375px){
+  .choose-cause {
+    .slick-slide {
+      width: 295px !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 915px){
+  .choose-cause {
+    display: flex;
+    flex-direction: column;
+
+    .slick-slide {
+      width: 295px !important;
+    }
+
+    .user-support {
+      // display: flex;
+      // flex-direction: column;
+      // align-items: center;
+      margin: 30px 0;
+
+      .user-cause-container {
+        padding: 0;
+        width: 295px;
+
+        .user-cause-content {
+          bottom: 0;
+        }
+      }
+    }
+
+    .change-cause {
+      .user-button {
+        position: absolute;
+        bottom: 53px;
+        right: 0;
+        max-width: 200px;
+        font-size: 13px;
+        padding: 9px 20px;
+      }
+    }
+
+    .causes-carrousel {
+      width: 295px;
+    }
+  }
+}

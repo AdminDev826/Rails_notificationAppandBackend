@@ -1,0 +1,65 @@
+<div>
+  <%= link_to "Créer un commerce", new_pro_business_path, class: "btn business-button" %>
+</div>
+<div id="accordion">
+  <% @businesses.group_by{|e| e[:business_category_id]}.each do |business_category, businesses| %>
+    <h3>
+      <%= BusinessCategory.find(business_category).name %>
+       <div class="icon-category" style="background-color: <%= BusinessCategory.find(business_category).color %>;">
+        <%= image_tag BusinessCategory.find(business_category).picture %>
+      </div>
+      <div class="data-business">
+        <li>
+          <i class="fa fa-home"></i>
+          <span class="number"><%= businesses.count %></span>
+        </li>
+        <li>
+          <i class="fa fa-tag"></i>
+          <span class="number">0<%#= businesses.perks_count %></span>
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span class="number">0<%#= businesses.perks_views_count %></span>
+        </li>
+        <li>
+          <i class="fa fa-shopping-basket"></i>
+          <span class="number">0<%#= businesses.perks_uses_count %></span>
+        </li>
+      </ul>
+    </h3>
+    <ul class="data-list">
+      <% businesses.each do |business| %>
+        <li >
+          <span><%= business.name %></span>
+          <ul class="data-business">
+            <li>
+              <i class="fa fa-tag"></i>
+              <span class="number"><%= business.perks.count %></span>
+            </li>
+            <li>
+              <i class="fa fa-eye"></i>
+              <span class="number"><%= business.perks_views_count %></span>
+            </li>
+            <li>
+              <i class="fa fa-shopping-basket"></i>
+              <span class="number"><%= business.perks_uses_count %></span>
+            </li>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<% content_for :after_js do %>
+
+ <script>
+  $( function() {
+    $( "#accordion" ).accordion(
+      { active: false, collapsible: true }
+    );
+  } );
+  </script>
+
+<% end %>
+

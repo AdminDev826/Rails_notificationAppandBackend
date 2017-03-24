@@ -1,0 +1,56 @@
+<!-- FORM SELECT CAUSE SIGNUP -->
+<div class="signup-cause">
+  <div class="choose-cause">
+    <div class="change-cause">
+      <span>Choisissez l'association que vous souhaitez soutenir</span>
+      <div class="causes-carrousel">
+        <!-- Random Causes cards -->
+        <% @cause.each do |cause| %>
+          <% if cause.id != current_user.cause_id && cause.id != ENV['CAUSE_ID_CFORGOOD'].to_i %>
+            <div id="<%= cause.id %>" class="cause-presentation">
+              <!-- CARD CAUSE -->
+              <%= render partial: 'components/card_cause', locals: { cause: cause } %>
+              <div class="love-you hidden"> <%= render 'shared/icons/heart' %>Vous soutenez cette association</div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <%= simple_form_for(current_user, url: member_update_cause_path, remote: true, authenticity_token: true, html: { method: :put, id: :update_cause_id }) do |f| %>
+        <%= f.input :cause_id, as: :hidden %>
+        <%= f.submit "Soutenir cette cause", class: "user-button" %>
+      <% end %>
+      <p class="comment-cause">Sans choix de votre part, c'est CforGood qui bénéficiera de votre soutien. Vous pourrez toujours modifier votre choix depuis votre profil.</p>
+      <button class="signup-next">Suivant</button>
+    </div>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+    $(document).ready(function() {
+
+      $(".user-button").on("click", function(e) {
+        e.preventDefault;
+        var causeId = $('.cause-presentation.slick-active').val('div').attr('id');
+        $("#user_cause_id").val(causeId);
+        $(".love-it").addClass('hidden').removeClass('love-it');
+
+        // EVENT AMPLITUDE : USER_C_SIGNUP1_SUPPORTCAUSE
+        amplitude.logEvent('USER_C_SIGNUP1_SUPPORTCAUSE');
+      });
+
+      $(".signup-cause .signup-next").on("click", function(e) {
+        e.preventDefault;
+        $(".choose-cause").addClass("ishidden");
+        $(".signup-plan").removeClass("ishidden").addClass("slideup");
+        $("#signup-breadcrumb").addClass("slide-2");
+
+        // EVENT AMPLITUDE : USER_C_SIGNUP1_NEXT
+        amplitude.logEvent('USER_C_SIGNUP1_NEXT');
+      });
+
+    });
+  </script>
+
+<% end %>

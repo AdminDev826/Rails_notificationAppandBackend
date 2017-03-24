@@ -1,0 +1,32 @@
+.dashboard-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.dashboard {
+  /* BACKGROUND MAP ***********************************************************/
+  .user-map-businesses {
+    position: relative;
+    height: 100%;
+  }
+
+  .sign-box.gift {
+    z-index: 0;
+    width: 100%;
+
+    @media (min-width: 767px) {
+      max-width: 380px !important;
+    }
+  }
+}
+
+@media only screen and (min-width:769px){
+  .dashboard {
+    .user-map-businesses {
+      position: relative;
+      height: 100%;
+    }
+  }
+}
+

@@ -1,0 +1,40 @@
+<div class="dashboard-create-perk">
+  <%= image_tag('logopouce.png', class: 'logo-title') %>
+  <span class="view-title">Modifier le bon plan | <strong><%= @perk.name %></strong></span>
+
+  <!-- CARDS PERK -->
+  <%= render "pro/perks/form/cards_perk" %>
+
+ <!-- FORMS PERK -->
+  <%= render "pro/perks/form/forms_perk",  action: 'edit', submit_label: 'Modifier votre bon plan' %>
+</div>
+
+<!-- UPDATE PERK CONFIRMATION -->
+<%= render "pro/perks/form/updated" %>
+
+<% content_for :after_js do %>
+
+  <script>
+    $(document).ready(function() {
+
+      // ACTIVE INITIAL PERK
+      $('.dashboard').scrollTop(0);
+      $(".dashboard-overlay").removeClass('hidden');
+      if (<%= @perk.appel %>) {
+        $("#type-create-appel").find('.fa-plus').addClass('plus-animation');
+        $(".perk-appel").addClass('type-show');
+        $("#type-create-appel").parents('.type-card').addClass('card-visible').siblings('.type-card').addClass('card-invisible');
+      } else if (<%= @perk.durable %>) {
+        $("#type-create-durable").find('.fa-plus').addClass('plus-animation');
+        $(".perk-durable").addClass('type-show');
+        $("#type-create-durable").parents('.type-card').addClass('card-visible').siblings('.type-card').addClass('card-invisible');
+      } else {
+        $("#type-create-flash").find('.fa-plus').addClass('plus-animation');
+        $(".perk-flash").addClass('type-show');
+        $("#type-create-flash").parents('.type-card').addClass('card-visible').siblings('.type-card').addClass('card-invisible');
+      }
+
+    });
+  </script>
+
+<% end %>

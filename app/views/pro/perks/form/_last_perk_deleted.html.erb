@@ -1,0 +1,33 @@
+<div class="popup-overlay last-perk-deleted hidden">
+  <div class="popup-container delete-perk">
+    <div class="close-popup"><i class="fa fa-times"></i></div>
+    <div class="wrapper">
+      <!-- ILLUSTRATION-->
+      <%= render 'shared/icons/only_danger' %>
+    </div>
+    <span>Hey !</span>
+    <p>Si tu supprimes ce bon plan, tu ne seras plus visible sur la carte !!! </p>
+    <button type="submit" id="last-delete-submit" class="business-button">Valider</button>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function() {
+
+      $(".last-perk-deleted .close-popup").click(function (e) {
+        e.preventDefault();
+        $(".last-perk-deleted").toggleClass('hidden');
+      });
+
+      $("#last-delete-submit").on("click", function (e) {
+        e.preventDefault();
+        var deletePerk = $(this).attr('class').split(" ")[1];
+        $("#"+deletePerk).submit();
+      });
+
+    });
+  </script>
+<% end %>
+
+

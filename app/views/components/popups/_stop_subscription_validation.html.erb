@@ -1,0 +1,29 @@
+<div class="popup-overlay popup-stop-confirmation hidden">
+  <div class="popup-container">
+    <div class="close-popup"><i class="fa fa-times"></i></div>
+    <div class="wrapper">
+      <!-- ILLUSTRATION-->
+      <%= render 'shared/icons/danger' %>
+    </div>
+    <span>Souhaitez-vous vraiment vous désabonner ?</span>
+
+    <%= simple_form_for(current_user, url: member_stop_subscription_path, method: :put, remote: true, authenticity_token: true) do |f| %>
+      <%= f.submit "Valider", class: "user-button stop-confirmation-button" %>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function() {
+
+      $(".popup-stop-confirmation .close-popup").on("click", function(e) {
+        e.preventDefault();
+        $(".popup-stop-confirmation").addClass('hidden');
+      });
+
+    });
+  </script>
+<% end %>
+
+

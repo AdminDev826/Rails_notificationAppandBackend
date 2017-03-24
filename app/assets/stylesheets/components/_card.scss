@@ -1,0 +1,56 @@
+.perk-card {
+  position: relative;
+  margin-left: 24px;
+  width: 85%;
+  height: 220px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+
+  img {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    @include transition(all 0.2s ease-in-out);
+  }
+
+  .box-shadow {
+    position: absolute;
+    padding: 15px 10px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.3);
+    @include transition(all 0.2s ease-in-out);
+  }
+
+  &:hover{
+    .box-shadow { background-color: rgba(0,0,0,0.5); }
+    img { @include transform(scale(1.1)); }
+  }
+
+  .business-name {
+    margin-bottom: 0px;
+    color: $white;
+    font-weight: 500;
+  }
+  .fa-map-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 60px;
+  }
+
+  .business-perk {
+    position: absolute;
+    width: 100%;
+    font-weight: 600;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

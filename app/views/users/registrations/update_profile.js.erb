@@ -1,0 +1,36 @@
+$(".alert").remove();
+
+if (<%= !current_user.errors.any? %>) {
+  if (<%= request.referer.include?("subscribe") %>) {
+      $(".signup-plan").addClass("ishidden");
+      $(".signup-payment").removeClass("ishidden");
+      $(".signup-payment").addClass("slideup");
+      $("#signup-breadcrumb").addClass("slide-3");
+      if (<%= current_user.code_partner.present? %>) {
+        $('.days').html("<%= current_user.date_end_partner.present? ? (current_user.date_end_partner - Date.today).to_i  : "" %>");
+        $('.message-subscription').removeClass('hidden');
+      }
+      if ($(window).width() <= 320) {
+        $('.text-subscription').html('Participation :');
+        $('.btn-no-bank-details').html('Je renseignerai plus tard');
+      }
+  } else {
+    if (<%= !current_user.code_partner.present? && !current_user.card_id.present? %>) {
+      $("#payment").removeClass('hidden');
+      $("#menu a.show-payment").tab('show');
+    } else {
+     // DISCLAIMER - DISPLAYED
+      $(".done-overlay").removeClass("hidden");
+      window.setTimeout(function(){
+        // DISCLAIMER - HIDDEN
+        $(".done-overlay").addClass("hidden");
+      }, 3000);
+    }
+  }
+} else {
+  if (<%= request.referer.include?("subscribe") %>) {
+    $(document).find(".signup-plan").prepend('<%= j render("components/error_messages", resource: current_user, formats: [:html]) %>');
+  } else {
+    $(document).find("form").prepend('<%= j render("components/error_messages", resource: current_user, formats: [:html]) %>');
+  }
+}

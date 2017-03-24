@@ -1,0 +1,131 @@
+#bg-connexion {
+  background-image: image-url("background-pouce.png");
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: 70%;
+  position: relative;
+  border-bottom: 1px rgba(124, 118, 118, 0.23) solid;
+  text-align: center;
+}
+
+#blackbox-connexion {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(51, 51, 51, 0.3);
+  color: rgb(240, 240, 240);
+  z-index: 0;
+}
+
+#form-card   {
+  height: 100%;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 10px;
+ }
+
+.cgu {
+  text-align: left !important;
+  p {
+    font-weight: 100;
+    font-size: 15px;
+    color: rgb(51,51,51);
+  }
+  h2 {
+    font-size: 22px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+}
+
+ .btn-facebook   {
+
+   border-radius: 5px;
+   text-shadow: 1px 1px 3px #666666;
+   box-shadow: 0px 1px 3px #666666;
+   font-family: Arial;
+   color: #ffffff;
+   font-size: 21px;
+   background: #47639E;
+   padding: 10px 20px 10px 20px;
+   text-decoration: none;
+   margin-bottom: 10px;
+   text-align:center;
+
+   a   {
+     color:white;
+     text-decoration: none;
+   }
+
+   a:hover   {
+     color:white;
+     text-decoration: none;
+   }
+
+ }
+
+ .btn-facebook:hover {
+   background: #466AB0;
+   text-decoration: none;
+   color:white;
+ }
+
+ .btn-connexion   {
+   border-radius: 5px;
+   border-color: transparent;
+   color: #ffffff;
+   font-size: 21px;
+   background: #36D4DA;
+   padding: 5px 10px 5px 10px;
+   text-decoration: none;
+   text-align:center;
+   text-transform: uppercase;
+   a {
+     color:white;
+     text-decoration: none;
+   }
+   a:hover   {
+     color:white;
+     text-decoration: none;
+   }
+ }
+
+ .btn-connexion:hover {
+   background: #36DBE4;
+   border-color: transparent;
+   text-decoration: none;
+   color:white;
+ }
+
+ .btn-google   {
+
+   border-radius: 5px;
+   text-shadow: 1px 1px 3px #666666;
+   box-shadow: 0px 1px 3px #666666;
+   font-family: Arial;
+   color: #ffffff;
+   font-size: 21px;
+   background: #DD4C39;
+   padding: 10px 32px 10px 32px;
+   text-decoration: none;
+   margin-bottom: 10px;
+   text-align:center;
+
+   a   {
+     color:white;
+     text-decoration: none;
+   }
+
+   a:hover   {
+     color:white;
+     text-decoration: none;
+   }
+
+ }
+
+  .btn-google:hover {
+   background: #E75947;
+   text-decoration: none;
+   color:white;
+ }

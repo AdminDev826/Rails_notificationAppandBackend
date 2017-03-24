@@ -1,0 +1,31 @@
+<%= content_for(:title) do %>
+<%= @perk.name %>
+<% end %>
+<%= content_for(:description) do %>
+Modifiez votre Bon Plan
+<% end %>
+
+<div class="container-fluid admin">
+  <!-- Sub Menu Sidebar -->
+  <% if current_business.supervisor %>
+    <%= render "pro/dashboard/shared/supervisor_sidebar" %>
+  <% else %>
+    <%= render "pro/dashboard/shared/sidebar" %>
+  <% end %>
+  <!-- Content - Statistics -->
+  <div class="dashboard">
+    <div class="dashboard-overlay hidden"></div>
+    <div class="mobile-menu-overlay hidden"></div>
+    <div class="form-perk-container">
+      <%= render 'pro/perks/form/edit' %>
+    </div>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function() {
+     $('#perk-tab').addClass('active');
+    });
+  </script>
+<% end %>

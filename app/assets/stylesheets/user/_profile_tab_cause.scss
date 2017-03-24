@@ -1,0 +1,300 @@
+/* TABS - ICONS ****************************/
+.user-container {
+  .user-title {
+    position: relative;
+    padding: 20px;
+    top: -10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+
+    svg {
+      position: relative;
+      margin-right: 5px;
+      width: 20px;
+      height: 20px;
+      top: 4px;
+    }
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+  .nav-tabs {
+    a {
+      @media (max-width: 767px){
+        span {
+          display: none;
+        }
+      }
+
+      @media (min-width: 768px){
+        i {
+          display: none;
+        }
+
+        span {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}
+
+/* TABS - CONTENT ****************************/
+.tab-content {
+  min-height: 100vh;
+
+  .tab-cause {
+    .choose-cause {
+      display: flex;
+      flex-direction: row;
+
+      @media (max-width: 767px){
+        flex-direction: column;
+      }
+
+      .user-cause {
+        width: 50%;
+
+        .user-cause-content img {
+          width: 60px;
+          max-width: 60px;
+        }
+
+        @media (max-width:840px){
+          width: 100%;
+
+          .user-support {
+            .user-cause-container,
+            .user-cause-content,
+            .user-cause-disclaimer {
+              width: 100%;
+            }
+          }
+        }
+      }
+
+      .change-cause {
+        display: flex;
+        width: 50%;
+
+        @media (max-width: 767px){
+          align-items: flex-start;
+          width: 100%;
+        }
+
+        span {
+          text-align: left;
+        }
+
+        .user-button-profile{
+          top: 279px;
+          left: 113px;
+
+          @media (max-width: 320px) {
+            top: 279px;
+            left: 100px;
+          }
+
+          @media (min-width: 321px) and (max-width: 767px) {
+            top: -65px;
+            left: 135px;
+          }
+        }
+      }
+    }
+  }
+
+  .tab-contribution {
+
+    table {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+
+      tr {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin-bottom: 10px;
+      }
+    }
+
+    .contribution-date {
+      padding: 2px 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #fff;
+      background-color: #333;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .contribution-cause {
+      background-color: #F9F9F9;
+      text-transform: uppercase;
+      font-size: 0.7em;
+      font-weight: 600;
+    }
+
+    .contribution-amount {
+      padding: 0 10px;
+      background-color: #fff;
+      font-size: 0.9em;
+      font-weight: 600;
+
+      @media (min-width: 768px)  {
+        position: absolute;
+        right: 30px;
+        top: 37px;
+        background-color: #f9f9f9;
+      }
+    }
+
+    .done {
+      position: absolute;
+      bottom: -9px;
+      left: 40px;
+
+      @media (min-width: 768px) {
+        right: 4px;
+        bottom: 2px;
+        left: inherit;
+      }
+    }
+  }
+
+  /* PROFILE - FORM PAYMENT ****************************************/
+
+  .tab-payment {
+    position: relative;
+    min-height: 530px;
+
+    .offer-details {
+      padding-top: 25px !important;
+
+        &:after {
+          top: 92px !important;
+        }
+
+        p {
+          padding: 5px 0 0 !important;
+        }
+    }
+
+    .offer-description {
+       @media (min-width: 768px)  { margin-top: 20px !important; }
+    }
+
+    .offer-card {
+       @media (max-width: 767px)  { margin-top: 20px !important; }
+    }
+
+
+    .btn-subscription {
+      margin-top: 25px;
+    }
+
+    .btn-no-subscription {
+      @media (max-width: 767px)  { bottom: -20px;}
+      @media (max-width: 320px)  { bottom: -15px;}
+    }
+
+    .stop-subscription {
+      bottom: -15px;
+      @media (max-width: 767px)  { bottom: -45px;}
+      @media (max-width: 320px)  { bottom: -40px;}
+    }
+
+    .code-partner {
+      position: relative;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding-top: 20px;
+
+      #user_code_partner {
+        margin-left: 10px;
+      }
+    }
+
+    #user_amount {
+      position: relative !important;
+      bottom: 270px !important;
+      left: -60px !important;
+    }
+
+    .user_amount {
+      &:after {
+        bottom: 266px !important;
+        left: 70px !important;
+      }
+    }
+  }
+
+  .card-authorized {
+     margin-top: 25px;
+
+    ul {
+      list-style: none;
+      display: flex;
+
+      li {
+        margin: 0 5px;
+
+        img {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+
+  .mangopay-disclaimer {
+    margin-bottom: 50px;
+    @media (max-width: 320px)  { margin-bottom: 0; }
+  }
+
+  .btn-no-bank-details {
+    right: inherit !important;
+    bottom: 0 !important;
+    @media (max-width: 320px)  { bottom: -30px !important; }
+  }
+
+  .signup-prev {
+    display: none;
+  }
+
+  /* PROFILE - USER PAYMENTS ****************************************/
+  .list-payments {
+
+    .tab-subtitle {
+      margin: 0 0 20px;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: #636363;
+      font-weight: 600;
+    }
+
+    table {
+      margin: auto;
+
+      td {
+        padding: 10px;
+
+
+        &.done {
+          width: 35px;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+
+      tr:nth-child(even) { background: #E1E1E1; }
+      tr:nth-child(odd) { background: #F1F1F1; }
+    }
+  }
+}

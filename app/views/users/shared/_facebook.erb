@@ -1,0 +1,10 @@
+<div class="btn-facebook">
+  <%- if devise_mapping.omniauthable? %>
+    <%- resource_class.omniauth_providers.each do |provider| %>
+    <%= link_to t('.sign_in_with_provider', :provider => provider.to_s.titleize, :default => "Connexion #{provider.to_s.titleize}"), omniauth_authorize_path(resource_name, provider) %><br />
+    <% end -%>
+  <% end -%>
+  <% if user_signed_in? %>
+    <%= image_tag current_user.picture, class: "img-avatar" %>
+  <% end %>
+</div>

@@ -1,0 +1,259 @@
+/* -------------------------------------
+ * Utilities classes
+ * These are examples of utilities classes
+ * Feel free to change them and create your own
+ * ------------------------------------- */
+
+.padded {
+  padding-top: 8em;
+  padding-bottom: 8em;
+}
+.bg-red {
+  background: $red;
+  color: white;
+}
+.bg-blue {
+  background-color: #97E8EB;
+  color: white;
+}
+.bg-turquoise {
+  background-color: rgba(54,211,218,0.7);
+  color: white;
+}
+.bg-yellow {
+  background: $yellow;
+  color: white;
+}
+.bg-orange {
+  background: $orange;
+  color: white;
+}
+.bg-green {
+  background: $green;
+  color: white;
+}
+.bg-purple {
+  background: $purple;
+  color: white;
+}
+.bg-white {
+  background: white;
+  color: black;
+}
+.bg-light-white {
+  background: rgba(255,255,255,0.5);
+  color: black;
+  border-radius: 10px;
+}
+.bg-grey {
+  background: #F9F9F9;
+  color: black;
+}
+.gradient-cforgood {
+  background: -webkit-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* IE10 */
+  background:      -o-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* Opera 11.10+ */
+  background:         linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* W3C */
+}
+
+.blue {
+  color: #00CAFF !important;
+}
+.turquoise {
+  color: #36D3DA !important;
+}
+.green {
+  color: #80F2A4 !important;
+}
+.red {
+  color: #F74042 !important;
+}
+.black {
+  color: rgb(51,51,51) !important;
+}
+.white {
+  color: white;
+}
+
+.r5 {
+  border-radius: 5px;
+}
+
+.img140 {
+  img {
+    height: 140px;
+  }
+}
+
+.img120 {
+  img {
+    height: 120px;
+  }
+}
+
+.absolute {
+  position: absolute;
+  z-index: 2;
+}
+
+.relative {
+  position: relative;
+  z-index: 2;
+}
+
+.index-2 {
+  z-index: 2;
+}
+
+.border-white {
+    border-top: 2px rgba(255, 255, 255, 1) solid;
+    margin-top: 25px;
+}
+
+.border-black {
+    border-top: 2px rgba(51, 51, 51, 1) solid;
+}
+
+.border-blue {
+    border-top: 3px rgba(54, 211, 218, 1) solid;
+}
+
+.border-top {
+  border-top: 2px rgba(181, 181, 181, 0.23) solid;
+}
+
+.border-bottom {
+  border-bottom: 1px rgba(216,227,225,0.23) solid;
+}
+
+.border-bottom-lightgrey {
+  border-bottom: 1px #E1E1E1 solid;
+}
+
+.border {
+  border: 1px rgb(255,255,255) solid;
+}
+
+.border2 {
+  border: 2px rgb(255,255,255) solid;
+}
+
+.border3 {
+  border: 3px rgb(255,255,255) solid;
+}
+
+.cforgood-background {
+  background: -webkit-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* IE10 */
+  background:      -o-linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* Opera 11.10+ */
+  background:         linear-gradient(90deg, #00C9FF 10%, #80F2A4 90%); /* W3C */
+  height: 210px;
+  border-bottom: 2px rgba(53, 60, 59, 0.23) solid;
+  font-variant: small-caps;
+  h3 {
+    color: white;
+    font-size: 32px;
+  }
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 80px;
+}
+
+#page-title-legal {
+  color: white;
+  text-shadow: 1px 1px 3px #666666;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-12 {
+  font-size: 12px;
+}
+
+.f-17 {
+  font-size: 17px;
+}
+
+.f-20 {
+  font-size: 20px;
+}
+
+.s-18 {
+  font-size: 18px !important;
+}
+
+.w-100 {
+  font-weight: 100 !important;
+}
+
+.w-400 {
+  font-weight: 400 !important;
+}
+
+.w-500 {
+  font-weight: 500 !important;
+}
+
+.a-400 {
+  font-weight: 400 !important;
+}
+
+.br5 {
+  border-radius: 5px;
+}
+
+.italique {
+  font-style: italic;
+}
+
+.width-210 {
+  width: 210px;
+}
+
+.w-90cent {
+  width: 90% !important;
+}
+
+.display-inline {
+  display: inline;
+}
+
+// Flash alerts
+
+.alert-container  {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  z-index:4;
+  text-align: center;
+
+  .alert {
+    display: inline-block;
+  }
+}
+
+.clear {
+  clear: both;
+}
+
+// Media queries
+.visible-xs {
+  .hidden-sm {};
+  .hidden-md {};
+  .hidden-lg {};
+}
+
+.pl-25cent {
+  padding-left: 25% !important;
+}
+
+li.alert-message {
+  margin-left: 18px;
+ }

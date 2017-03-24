@@ -1,0 +1,26 @@
+<% content_for :meta_title, "F.A.Q" %>
+<% content_for :meta_description, "Trouvez toutes les réponses à vos questions" %>
+<% content_for :meta_image %>
+
+<div class="container-fluid admin">
+  <% if current_user %>
+    <!-- Sub Menu Sidebar MEMBER -->
+    <%= render "member/dashboard/shared/sidebar" %>
+  <% else %>
+    <!-- Sub Menu Sidebar PRO -->
+    <% if current_business.supervisor %>
+      <%= render "pro/dashboard/shared/supervisor_sidebar" %>
+    <% else %>
+      <%= render "pro/dashboard/shared/sidebar" %>
+    <% end %>
+  <% end %>
+
+  <!-- Content - FAQ -->
+    <div class="dashboard" id="faq">
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <h3>Des réponses à vos questions...</h3>
+        <%= render "pages/shared/faq_content" %>
+      </div>
+    </div>
+  </div>
+</div>

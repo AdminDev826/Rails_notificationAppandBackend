@@ -1,0 +1,14 @@
+
+<% if flash[:success].present? %>
+
+  $("#loading-indicator").hide();
+  $(".success-message").html("<%= flash[:success] %>");
+  $(".signup-done-overlay.ok").removeClass('hidden');
+
+<% else %>
+
+  $("#loading-indicator").hide();
+  $(".error-message").html("<%= flash[:alert] %>");
+  $(".signup-done-overlay.ko").removeClass('hidden');
+
+<% end %>

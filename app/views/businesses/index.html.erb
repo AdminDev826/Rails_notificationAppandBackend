@@ -1,0 +1,235 @@
+<%= content_for(:title) do %>
+  Bons Plans
+<% end %>
+<%= content_for(:description) do %>
+  Découvrez notre liste de bons plans
+<% end %>
+
+<div class="container-fluid admin">
+  <!-- Sub Menu Sidebar -->
+  <%= render "member/dashboard/shared/sidebar" %>
+  <!-- Content - Statistics -->
+  <div class="dashboard dashboard-view-perks">
+    <div class="mobile-menu-overlay hidden"></div>
+
+    <%= render "components/menu/index_search_category" %>
+
+    <div class="search-category-overlay hidden"></div>
+      <div id="businesses">
+        <div id="mixitup" class="container-perk-cards">
+
+        <ul class="list">
+          <% @businesses.each do |business| %>
+            <% (@addresses_id.select { |address_id| address_id[0] == business.id }).each do |address_id| %>
+              <!-- COMPONENT | ADDRESSES -->
+              <% business.perks.active.each do |perk| %>
+                <!-- COMPONENT | CARD BON PLAN -->
+                <%= link_to business_path(business, perk_id: perk.id, address_id: address_id[1]), class: "card-frame mix #{business.business_category_id} #{business.online? ? 'online' : ''}" do %>
+                  <!-- CARD HEADER -->
+                  <div class="card-header">
+                    <h3 class="perk-name name hidden"><%= perk.name %></h3>
+                    <div class="card-header-main">
+                      <span class="perk-title"><%= business.name %></span>
+                      <% liked = Use.liked.where(perk_id: perk.id).count %>
+                      <% if liked > 0 %>
+                      <div class="perk-liked">
+                        <%= render 'shared/icons/heart_like' %>
+                        <span><%= liked %></span>
+                      </div>
+                      <% end %>
+                    </div>
+                    <div class="card-header-leader">
+                    <% if business.leader_picture.present? %>
+                      <%= image_tag business.leader_picture.url(:avatar) %>
+                    <% else %>
+                      <%= image_tag image_url 'default_pic.png' %>
+                    <% end %>
+                    </div>
+                    <div class="card-header-category" style="background-color: <%= business.business_category.color %>;">
+                      <%= image_tag business.business_category.picture %>
+                      <!-- <div class="category-container" style="background-color: <#= business.business_category.color %>;">
+                      </div> -->
+                    </div>
+                  </div>
+                  <!-- CARD BODY -->
+                  <div class="card-body" style="background-image: url('<%= perk.picture.present? ? perk.picture.url(:card) : business.picture.url(:card) %>');">
+                    <div class="business-details">
+                      <% if perk.flash? && perk.times > 0 %>
+                        <span style="background-color: <%= business.business_category.color %>;"><i class="fa fa-flash"></i><%= perk.times - Use.used.where(perk_id: perk.id).count  %> restants</span>
+                      <% end %>
+                      <h3 class="perk-name name"><%= perk.name %></h3>
+                    </div>
+                  </div>
+                <% end %>
+                <!-- END | CARD BON PLAN -->
+              <% end %>
+              <!-- END | ADDRESSES -->
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <!-- END | DASHBOARD PERKS -->
+  </div>
+  <!-- END | ADMIN -->
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function(){
+
+      // TOOGLE CATEGORY MENUs
+      $('#open-categories').click(function(event) {
+        $('.search-category-overlay').toggleClass('hidden');
+        // TOOGLE CATEGORY MENU
+        $('.search-category').toggleClass('is-open-max');
+        $('.category-item').toggleClass('is-open-min');
+      });
+
+      // TOOGLE CATEGORY OVERLAY
+      $('.search-category-overlay').click(function(event) {
+        $(this).addClass('hidden');
+        $('.search-category').removeClass('is-open-max');
+        $('.category-item').removeClass('is-open-min');
+      });
+
+      // EVENT AMPLITUDE USER_ALL_PERKS + USER_C_BUSINESS_ALLPERKS
+      amplitude.logEvent('USER_ALL_PERKS');
+      $('.card-frame').click(function(event) {
+        amplitude.logEvent('USER_C_BUSINESS_ALLPERKS');
+      });
+
+    });
+
+    var buttonFilter = {
+      // Declare any variables we will need as properties of the object
+      $filters: null,
+      $reset: null,
+      groups: [],
+      outputArray: [],
+      outputString: '',
+
+      // The "init" method will run on document ready and cache any jQuery objects we will need.
+      init: function(){
+        var self = this; // As a best practice, in each method we will asign "this" to the variable "self" so that it remains scope-agnostic. We will use it to refer to the parent "buttonFilter" object so that we can share methods and properties between all parts of the object.
+
+        self.$filters = $('#Filters');
+        self.$reset = $('#categories-all');
+        self.$container = $('#mixitup');
+        self.$filters.find('.fieldset-flexbox').each(function(){
+          self.groups.push({
+            $buttons: $(this).find('.filter-btn'),
+            active: ''
+          });
+        });
+        self.bindHandlers();
+      },
+
+      // The "bindHandlers" method will listen for whenever a button is clicked.
+      bindHandlers: function(){
+        var self = this;
+
+        // Handle filter clicks
+        self.$filters.on('click', '.filter-btn', function(e){
+          e.preventDefault();
+          var $button = $(this);
+
+          // If the button is active, remove the active class, else make active and deactivate others.
+          $button.hasClass('is-selected') ?
+            $button.removeClass('is-selected') :
+            $button.addClass('is-selected').siblings('.filter-btn').removeClass('is-selected');
+
+          self.parseFilters();
+        });
+
+        // Handle reset click
+        self.$reset.on('click', function(e){
+          e.preventDefault();
+          self.$filters.find('.filter-btn').removeClass('is-selected');
+          self.parseFilters();
+        });
+      },
+
+      // The parseFilters method checks which filters are active in each group:
+      parseFilters: function(){
+        var self = this;
+
+        // loop through each filter group and grap the active filter from each one.
+        for(var i = 0, group; group = self.groups[i]; i++){
+          group.active = group.$buttons.filter('.is-selected').attr('data-filter') || '';
+        }
+
+        self.concatenate();
+      },
+
+      // The "concatenate" method will crawl through each group, concatenating filters as desired:
+      concatenate: function(){
+        var self = this;
+
+        self.outputString = ''; // Reset output string
+
+        for(var i = 0, group; group = self.groups[i]; i++){
+          self.outputString += group.active;
+        }
+
+        // If the output string is empty, show all rather than none:
+        !self.outputString.length && (self.outputString = 'all');
+
+        // Send the output string to MixItUp via the 'filter' method:
+        if(self.$container.mixItUp('isLoaded')){
+          self.$container.mixItUp('filter', self.outputString);
+        }
+      }
+    };
+
+    // On document ready, initialise our code.
+    $(function(){
+      // Initialize buttonFilter code
+      buttonFilter.init();
+      // Instantiate MixItUp
+      $('#mixitup').mixItUp({
+        controls: {
+          enable: true // we won't be needing these
+        },
+        animationOptions: {
+          duration: 750,
+          easing: 'linear',
+          queue: false
+        }
+      });
+    });
+
+    // var monkeyList = new List('perks-list', {
+    //   valueNames: ['perk-name'],
+    //   plugins: [ ListFuzzySearch() ]
+    // });
+
+    // var options = {
+    //   valueNames: [ 'perk-name' ]
+    // };
+
+    // var perksList = new List('perks-list', options);
+
+  </script>
+
+<% end %>
+
+<% content_for :listjs_businesses do %>
+
+  <script>
+
+    var options = {
+      valueNames: [ 'perk-title' ]
+    };
+
+    var userList = new List('businesses', options);
+
+    $('#search-businesses').keyup(function(){
+      userList.search($(this).val());
+    });
+
+  </script>
+
+<% end %>

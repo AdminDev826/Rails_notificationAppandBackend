@@ -1,0 +1,25 @@
+<div class="pmdjs perk-modal-dynamic-<%= perk.business.id %>-<%= perk.id %> hidden">
+
+  <div class="closed-perk-on-modal" style="color: white;border: 3px solid white;">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </div>
+
+  <div class="pmdjs-header-color" style="background-color: <%= perk.business.business_category.color %>;"></div>
+
+  <div class="pmdjs-photo" style="background-image: url('<%= perk.business.picture %>');"></div>
+
+  <div class="pmdjs-offers">
+    <div class="pcri-item-tooltip" style="background-color: <%= perk.business.business_category.color %>;">
+      <div>OFFERT</div>
+    </div>
+  </div>
+
+  <div class="pmdjs-perk-name">
+    <%= perk.name %>
+  </div>
+
+  <div class="pmdjs-perk-description">
+    <%= perk.description %>
+  </div>
+
+</div>

@@ -1,0 +1,35 @@
+// VIDEO RESPONSIVE
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+  height: auto;
+  margin-bottom: 12px;
+  margin-top: 13%;
+  margin-left: 7%;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.border-video {
+  border: 5px rgb(54,211,218) solid;
+  border-radius: 5px;
+}
+
+.cause-video {
+  .embed-container {
+    padding-top: 0;
+    margin-bottom: 0;
+    margin-top: 10%;
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,99 @@
+<!-- BUSINESS SIGN IN -->
+<% if business_signed_in? %>
+  <div class="business-sidebar">
+    <ul id="sidebar">
+      <li class="<%= active_class(pro_business_dashboard_path(current_business))%>">
+        <%= link_to pro_business_dashboard_path(current_business) do %>
+          <div class="icon-container">
+            <%= render "shared/icons/analytics" %>
+          </div>
+          <span class="admin-label">Mon suivi</span>
+        <% end %>
+      </li>
+      <li id="perk-tab" class="<%= active_class(pro_business_perks_path(current_business))%> light">
+        <%= link_to pro_business_perks_path(current_business) do %>
+          <div class="icon-container">
+            <%= render "shared/icons/perks" %>
+          </div>
+          <span class="admin-label">Mes Bons Plans</span>
+        <% end %>
+      </li>
+      <li class="<%= active_class(new_pro_business_perk_path(current_business))%> light">
+        <%= link_to new_pro_business_perk_path(current_business) do %>
+          <div class="icon-container">
+            <%= render "shared/icons/create_perks" %>
+          </div>
+          <span class="admin-label">Créer un Bon Plan</span>
+        <% end %>
+      </li>
+      <!-- DESKTOP | GO TO PROFILE -->
+      <li id="perk-tab" class="<%= active_class(pro_business_profile_path(current_business))%> light desktop-profile">
+        <%= link_to pro_business_profile_path(current_business) do %>
+          <div class="icon-container">
+            <%= image_tag "citoyen.svg", class: "avatar-citoyen" %>
+          </div>
+          <span class="admin-label">Mon profil</span>
+        <% end %>
+      </li>
+      <!-- MOBILE | OPEN MENU DROPDOWN -->
+      <li id="profile-tab" class="mobile-dropdown">
+        <a href="#">
+          <div class="icon-container">
+            <%= image_tag('icons/profil.png', :class => 'admin-icon') %>
+          </div>
+          <span class="admin-label">Mon profil</span>
+        </a>
+        <ul class="mobile-menu hidden">
+          <!-- BUSINESS DETAILS -->
+          <% if business_signed_in? && pro_space? %>
+            <div class="business-details">
+              <% if current_business.picture.present? %>
+                <%= image_tag avatar_url(current_business) %>
+              <% else %>
+                <%= image_tag "default_pic.png" %>
+              <% end %>
+              <span><%= current_business.name %></span>
+            </div>
+          <% end %>
+          <!-- OTHER LINKS -->
+          <li class="<%= active_class(edit_business_registration_path(current_business)) %>">
+            <%= link_to pro_business_profile_path(current_business) do %>
+              <i class="fa fa-user"></i>Mon profil
+            <% end %>
+          </li>
+          <li>
+            <%= link_to faq_connect_path do %>
+              <i class="fa fa-question"></i>Aide et conseils
+            <% end %>
+          </li>
+          <li>
+            <%= link_to destroy_user_session_path, method: :delete do %>
+              <i class="fa fa-power-off sign-out"></i>Se déconnecter
+            <% end %>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div class="signout">
+      <%= link_to destroy_user_session_path, method: :delete do %>
+        <%= image_tag('icons/signout.png', :class => 'signout-icon sign-out') %><%= t ".se_déconnecter", default: "À bientôt" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function(){
+      $('.mobile-dropdown').click(function(event) {
+        $('.mobile-menu').toggleClass('hidden');
+        $('.mobile-menu-overlay').toggleClass('hidden');
+      });
+
+      $('.mobile-menu-overlay').click(function(event) {
+        $(this).addClass('hidden');
+        $('.mobile-menu').addClass('hidden');
+      });
+    });
+  </script>
+<% end %>

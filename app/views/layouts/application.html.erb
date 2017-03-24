@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render "layouts/shared/head" %>
+  </head>
+
+  <body>
+
+    <% if signup_or_signin_page? %>
+      <%= render "layouts/shared/navbar_logout" %>
+    <% else %>
+      <div class="">
+        <%= render "layouts/shared/navbar" %>
+      </div>
+    <% end %>
+
+    <div id="menu-overlay">
+      <%= yield %>
+    </div>
+    <%= render "layouts/shared/js" %>
+    <%= yield(:after_js) %>
+    <%= content_for :perk_dynamic %>
+    <%= content_for :listjs %>
+    <%= content_for :listjs_businesses %>
+    <%= content_for :modal_search_index_desk %>
+    <%= content_for :modal_search_index %>
+  </body>
+</html>

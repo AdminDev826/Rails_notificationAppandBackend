@@ -1,0 +1,52 @@
+<div class="mapboxv2">
+
+  <div class="caret-absolute hidden-xs" style="color: <%= business.business_category.color %>">
+    <i class="fa fa-caret-up" aria-hidden="true"></i>
+  </div>
+
+  <% business.perks_in_time.each do |perk| %>
+    <% if !flash || (flash && perk.flash) %>
+
+        <%= link_to business_path(perk.business_id, perk_id: perk.id, address_id: address), class: "link-business-plus" do %>
+          <i class="fa fa-plus"></i>
+        <% end %>
+
+    <% end %>
+  <% end %>
+
+  <div class="mv2-photo" style="background-image: url('<%= business.picture.url(:thumb) %>');"></div>
+
+  <div class="mv2-content">
+
+    <div class="mv2-content-top" style="background-color: <%= business.business_category.color %>;">
+      <div class="mv2-content-top-top">
+        <div class="mv2-content-top-top-text"><%= business.name %></div>
+      </div>
+      <div class="mv2-content-top-bottom">
+        <div class="mv2-content-top-bottom-text"><%= business.business_category.name %></div>
+      </div>
+    </div>
+
+    <div class="mv2-content-bottom" style="background-color: <%= business.business_category.color %>;">
+
+      <div class="mv2-content-bottom-left" style="background-color: rgba(55,55,55,0.2);">
+        <% if business.perks.count == 1 %>
+          <div class="available-perk-text"><%= "#{business.perks.count} bon plan disponible" %></div>
+        <% else %>
+          <div class="available-perk-text"><%= "#{business.perks.count} bons plans disponibles" %></div>
+        <% end %>
+      </div>
+
+      <div class="mv2-content-bottom-right" style="background-color: rgba(55,55,55,0.2);">
+        <div class="asso-card-red-heart-v2">
+            <%= image_tag "icons/heart.svg" %>
+        </div>
+        <% business.perks_in_time.each do |perk| %>
+          <% @liked = Use.liked.where(perk_id: perk.id).count %>
+        <% end %>
+        <div class="asso-firstblock-text-v2"><%= @liked %></div>
+      </div>
+
+    </div>
+  </div>
+</div>

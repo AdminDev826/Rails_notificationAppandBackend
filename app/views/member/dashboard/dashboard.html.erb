@@ -1,0 +1,180 @@
+<%= content_for(:title) do %>
+  Autour de moi
+<% end %>
+<%= content_for(:description) do %>
+  Découvrez les bons plans de nos partenaires !
+<% end %>
+
+<%= render 'businesses/business_search_index' %>
+<%= render 'businesses/business_search_index_desk' %>
+
+<div class="container-fluid admin">
+  <% if user_signed_in? and !current_user.active %>
+    <div class="done-overlay waiting connexion-user">
+      <div class="done-container">
+        <div class="wrapper">
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 98.5 98.5" enable-background="new 0 0 98.5 98.5" xml:space="preserve">
+            <path class="checkmark" fill="none" stroke-width="3" stroke-miterlimit="10" d="M81.7,17.8C73.5,9.3,62,4,49.2,4
+          C24.3,4,4,24.3,4,49.2s20.3,45.2,45.2,45.2s45.2-20.3,45.2-45.2c0-8.6-2.4-16.6-6.5-23.4l0,0L45.6,68.2L24.7,47.3"/>
+          </svg>
+        </div>
+        <span>Félicitations !<br><small>Ton compte Cforgood est créé.</small></span>
+        <p>Ton espace sera très prochainement actif, surveille ta boîte mail dans les jours à venir.</p>
+        <%= link_to "À très vite !", destroy_user_session_path, method: :delete %>
+      </div>
+    </div>
+  <% else %>
+    <% if user_signed_in? %>
+      <% if !current_user.member %>
+        <%= render 'components/popups/not_member_dashboard' %>
+      <% elsif current_user.trial_done? %>
+        <!-- POPUP TRIAL -->
+        <%= render 'components/popups/welcome_member_trial' %>
+      <% elsif @businesses_around == 0 %>
+        <%= render 'components/popups/no_perks_dashboard' %>
+      <% end %>
+    <% else %>
+        <%#= render 'components/popups/not_user_signin_dashboard' %>
+    <% end %>
+    <!-- SIDEBAR -->
+    <%= render "member/dashboard/shared/sidebar" %>
+
+    <!-- DASHBOARD CONTAINER -->
+    <div class="dashboard">
+
+      <div class="mobile-menu-overlay hidden"></div>
+
+      <!-- MENU | NOTIFICATION -->
+      <%#= render 'components/menu/notification_center' %>
+
+      <!-- FLASH | FIND PERK -->
+      <%= render 'components/user_dashboard/flash_button' %>
+
+      <!-- MENU | CATEGORY FILTER -->
+      <%= render 'components/menu/search_category' %>
+
+      <!-- ON MOBILE | WELCOME -->
+      <%#= render 'components/user_dashboard/welcome_user' %>
+
+      <!-- MAP -->
+      <div id="map-dashboard" class="user-map-businesses" style="width: 100%;"></div>
+
+      <!-- POPUP PERKS WITHOUT FEEDBACK -->
+      <% @uses_without_feedback.each do |use| %>
+        <%= render(partial: 'uses/form/feedback_dashboard', locals: { use: use }) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<% content_for(:after_js) do %>
+
+  <%= render 'components/map', geojson: @geojson %>
+
+  <script>
+
+    $(document).ready(function(){
+
+      // SET VISIBLE OR NOT LAYERS ON MAP
+      function setLayerVisibilty() {
+        var input = document.getElementsByClassName('category-item');
+        var i;
+        for (i = 0; i < input.length; i++) {
+          var filter = input[i].getAttribute('id');
+          var currentFilter = filter;
+          var outFilter = filter+"-flash"
+          // REVERSE CURRENT FILTER IF FLASH
+          if ($(".flash").hasClass('is-running')) {
+            currentFilter = outFilter;
+            outFilter = filter;
+          }
+          // HIDE NOT CURRENT LAYERS
+          if (map.getLayer(outFilter) != undefined) {
+            map.setLayoutProperty(outFilter, 'visibility', 'none');
+          }
+          // SET VISIBLE LAYERS SELECTED
+          if ($('#categories-all').hasClass('is-selected')) {
+            if (map.getLayer(currentFilter) != undefined) {
+              map.setLayoutProperty(currentFilter, 'visibility', 'visible');
+            }
+          } else {
+            if (map.getLayer(currentFilter) != undefined) {
+              map.setLayoutProperty(currentFilter, 'visibility',
+              input[i].classList.contains("is-selected") ? 'visible' : 'none');
+            }
+          }
+        }
+      }
+
+      // TOOGLE FLASH PERKS LAYER ON MAP
+      $('.in-central-city').click(function(event) {
+        $('.mapboxgl-popup').addClass('hidden');
+        $('.flash').toggleClass('is-running');
+        setLayerVisibilty();
+      });
+      $('.category-item').click(function(event) {
+        if ($(this).val('div').attr('id') != 'categories-all') {
+          $(this).toggleClass('is-selected');
+          $('#categories-all').removeClass('is-selected');
+        } else {
+          $('.category-item').removeClass('is-selected');
+          $('#categories-all').addClass('is-selected');
+        }
+        // SET VISIBLE OR NOT LAYERS ON MAP
+        setLayerVisibilty();
+      });
+
+      // TOOGLE NOTIFICATION CENTER MENU & HIDE CATEGORY MENU
+      $('#open-notification').click(function(event) {
+        $('.notification-center-overlay').toggleClass('hidden');
+        $('.search-category-overlay').addClass('hidden');
+        // HIDE CATEGORY MENU
+        $('.search-category').removeClass('is-open-max');
+        $('.category-item').removeClass('is-open-min');
+        // TOOGLE NOTIFICATION CENTER MENU
+        $('.notification-center').toggleClass('is-open-max');
+        $('.notification-panel').toggleClass('is-open-min');
+      });
+
+      // TOOGLE NOTIFICATION CENTER OVERLAY
+      $('.notification-center-overlay').click(function(event) {
+        $(this).addClass('hidden');
+        $('.notification-center').toggleClass('is-open-max');
+        $('.notification-panel').toggleClass('is-open-min');
+      });
+
+      // TOOGLE CATEGORY MENU & HIDE NOTIFICATION CENTER
+      $('#open-categories').click(function(event) {
+        $('.search-category-overlay').toggleClass('hidden');
+        $('.notification-center-overlay').addClass('hidden');
+        //HIDE NOTIFICATION CENTER
+        $('.notification-center').removeClass('is-open-max');
+        $('.notification-panel').removeClass('is-open-min');
+        // TOOGLE CATEGORY MENU
+        $('.search-category').toggleClass('is-open-max');
+        $('.category-item').toggleClass('is-open-min');
+      });
+
+      // TOOGLE CATEGORY OVERLAY
+      $('.search-category-overlay').click(function(event) {
+        $(this).addClass('hidden');
+        $('.search-category').removeClass('is-open-max');
+        $('.category-item').removeClass('is-open-min');
+      });
+
+      // CLOSE BUTTON FOR POP_UP
+      $(".close-button").click(function() {
+        $('.use-overlay').addClass('hidden');
+      });
+
+      // DISPLAY FIRST POPUP FEEDBACK
+      $('.feedback-overlay').first().removeClass('hidden');
+
+      // EVENT AMPLITUDE : USER_DASHBOARD
+      amplitude.logEvent('USER_DASHBOARD');
+    });
+
+  </script>
+
+<% end %>

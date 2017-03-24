@@ -1,0 +1,192 @@
+/* NO PERKS *******************************************************************/
+.popup-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 200;
+  background-color: rgba(0,0,0,0.6);
+  @include transition(all, 0.3s, ease-in-out);
+
+  .popup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 45px 20px 20px;
+    width: 300px;
+    height: 420px;
+    background-color: #fff;
+    border-radius: 3px;
+    z-index: 500;
+
+    .close-popup {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 20px;
+      color: #636363;
+      cursor: pointer;
+
+      &:hover {
+         color: #000;
+      }
+    }
+
+    span {
+      padding-top: 30px;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 18px;
+      text-align: center;
+
+      small {
+        font-size: 15px;
+        text-transform: none;
+        color: #636363;
+      }
+    }
+
+    p {
+      margin: 0;
+      padding: 15px 10px;
+      font-size: 12px;
+      color: #636363;
+      text-align: center;
+    }
+  }
+
+  /* CONFIRMATION CHECKMARK ***************************************************/
+  .confirmation {
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 20px 15px;
+      width: 130px;
+      min-height: 130px;
+      background-color: #9FD6AE;
+      border-radius: 50%;
+
+      svg {
+        height: 64px;
+        width: 64px;
+      }
+
+      .checkmark {
+        stroke: #fff;
+        stroke-dashoffset: 745.74853515625;
+        stroke-dasharray: 745.74853515625;
+        animation: dash 2s ease-out forwards;
+         -webkit-animation-delay: 2s;
+        animation-delay: 1s;
+      }
+
+      @keyframes dash {
+        0% {
+          stroke-dashoffset: 745.74853515625;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      a {
+        position: absolute;
+        padding: 10px 0;
+        margin: 0;
+        width: 100%;
+        left: 0px;
+        bottom: 0;
+        background-color: #f4f4f4;
+        border-radius: 0 0 3px 3px;
+        text-align: center;
+        font-size: 12pvx;
+        color: #636363;
+        text-decoration: underline;
+
+        &:hover, &:active, &:focus {
+          color: #636363;
+        }
+      }
+    }
+  }
+
+
+  /* CAUSE VALIDATION & DELETE PERK********************************************/
+  .cause-confirmation, .delete-perk {
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 20px 15px;
+      width: 130px;
+      min-height: 130px;
+      background-color: #f4f4f4;
+      border-radius: 50%;
+
+      svg {
+        height: 64px;
+        width: 64px;
+      }
+    }
+
+    .cause-name {
+      padding-top: 0;
+      font-size: 12px;
+    }
+  }
+
+  /* STOP SUBSCRIPTION ********************************************************/
+  .stop-confirmation-button {
+    margin-top: 50px;
+  }
+
+
+  /* NO PERKS *****************************************************************/
+  .no-perks {
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background-color: #f4f4f4;
+
+      svg {
+        height: 128px;
+        width: 128px;
+      }
+    }
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      width: 100%;
+      background-color: #9FD6AE;
+      border-radius: 3px;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #fff;
+      @include transition(all, 0.3s, ease-in-out);
+
+      &:hover {
+        background-color: #8BBD99;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width:769px){
+  .popup-overlay {
+    left: 15%;
+  }
+}

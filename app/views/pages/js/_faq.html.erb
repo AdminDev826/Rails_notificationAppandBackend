@@ -1,0 +1,12 @@
+<script>
+
+  $(document).ready(function() {
+    $("ul li div.faq-question").on("click", function() {
+      $(this).next("div.faq-answer").slideToggle();
+      $("div.faq-question").not(this).next("div.faq-answer").slideUp();
+      $("div.faq-question i.fa-chevron-circle-down").addClass("fa-chevron-circle-right").removeClass("fa-chevron-circle-down");
+      $("i", this).toggleClass("fa-chevron-circle-right").toggleClass("fa-chevron-circle-down");
+    });
+  });
+
+</script>

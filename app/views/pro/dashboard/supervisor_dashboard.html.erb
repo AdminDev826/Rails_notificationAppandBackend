@@ -1,0 +1,82 @@
+<%= content_for(:title) do %>
+<%= @business.name %>
+<% end %>
+<%= content_for(:description) do %>
+Consultez vos chiffres
+<% end %>
+
+<div class="container-fluid admin">
+  <!-- Sub Menu Sidebar -->
+  <%= render "pro/dashboard/shared/supervisor_sidebar" %>
+  <!-- Content - Statistics -->
+  <div class="dashboard">
+    <div class="mobile-menu-overlay hidden"></div>
+    <!-- UPDATE PROFILE CONFIRMATION -->
+    <%= render "pro/dashboard/shared/updated" %>
+    <div class="mobile-title">
+      <%= image_tag('logopouce.png', class: '') %>
+      <span>Mon compte</span>
+    </div>
+    <div class="tab-container">
+      <!-- Nav tabs -->
+      <ul id="menu" class="nav nav-tabs">
+        <li role="profile" class="active">
+          <%= link_to "#data", role: "tab", data_toggle: "tab" do %>
+            <i class="fa fa-tachometer" aria-hidden="true"></i>
+            <span>Mes chiffres</span>
+          <% end %>
+        </li>
+        <li role="profile">
+          <%= link_to "#shop", role: "tab", data_toggle: "tab" do %>
+           <i class="fa fa-list" aria-hidden="true"></i>
+           <span>Les commerces</span>
+          <% end %>
+        </li>
+        <li role="profile">
+          <%= link_to "#business", role: "tab", data_toggle: "tab"  do %>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span>Mes informations</span>
+          <% end %>
+        </li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="data">
+          <%= render "pro/dashboard/shared/supervisor_data" %>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="shop">
+          <%= render "pro/dashboard/shared/businesses_list" %>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="business">
+          <%= render "pro/dashboard/form/form_supervisor" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+      $("#menu a").click(function (e) {
+        e.preventDefault();
+        $(".alert").remove();
+        $(this).tab('show');
+      });
+
+      // store the currently selected tab in the hash value
+      $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+        var id = $(e.target).attr("href").substr(1);
+        window.location.hash = id;
+      });
+
+      // on load of the page: switch to the currently selected tab
+      var hash = window.location.hash;
+      $('#menu a[href="' + hash + '"]').tab('show');
+    });
+
+  </script>
+
+<% end %>

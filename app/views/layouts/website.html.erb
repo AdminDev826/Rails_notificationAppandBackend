@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render "layouts/shared/head" %>
+  </head>
+
+  <body>
+    <div class="mobile-hidden">
+      <%= render "layouts/shared/navbar_logout" %>
+    </div>
+    <div id="menu-overlay" class="logout">
+      <%= yield %>
+      <%= render "layouts/shared/footer" if pages_controller? %>
+    </div>
+    <%= render "layouts/shared/js" %>
+    <%#= render "layouts/shared/js/speaklyn" %>
+    <%= yield(:after_js) %>
+  </body>
+</html>

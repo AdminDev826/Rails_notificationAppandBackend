@@ -1,0 +1,248 @@
+.form-edit {
+  position: relative;
+
+  img {
+    border-radius: 50%;
+  }
+
+  .form-group {
+    float: left;
+    width: 50%;
+  }
+  abbr { display: none; }
+
+  span {
+    display: block;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  label {
+    display: block;
+  }
+
+  input {
+
+  }
+
+  select {
+    width: 33.33333%;
+    display: inline-block;
+    float: left;
+  }
+}
+
+/* ALGOLIA ********************************************************************/
+
+.algolia-places {
+
+  .ap-input {
+    font-weight: 400;
+  }
+
+  .ap-input-icon svg {
+    width: 10px;
+    opacity: 0.8;
+  }
+
+  .ap-with-places span {
+    display: inline;
+    font-size: 14px;
+  }
+}
+
+.subscription-form .ap-input-icon {
+  top: 8px;
+  right: 0;
+}
+
+/* SELECT IMPERSONATE BUSINESS */
+
+// .form-group {
+//   padding: 25px;
+// }
+
+// .form-group.above {
+//   position: fixed;
+//   bottom: 0; left: 0; right: 0;
+// }
+
+.select2-container--default {
+  max-width: 200px;
+}
+
+
+.select2-container--open .select2-selection {
+  box-shadow: none !important;
+}
+
+.select2-container--default .select2-selection--single,
+.select2-dropdown.select2-dropdown--below .select2-results,
+.select2-dropdown .select2-search,
+#select2-impersonate_id-container {
+  font-size: small;
+  font-weight: 100;
+  text-transform: none;
+  text-align: left;
+}
+
+.select2-search__field:focus {
+  outline: none;
+}
+
+.select2-container--open .select2-selection .select2-selection__arrow {
+  z-index: 9999;
+}
+
+.select2-dropdown {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  border-top-width: 1px!important;
+  border-top-style: solid!important;
+  border-top-left-radius: 4px!important;
+  border-top-right-radius: 4px!important;
+  margin-top: -34px!important;
+}
+
+// .select2-dropdown .select2-search{
+//   padding: 0;
+// }
+
+// .select2-dropdown .select2-search .select2-search__field {
+//   border-top: 0;
+//   border-left: 0;
+//   border-right: 0;
+//   border-radius: 0;
+//   padding: 6px 12px;
+//   height: 33px;
+// }
+
+// .select2-dropdown.select2-dropdown--above {
+//   border-bottom: 1px solid red;
+//   border-bottom-left-radius: 4px;
+//   border-bottom-right-radius: 4px;
+//   margin-top: 34px!important;
+// }
+
+// .select2-dropdown.select2-dropdown--above .select2-search .select2-search__field {
+//   border-top: 1px solid red;
+//   border-bottom: 0;
+// }
+
+/* BENEFICIARY FORM ***********************************************************/
+
+.pack-gift {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0 0;
+}
+
+.pack-gift-comment {
+  padding: 0 20px 10px;
+}
+
+.radio-tile-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  //set dimensions for invisible container
+  .input-container {
+    position: relative;
+    height:  5rem;
+    width:  5rem;
+    margin: 0 2rem;
+
+    //make actual radio input invisible
+    // + stretch to fill container
+    .radio-button {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    //default tile styles
+    .radio-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      border: 2px solid $turquoise;
+      border-radius: 50%;
+      padding: 1rem;
+      transition: transform 300ms ease;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .present-3month {
+      width: 70% !important;
+    }
+
+    .icon svg {
+      fill: $turquoise;
+      width: 3rem;
+      height: 3rem;
+    }
+
+    //active tile styles
+    .radio-button:checked + .radio-tile {
+      background-color: $turquoise;
+      border: 2px solid $turquoise;
+      color: white;
+      transform: scale(1.1, 1.1);
+
+      .icon svg {
+        fill: white;
+        background-color: $turquoise;
+      }
+
+      .radio-tile-label {
+        color: white;
+        background-color: $turquoise;
+      }
+    }
+  }
+}
+
+.radio-tile-label {
+  text-align: center;
+  font-size: 1.1rem !important;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0 0.85em;
+}
+
+.icon-card {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  padding: 10px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translateX(-50%);
+
+  @media (max-width: 767px) {
+    position: relative;
+    margin-bottom: 20px;
+    top: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,16 @@
+<div class="form-create-address">
+  <!-- FORM CREATE ADDRESS -->
+  <%= simple_form_for [:pro, current_business, address], remote: true, method: :post do |f| %>
+    <%= f.input :day, as: :hidden, input_html: { value: day } %>
+    <%= f.input :active, as: :boolean, label: 'Adresse active', checked: true %>
+    <label class="hint--top-right" data-hint="Quels sont tes horaires aujourd'hui ?">Horaire</label>
+    <%= f.input :start_time_hour, label: "De", collection: pad0(0..23), selected: "12" %>
+    <%= f.input :start_time_min, label: ":", collection: pad0([0, 15, 30, 45]), selected: "00" %>
+    <%= f.input :end_time_hour, label: "à", collection: pad0(0..23), selected: "14" %>
+    <%= f.input :end_time_min, label: ":",collection: pad0([0, 15, 30, 45]), selected: "00" %>
+    <%= f.input :street, placeholder: 'Rue', label: 'Adresse *' %>
+    <%= f.input :zipcode, placeholder: 'Code postal', label: 'Code postal *' %>
+    <%= f.input :city, placeholder: 'Ville', label: 'Ville *' %>
+    <%= f.button :submit, "Ajouter cette adresse", class: "btn-new", disabled: true  %>
+  <% end %>
+</div>

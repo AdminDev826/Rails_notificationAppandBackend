@@ -1,0 +1,79 @@
+ <div class="form-card">
+  <!-- SIGNUP FORM USER -->
+  <div class="subscription-form">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= image_tag "citoyen.svg", class: "avatar-citoyen" %>
+      <div id="error-code">
+        <%= flash[:alert].humanize unless flash[:alert] == nil %>
+      </div>
+      <%= f.input :first_name, placeholder: 'Prénom', required: true, label: false, input_html: { value: session[:beneficiary_first_name] || nil } %>
+      <%= f.input :last_name, placeholder: 'Nom', required: true, label: false, input_html: { value: session[:beneficiary_last_name] || nil } %>
+      <%= f.input :email, placeholder: 'Adresse email', required: true, label: false, input_html: { value: session[:beneficiary_email] || nil } %>
+      <%= f.input :password, placeholder: '********', required: true, label: false %>
+      <%= f.input :city, placeholder: 'Ville', required: true, label: false %>
+      <%= f.input :zipcode, as: :hidden %>
+
+      <div class="subscribe-disclaimer">
+        <p>En cliquant sur <strong>S'inscrire</strong> ou <strong>Facebook</strong> vous acceptez les <a type="href" class="" data-toggle="modal" data-target="#modal-cgu"><strong>CGU</strong></a> et certifiez avoir de plus de 18 ans.</p>
+      </div>
+
+      <%= f.button :submit, "S'inscrire", class: "btn btn-connexion hint--top btn-user-connexion", :"data-hint" => "En cliquant sur S'inscrire ou Facebook vous acceptez les CGU et certifiez avoir de plus de 18 ans." %>
+    <% end %>
+  </div>
+  <!-- FB & GOOGLE SUBSCRIPTION BUTTONS -->
+  <div class="subscription-network">
+    <span>ou</span>
+    <%= link_to raw("<i class='fa fa-facebook' aria-hidden='true'></i>Se connecter avec Facebook"), user_facebook_omniauth_authorize_path, class: "btn btn-connexion" %>
+    <%#= link_to raw("<i class=\"fa fa-google\">Google</i>"), user_omniauth_authorize_path(:google_oauth2), class: "btn-google" %>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      var placesAutocomplete = places({
+        container: document.querySelector('#user_city'),
+        type: 'city',
+        aroundLatLngViaIP: false,
+        templates: {
+          value: function(suggestion) {
+            return suggestion.name;
+          }
+        }
+      });
+
+      placesAutocomplete.on('change', function resultSelected(e) {
+        document.querySelector('#user_zipcode').value = e.suggestion.postcode || '';
+      });
+
+      $("#new_user").validate({
+        lang: 'fr',
+        rules: {
+          first_name: {
+            required: true,
+          },
+          last_name: {
+            required: true,
+          },
+          city: {
+            required: true
+          }
+        }
+      });
+
+      $('.btn-user-connexion').on('click', function(e) {
+        if ( $('#user_zipcode').val() == "" || $('#user_zipcode').val() == null ) {
+          e.preventDefault();
+          $("#error-code").html('Sélectionnez une ville existante !');
+        }
+      });
+    });
+
+</script>
+
+<% end %>
+
+

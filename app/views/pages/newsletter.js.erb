@@ -1,0 +1,7 @@
+$("form.newsletter .newsletter_email .error-newsletter").remove();
+$("form.newsletter .newsletter_email .info-newsletter").remove();
+
+if (<%= @result.present? %>) {
+  $(document).find("form.newsletter .newsletter_email").append('<%= raw @result %>');
+}
+

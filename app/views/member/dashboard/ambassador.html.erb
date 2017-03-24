@@ -1,0 +1,165 @@
+<%= content_for(:title) do %>
+  Espace ambassadeur
+<% end %>
+<%= content_for(:description) do %>
+  Votre espace ambassadeur
+<% end %>
+
+<div class="container-fluid admin">
+  <!-- Sub Menu Sidebar -->
+  <%= render "member/dashboard/shared/sidebar" %>
+  <!-- Content -->
+  <div class="dashboard ambassador <%= current_user.ambassador %>">
+
+    <% if !current_user.ambassador %>
+
+      <!-- NOT AMBASSADOR -->
+      <div class="picture-container">
+        <% if current_user.picture? %>
+          <%= image_tag current_user.picture.url(:avatar), class: "img-circle user" %>
+        <% else %>
+          <!-- <div class="picture-none"> -->
+            <%= image_tag "citoyen.svg", class: "pastille-citoyen"%>
+          <!-- </div> -->
+        <% end %>
+      </div>
+      <h2> Rejoignez la communauté<br>Cforgood</h2>
+      <p class="testimonial">« Ils sont écolos, végétarien, trient leurs déchets, aiment les médecines alternatives… OU PAS ! <br>
+      Ils sont surtout à l'affût, conscients des enjeux et ont envie de changement à leur échelle.
+      Grâce à eux, la Révolution Positive est possible. »</p>
+
+      <p class="testi-bis">Rejoignez la communauté des Ambassadeurs et participez à la Révolution Positive en détectant et en impliquant les acteurs qui vont dans le bon sens autour de vous.
+
+      Vous allez vivre de l'intérieur cette révolution et aurez plus que jamais la parole pour faire grandir CforGood.
+
+      On vous promet une aventure folle pleine de rencontres bienveillantes, de bonnes idées, de surprises, de challenges et d'événements enthousiasmants !</p>
+      <!-- <span class="label-info">Demande en cours de modération</span> -->
+      <a class="button-link" href="https://cforgood1.typeform.com/to/erHCLs" data-mode="1" target="_blank">Devenir Ambassadeur</a>
+
+    <% else %>
+
+      <!-- AMBASSADOR -->
+      <div class="ambassasor-container">
+        <!-- Header -->
+        <div class="header-ambassador">
+          <div class="picture-container">
+            <% if current_user.picture? %>
+              <%= image_tag current_user.picture.url(:avatar), class: "img-circle user" %>
+            <% else %>
+              <!-- <div class="picture-none"> -->
+                <%= image_tag "citoyen.svg", class: "pastille-citoyen"%>
+              <!-- </div> -->
+            <% end %>
+          </div>
+          <div class="user-status">
+            <% if current_user.last_name != "" && current_user.last_name != nil %>
+              <p><%= current_user.first_name %> <%= current_user.last_name.chars.first + "." %></p>
+            <% elsif current_user.name != "" && current_user.name != nil %>
+              <p><%= current_user.name.split(" ")[0] %></p>
+            <% end %>
+            <span class="label-info">Ambassadeur</span>
+          </div>
+          <a href="https://www.appsheet.com/start/3ffdccbf-a018-4518-812b-22e6e30d08d1?utm_medium=email&utm_source=transactional&utm_campaign=Share+the+App+Conversions#_appName=AmbassadeurBoard-217783&_control=Bordeaux&_imageDisplayType=Square+Image&_page=deck&_showActionBar=true&_sortBy%5B0%5D%5BColumn%5D=Commerce&_sortBy%5B0%5D%5BOrder%5D=Ascending&_sortBy%5B1%5D%5BColumn%5D=Commer%C3%A7ant&_sortBy%5B1%5D%5BOrder%5D=Ascending&_table=Board+tri%C3%A9button" class="button-link app" target="_blank">Accès app ambassadeur</a>
+        </div>
+        <!-- Pitch -->
+        <div class="pitch">
+          <div class="pitch-text">
+          <h3>Le Pitch</h3>
+          <ul>
+            <li>
+              <h4>Pour les membres</h4>
+              <p>CforGood est une Carte de Consommation Positive qui permet de bénéficier de réductions chez les commerces responsables autour de soi en échange d’un don libre à une association.</p>
+            </li>
+             <li>
+              <h4>Pour les commerçants</h4>
+              <p>CforGood est une plateforme qui connecte en temps réel les commerçants responsables aux citoyens autour d’eux, pour les aider à se faire connaitre et à vendre à temps leurs produits à prix réduits.</p>
+            </li>
+             <li>
+              <h4>Pour les associations</h4>
+              <p>CforGood est une plateforme collaborative qui favorise le soutien associatif en offrant aux citoyens un moyen simple et valorisant de vous aider !</p>
+            </li>
+          </ul>
+           <button class="button-more see-more">En voir +</button>
+          </div>
+          <div class="pitch-video">
+            <div class="embed-container video">
+              <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fcforgood%2Fvideos%2F627492804100252%2F&show_text=0&width=560&autoplay=1" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+            </div>
+          </div>
+        </div>
+        <!-- Tools -->
+        <div class="tools">
+          <h3>Vos outils</h3>
+          <ul>
+            <li>
+              <button class='button-link-square modal-presentation button-modal'>
+                <%= render 'shared/icons/view_headline' %>
+              </button>
+              <p>Présentation</p>
+            </li>
+            <li>
+              <button class='button-link-square modal-community button-modal'>
+                <%= render 'shared/icons/location_city' %>
+              </button>
+              <p>Lancer la communauté dans ma ville</p>
+            </li>
+            <li>
+             <button class='button-link-square modal-prospection button-modal'>
+                <%= render 'shared/icons/turned_in_not' %>
+              </button>
+              <p>Guide de prospection</p>
+            </li>
+            <li>
+              <button class='button-link-square modal-questions button-modal'>
+                <%= render 'shared/icons/highlight' %>
+              </button>
+              <p>Foires aux questions</p>
+            </li>
+            <li>
+              <button class='button-link-square modal-ideas button-modal'>
+                <%= render 'shared/icons/plus_one' %>
+              </button>
+              <p>Boîte à idées</p>
+            </li>
+            <li>
+              <a class="button-link-square" href="//bit.ly/kit_ambassadeur_cforgood" data-mode="1" target="_blank">
+                <%= render 'shared/icons/plus' %>
+              </a>
+              <p>Kit Ambassadeur</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render partial: 'components/modals/modal_template', locals: {id: "see-more", source: "//bit.ly/2dvcJcm", style:"width:100%; height:600px; border:0;"} %>
+<%= render partial: 'components/modals/modal_template', locals: {id: "modal-presentation", source: "//bit.ly/Presentation_commerçant_CforGood", style:"width:100%; height:600px; border:0;"} %>
+<%= render partial: 'components/modals/modal_template', locals: {id: "modal-community", source: "//bit.ly/nouvelle_ville", style:"width:100%; height:600px; border:0;"} %>
+<%= render partial: 'components/modals/modal_template', locals: {id: "modal-prospection", source: "//bit.ly/guide_prospection", style:"width:100%; height:600px; border:0;"} %>
+<%= render partial: 'components/modals/modal_template', locals: {id: "modal-questions", source: "//bit.ly/FAQ_cforgood", style:"width:100%; height:600px; border:0;"} %>
+<%= render partial: 'components/modals/modal_template', locals: {id: "modal-ideas", source: "//bit.ly/boite_idée", style:"width:100%; height:600px; border:0;"} %>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      $(".button-modal, .button-more").click(function() {
+        var idModal = $(this).attr('class').split(" ")[1];
+        $("#"+idModal).removeClass('hidden');
+      });
+
+      $('.button-close').click(function() {
+        var idModal = $(this).attr('class').split(" ")[1];
+        $("#"+idModal).addClass('hidden');
+      });
+
+    });
+
+  </script>
+
+<% end %>
+

@@ -1,0 +1,81 @@
+#faq {
+  background-color: #fff;
+  text-align: left;
+  list-style: none;
+
+  h2, h3 {
+    text-align: center;
+  }
+
+  i {
+    padding-right: 8px;
+    color: $turquoise;
+  }
+
+  ul {
+    list-style-type: none;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  strong {
+    font-weight: 500;
+  }
+
+  .faq-list {
+    margin-top: 35px;
+    text-align: left;
+  }
+
+  li {
+
+    .faq-subject {
+      background-color: #f9f9f9;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .faq-question, .faq-question-hidden {
+      text-transform: uppercase;
+      font-weight: 100;
+      padding: 10px;
+      margin-top: 5px;
+      background-color: #f5f5f5;
+      cursor: pointer;
+    }
+
+    .faq-question-hidden {
+      display: none;
+      padding-left: 25px;
+    }
+
+    .faq-answer {
+      display: none;
+      text-transform: none;
+      font-weight: 200;
+      padding: 25px;
+      margin-bottom: 5px;
+      background-color: #eee;
+    }
+  }
+
+  .logo-mangopay {
+    text-align: center;
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
+#faq-contact {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 1.1rem;
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+
+

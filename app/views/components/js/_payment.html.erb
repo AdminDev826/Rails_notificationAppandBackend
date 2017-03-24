@@ -1,0 +1,121 @@
+<script>
+
+  $(document).ready(function() {
+
+    $.validator.addMethod("datePostToday",function(value, element) {
+      var today = new Date();
+      var todayMonth = today.getMonth()+1;
+      var todayYear = today.getFullYear().toString().substr(2,2);
+      var valueMonth = value.substr(0,2);
+      var valueYear = value.substr(2,2);
+      return (valueYear > todayYear || (valueYear == todayYear && valueMonth >= todayMonth));
+    }, "La date d'expiration ne doit pas être révolue");
+
+    $("#form-card-creation").validate({
+      lang: 'fr',
+      rules: {
+        card_number: {
+          required: true,
+          digits: true,
+          minlength: 16,
+          maxlength: 16,
+        },
+        card_exp_date: {
+          required: true,
+          digits: true,
+          minlength: 4,
+          maxlength: 4,
+          datePostToday: true,
+        },
+        card_cvx: {
+          required: true,
+          digits: true,
+          minlength: 3,
+          maxlength: 3
+        }
+      }
+    });
+
+    $("#form-card-creation").on("submit", function(e) {
+      e.preventDefault();
+      if ($("#form-card-creation").valid()) {
+        $("#loading-indicator").show();
+        var cardPreRegistration = <%= current_user.mangopay_id ? raw(MangopayServices.new(current_user).create_mangopay_card_pre_registration.to_json) : "null" %>;
+
+        // Initialize with card register data prepared on the server
+        mangoPay.cardRegistration.init({
+          cardRegistrationURL: cardPreRegistration.CardRegistrationURL,
+          preregistrationData: cardPreRegistration.PreregistrationData,
+          accessKey: cardPreRegistration.AccessKey,
+          Id: cardPreRegistration.Id
+        });
+
+        // Card data collected from the user
+        var cardData = {
+          cardNumber: $("#card_number").val(),
+          cardExpirationDate: $("#card_exp_date").val(),
+          cardCvx: $("#card_cvx").val(),
+          cardType: "CB_VISA_MASTERCARD"
+        };
+
+        // Set MangoPay API base URL and Client ID
+        mangoPay.cardRegistration.baseURL   = "<%= ENV['MANGOPAY_API_URL'] %>";
+        mangoPay.cardRegistration.clientId  = "<%= ENV['MANGOPAY_CLIENT_ID'] %>";
+        var validateCard = mangoPay.cardRegistration._validateCardData(cardData);
+
+        if (validateCard) {
+          // Register card
+          mangoPay.cardRegistration.registerCard(
+            cardData,
+            function(res) {
+              $("#card_id").val(res.CardId);
+              $(".btn-create-card").click();
+              // Success, you can use res.CardId now that points to registered card
+            },
+            function(res) {
+              $("#loading-indicator").hide();
+              $(".error-message").html(res.ResultMessage);
+              $(".signup-done-overlay.ko").removeClass('hidden');
+              // Handle error, see res.ResultCode and res.ResultMessage
+            }
+          );
+        };
+      };
+    });
+
+    $(".signup-payment .signup-prev").on("click", function(e) {
+      e.preventDefault;
+      $(".signup-payment").removeClass("slideup").addClass("ishidden");
+      $(".signup-plan").removeClass("ishidden").addClass("slidedown");
+      $("#signup-breadcrumb").removeClass("slide-3");
+      if (!$('.message-subscription').hasClass('hidden')) {
+        $('.message-subscription').addClass('hidden');
+        $(".rollback_code_partner").click();
+      }
+
+      // EVENT AMPLITUDE : USER_C_SIGNUP1_NEXT
+      amplitude.logEvent('USER_C_SIGNUP3_PREV');
+    });
+
+    $(".btn-create-card").on("click", function() {
+      <% if controller_path == "member/dashboard" %>
+        // EVENT AMPLITUDE : USER_C_PROFILE_MYSUBSCRIPTION_VALIDATED
+        amplitude.logEvent('USER_C_PROFILE_MYSUBSCRIPTION_VALIDATED');
+      <% else %>
+        // EVENT AMPLITUDE : USER_C_SIGNUP3_VALIDATED
+        amplitude.logEvent('USER_C_SIGNUP3_VALIDATED');
+      <% end %>
+    });
+
+    $(".btn-no-bank-details").on("click", function() {
+      <% if controller_path == "member/dashboard" %>
+        // EVENT AMPLITUDE : USER_C_PROFILE_MYSUBSCRIPTION_KO
+        amplitude.logEvent('USER_C_PROFILE_MYBANK_DETAILS_LATER');
+      <% else %>
+        // EVENT AMPLITUDE : USER_C_SIGNUP2_KO
+        amplitude.logEvent('USER_C_SIGNUP3_LATER');
+      <% end %>
+    });
+  });
+
+</script>

@@ -1,0 +1,34 @@
+$(".alert").remove();
+
+if (<%= !current_user.errors.any? %>) {
+  if (<%= !current_user.card_id.present? %>) {
+    $("#payment").removeClass('hidden');
+    $("#menu a.show-payment").tab('show');
+  } else {
+    if (<%= current_user.member %>) {
+      $(".stop-subscription").removeClass("disabled");
+    }
+
+    if (<%= current_user.code_partner.present? %>) {
+      $(".btn-subscription").val("M'abonner");
+      $("#user_code_partner").val("<%= current_user.code_partner%>").attr("disabled", "disabled");
+    } else {
+      $(".btn-subscription").val("Sauvegarder");
+      $("#user_code_partner").val("").removeAttr('disabled');
+    }
+
+    // DISCLAIMER - DISPLAYED
+    $(".done-overlay").removeClass("hidden");
+    $('.show-payment.btn').removeClass("disabled");
+
+    window.setTimeout(function(){
+      // DISCLAIMER - HIDDEN
+      $(".done-overlay").addClass("hidden");
+    }, 3000);
+  }
+
+} else {
+
+  $(document).find("form").prepend('<%= j render("components/error_messages", resource: current_user, formats: [:html]) %>');
+
+}

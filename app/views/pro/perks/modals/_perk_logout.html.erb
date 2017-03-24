@@ -1,0 +1,54 @@
+<div class="use-overlay hidden">
+  <div class="flip-container-mobile flip-signin">
+    <div class="flipper-mobile">
+      <!-- FRONT CARD-->
+      <figure class="front">
+        <!-- CLOSE BUTTON-->
+        <button type="button" class="close-button">&times;</button>
+        <!-- ILLUSTRATION-->
+        <div class="wrapper">
+          <%= render "shared/icons/bowtie" %>
+        </div>
+        <!-- CTA-->
+        <div class="container-code gentleman">
+          <span>Hey !</span>
+          <p>Ne manquez plus un seul bon plan !</p>
+          <!-- SIGNUP/SIGNIN BUTTONS -->
+          <%= link_to "S'inscrire", signup_path, class: "button-log sign-up" %>
+          <%= link_to "Se connecter", "#" , class: "button-log sign-in" %>
+        </div>
+      </figure>
+       <!-- BACK CARD -->
+      <figure class="back">
+        <!-- SIGNIN -->
+        <div class="connexion popup-signin">
+          <div class="sign-box">
+            <!-- CLOSE BUTTON-->
+            <button type="button" class="close-button-signin">&times;</button>
+            <%= render "devise/sessions/shared/form_signin_logout", resource: User.new, resource_name: :user%>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<% content_for(:after_js) do %>
+
+  <script>
+
+    $(document).ready(function() {
+
+      $(".button-log.sign-in").click(function() {
+        $('.flipper-mobile').toggleClass('flipped');
+      });
+
+       $(".close-button-signin").click(function() {
+        $('.use-overlay').addClass('hidden');
+        $('.flipper-mobile').toggleClass('flipped');
+      });
+
+    });
+
+  </script>
+<% end %>

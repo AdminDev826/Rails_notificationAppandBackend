@@ -1,0 +1,140 @@
+<%= content_for(:title) do %>
+  <%= @business.name %>
+<% end %>
+<%= content_for(:description) do %>
+  Consultez vos Bons Plans
+<% end %>
+
+<div class="container-fluid admin">
+  <!-- Sub Menu Sidebar -->
+  <% if current_business.supervisor %>
+    <%= render "pro/dashboard/shared/supervisor_sidebar" %>
+  <% else %>
+    <%= render "pro/dashboard/shared/sidebar" %>
+  <% end %>
+  <!-- Content - Statistics -->
+  <div class="dashboard">
+    <div class="mobile-menu-overlay hidden"></div>
+    <div class="admin-perks">
+      <%= image_tag('logopouce.png', class: 'logo-title') %>
+      <span class="view-title">Mes bons plans</span>
+      <% if current_business.supervisor && !current_impersonation %>
+        <%= render 'components/popups/supervisor_without_impersonate' %>
+      <% elsif @perks.count == 0 %>
+        <%= render 'components/popups/empty_perks_index' %>
+      <% else %>
+        <% @perks.reverse.each do |perk| %>
+          <div class="admin-perk-card">
+            <!-- PERK MAIN INFOS -->
+            <div class="perk-details">
+              <div class="perk-title">
+                <%= perk.name.upcase %>
+                <% if perk.appel %>
+                  <i class="fa fa-gift pro-card-perk-flash"></i>
+                <% end %>
+                <% if perk.durable %>
+                  <i class="fa fa-repeat pro-card-perk-flash"></i>
+                <% end %>
+                <% if perk.flash %>
+                  <i class="fa fa-bolt pro-card-perk-flash"></i>
+                <% end %>
+                <!-- CREATION DATE -->
+                <div class="perk-creation-date">
+                  <span>Créé : <em>le <%= perk.created_at.strftime("%d %b %Y") %></em></span>
+                </div>
+                <!-- PERK CODE -->
+                <% if PerkDetail.find(perk.perk_detail_id).name != "carte" %>
+                  <span class="perk-code">Code client : <%= perk.perk_code %></span>
+                <% end %>
+              </div>
+
+              <div class="perk-content">
+                <%= perk.description %>
+                <div class="perk-date">
+                  <% if perk.appel %>
+                    <span>Bon Plan de bienvenue</span>
+                  <% elsif perk.durable %>
+                     <span>Bon Plan durable</span>
+                  <% else %>
+                    <% if perk.times > 0 %>
+                      <span><i class="fa fa-barcode"></i><%= perk.times - Use.where(perk_id: perk.id).count %> restants</span>
+                    <% end %>
+                    <span><i class="fa fa-calendar-check-o"></i><%= render(partial: "components/perk_flash_period", locals: { start_date: perk.start_date, end_date: perk.end_date }) %></span>
+                  <% end %>
+                </div>
+                <!-- PERK STATS -->
+                <div class="perk-stats">
+                  <ul>
+                    <li>Vues <strong><%= perk.nb_views %></strong></li>
+                    <li>Utilisations <strong><%= perk.uses.count %></strong></li>
+                    <li>Clients <strong><%= perk.uses.select(:user_id).distinct.count %></strong></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- PERK ACTIVATION -->
+            <div class="perk-activation">
+              <span>Désactiver / Activer</span>
+              <input class="tgl tgl-light" id="<%= perk.id %>" type="checkbox" <%= 'checked="checked"' if perk.active %>>
+              <label class="tgl-btn" for="<%= perk.id %>"></label>
+              <%= simple_form_for :perk, url: pro_perk_path(perk.id), method: :patch, html: { id: "update_perk_#{perk.id}", class: "hidden" } do |f| %>
+                <%= f.input :active, as: :hidden, input_html: { value: !perk.active } %>
+                <%= f.submit "", :style => "display: none;" %>
+              <% end %>
+            </div>
+            <div class="perk-actions">
+              <!-- PERK PREVIEW -->
+              <%= link_to business_path(@business, perk_id: perk.id), target: "_blank", class: "perk-preview" do %>
+                <i class="fa fa-eye"></i>
+              <% end %>
+              <!-- PERK EDIT -->
+              <%= link_to edit_pro_perk_path(perk), class: "perk-status" do %>
+                <i class="fa fa-pencil"></i>
+              <% end %>
+              <!-- PERK DELETION -->
+              <a class="perk-delete-button perk-deletion" id="perk_<%= perk.id %>"><i class="fa fa-trash-o"></i></a>
+              <div class="hidden">
+                <%= simple_form_for :perk, url: pro_perk_path(perk), method: :delete, html: { id: "delete_perk_#{perk.id}" } do |f| %>
+                <%= f.submit "", :style => "display: none;" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'pro/perks/form/delete_confirmation' %>
+<%= render 'pro/perks/form/last_perk_deleted' %>
+<%= render 'pro/perks/form/last_perk_desactivated' %>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function() {
+      $(':checkbox').change(function(e) {
+        e.preventDefault();
+        var idPerk = $(this).val("form").attr('id');
+        var updatePerk = "update_perk_" + idPerk;
+        if ($('#' + idPerk).attr('checked') == 'checked' && <%= current_business.perks.active.count == 1 %>) {
+          $('.id-perk').html(updatePerk);
+          $(".last-perk-desactivated").toggleClass("hidden");
+        } else {
+          $('#' + updatePerk).submit();
+        }
+      });
+
+      $(".perk-delete-button").on("click", function() {
+        var deletePerk = "delete_" + ($(this).val("div").attr('id'));
+        $(".business-button").addClass(deletePerk);
+        if (<%= current_business.perks.active.count == 1 %>) {
+          $(".last-perk-deleted").toggleClass("hidden");
+        } else {
+          $(".delete-confirmation").toggleClass("hidden");
+        }
+      });
+
+    });
+  </script>
+<% end %>

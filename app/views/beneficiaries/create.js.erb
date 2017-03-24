@@ -1,0 +1,22 @@
+$(".alert").remove();
+
+if (<%= @beneficiary.errors.any? %>) {
+  $(document).find("form").prepend('<%= j render("components/error_messages", resource: @beneficiary, formats: [:html]) %>');
+} else {
+  if (<%= !current_user.card_id.present? %>) {
+    $(".form-card.beneficiary").addClass("hidden");
+    $(".gift-payment").removeClass("hidden");
+    $(".gift-payment").addClass("slideup");
+    $('.message-gift').removeClass('hidden');
+  } else {
+    // DISCLAIMER - DISPLAYED
+    $(".done-overlay").removeClass("hidden");
+
+    window.setTimeout(function(){
+      // DISCLAIMER - HIDDEN
+      $(".done-overlay").addClass("hidden");
+      window.location.href = "<%= member_user_dashboard_path(current_user) %>";
+    }, 3000);
+  }
+}
+

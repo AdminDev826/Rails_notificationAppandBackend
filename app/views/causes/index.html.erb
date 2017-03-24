@@ -1,0 +1,137 @@
+<%= content_for(:title) do %>
+  Associations
+<% end %>
+<%= content_for(:description) do %>
+  Découvrez notre liste de causes partenaires
+<% end %>
+
+<div class="container-fluid admin">
+  <!-- Sub Menu Sidebar -->
+  <%= render "member/dashboard/shared/sidebar" %>
+  <!-- Content - Statistics -->
+  <div class="dashboard dashboard-causes">
+    <div class="mobile-menu-overlay hidden"></div>
+
+    <!-- MENU | CATEGORY FILTER -->
+    <%= render 'components/menu/index_causes_search_category' %>
+
+    <div class="asso-header">
+      <div class="asso-header-count-container">
+        <div class="asso-number"><%= @causes.count %></div>
+        <div class="asso-text">Associations</div>
+      </div>
+    </div>
+
+    <div id="assos">
+
+      <div id="mixitup" class="container-perk-cards">
+        <ul class="list">
+        <% @causes.each do |cause| %>
+          <% if cause.id != ENV['CAUSE_ID_CFORGOOD'].to_i %>
+            <!-- COMPONENT | CARD BON PLAN -->
+            <%= link_to cause_path(cause), class: "card-frame mix #{cause.cause_category_id}" do %>
+              <!-- CARD HEADER -->
+                <div class="card-body" style="background-image: url('<%= cause.picture.url(:card) %>');">
+                  <div class="disque-item item-category" style="background-color: <%= cause.cause_category.color %>;">
+                    <%= image_tag cause.cause_category.picture %>
+                  </div>
+                  <span class="name"><%= cause.name %></span>
+                  <div class="category hidden"><%= cause.cause_category.name %></div>
+                  <p><%= truncate(cause.description, length: 190) %></p>
+                  <div class="disque-item item-logo">
+                    <%= image_tag cause.logo %>
+                  </div>
+                </div>
+
+            <% end %>
+            <!-- END | CARD BON PLAN -->
+          <% end %>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <!-- END | DASHBOARD CAUSES -->
+  </div>
+ <!-- END | ADMIN -->
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function(){
+      $('#mixitup').mixItUp({
+        load:{
+          filter: 'all'
+        },
+        animation: {
+          duration: 300,
+          effects: 'fade',
+          easing: 'ease'
+        },
+        selectors: {
+          filter: '.filter-btn'
+        },
+        controls: {
+          enable: true
+        }
+      });
+
+      $('.category-item').click(function(event) {
+        if ($(this).val('div').attr('id') != 'categories-all'){
+          $('.category-item').removeClass('is-selected'); // TO DELETE FOR MULTIPLE SELECTION
+          $('#categories-all').removeClass('is-selected');
+          $(this).toggleClass('is-selected');
+        } else {
+          $('.category-item').removeClass('is-selected');
+          $('#categories-all').addClass('is-selected');
+        }
+      });
+
+      // TOOGLE CATEGORY MENUs
+      $('#open-categories').click(function(event) {
+        $('.search-category-overlay').toggleClass('hidden');
+        // TOOGLE CATEGORY MENU
+        $('.search-category').toggleClass('is-open-max');
+        $('.category-item').toggleClass('is-open-min');
+      });
+
+      // TOOGLE CATEGORY OVERLAY
+      $('.search-category-overlay').click(function(event) {
+        $(this).addClass('hidden');
+        $('.search-category').removeClass('is-open-max');
+        $('.category-item').removeClass('is-open-min');
+      });
+
+      // EVENT AMPLITUDE USER_ALL_CAUSES + USER_C_CAUSE_ALLCAUSES
+      amplitude.logEvent('USER_ALL_CAUSES');
+      $('.card-frame').click(function(event) {
+        amplitude.logEvent('USER_C_CAUSE_ALLCAUSES');
+      });
+    });
+
+  </script>
+
+<% end %>
+
+<% content_for :listjs do %>
+
+  <script>
+
+    var options = {
+      valueNames: [ 'name', 'category' ]
+    };
+
+    var userList = new List('assos', options);
+
+    $('#search-assos').keyup(function(){
+      userList.search($(this).val());
+    });
+
+  </script>
+
+<% end %>
+
+
+
+

@@ -1,0 +1,73 @@
+/* -------------------------------------
+ * Base elements style (h1, h2, p, a, ul..)
+ * ============= IMPORTANT =============
+ * Before writing in this file, look if there is not
+ * already a Bootstrap SCSS variable that does the same job
+ * ------------------------------------- */
+
+body {
+  background: $body-background;
+  font-family: $normal-font;
+  line-height: $normal-line-height;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: 100;
+  text-transform: uppercase;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* FONT SIZE ******************************************************************/
+
+h1 { font-size: 4.5rem; }
+h2 { font-size: 2.75rem;}
+h3 { font-size: 2.5rem; }
+h4, h5, h6 {}
+p { font-size: 1.6rem; }
+
+@media only screen and (max-width:768px){
+  h1 { font-size: 3.5rem; }
+}
+
+@media only screen and (max-width:460px){
+  h1 { font-size: 3rem; }
+  h2 { font-size: 2.25rem; padding: 0 20px; }
+  h3 { font-size: 2rem; }
+}
+
+h2 { margin-top: 0; }
+
+ul {
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
+}
+
+section {
+  box-sizing: border-box;
+  padding: 75px 0;
+  color: $section-font-color;
+
+  h2, h3 {
+    color: $section-font-color;
+  }
+}
+
+@media only screen and (max-width:768px){
+  .col-md-1, .col-md-2, .col-md-3,
+  .col-md-4, .col-md-5, .col-md-6,
+  .col-md-7, .col-md-8, .col-md-9,
+  .col-md-10, .col-md-11, .col-md-12 {
+      padding: 0 20px;
+  }
+
+  #intercom-container .intercom-launcher-frame {
+    transform: translateY(-60px) !important;
+  }
+}

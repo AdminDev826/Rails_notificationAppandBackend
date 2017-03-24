@@ -1,0 +1,81 @@
+<div class="form-edit-container">
+  <div class="form-edit">
+    <!-- FORM BUSINESS -->
+    <%= simple_form_for(@business, url: pro_update_business_path, method: :put, remote: true, authenticity_token: true) do |f| %>
+      <%= f.error_notification %>
+      <div class="col-1">
+        <label>Photo</label>
+        <div class="picture-container">
+          <% if @business.leader_picture? %>
+            <%= image_tag @business.leader_picture.url(:avatar), class: 'picture-owner' %>
+          <% else %>
+            <div class="picture-none">
+              <%= image_tag "citoyen.svg", class: "avatar-citoyen" %>
+            </div>
+          <% end %>
+        </div>
+        <%= f.input :leader_picture, as: :file, required: false, label: 'Sélectionner une nouvelle image' %>
+      </div>
+      <div class="col-1">
+        <%= f.input :name, placeholder: "Nom de l'établissement", required: true, label: "Nom de l'établissement" %>
+        <%= f.input :description, as: :text, placeholder: 'Quelques infos sur vous...', :input_html => { :rows => 6, maxlength: 330 }, required: true, label: "Présenter l'établissement" %>
+      </div>
+      <%= f.input :street, placeholder: 'Rue', required: true, label: 'Adresse principale' %>
+      <%= f.input :zipcode, placeholder: 'Code postal', required: true, label: "Code postal" %>
+      <%= f.input :city, placeholder: 'Ville', required: true, label: 'Ville' %>
+
+      <%= f.input :url, placeholder: 'Site web', label: 'Site web' %>
+      <%= f.input :email, placeholder: 'Adresse email', required: true, label: "Email" %>
+      <%= f.input :telephone, placeholder: 'Téléphone', required: true, label: 'Téléphone' %>
+      <%= f.input :facebook, placeholder: 'lapagedejohndoe', label: 'Facebook' %>
+      <%= f.input :twitter, placeholder: 'johndoe', label: 'Twitter' %>
+      <%= f.input :instagram, placeholder: 'johndoe', label: 'Instagram' %>
+      <div class="col-2">
+        <%= f.button :submit, "Sauvegarder" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :after_js do %>
+  <script>
+    $(document).ready(function() {
+
+      function readURL(input) {
+        var reader = new FileReader();
+          reader.onload = function (e) {
+            if ($('#business.picture-business').attr('src') === undefined) {
+              $("#business.picture-none").remove();
+              $('#business.picture-container').append('<img src=" " class="picture-business" >')
+            };
+            $('#business.picture-business').attr('src', e.target.result);
+          }
+        reader.readAsDataURL(input);
+      }
+
+      $('#profile-tab').addClass('active');
+      $(".business_leader_picture").on("change", function(e) {
+        e.preventDefault();
+        var newFile = document.querySelector('#shop input[type=file]').files[0];
+        $(".business_leader_picture").children().html(newFile.name);
+        readURL(newFile);
+      });
+
+      // Autocomplete principal address
+      var placesAutocomplete = places({
+        container: document.querySelector('#business_street'),
+        type: 'address',
+        templates: {
+          value: function(suggestion) {
+            return suggestion.name;
+          }
+        }
+      });
+
+      placesAutocomplete.on('change', function resultSelected(e) {
+        document.querySelector('#business_city').value = e.suggestion.city || '';
+        document.querySelector('#business_zipcode').value = e.suggestion.postcode || '';
+      });
+    });
+  </script>
+<% end %>

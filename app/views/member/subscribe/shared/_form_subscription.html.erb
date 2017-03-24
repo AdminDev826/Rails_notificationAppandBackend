@@ -1,0 +1,66 @@
+<div class="signup-plan">
+  <span>Choisissez le montant de votre participation <strong>libre</strong> et sans engagement</span>
+   <div class="switch">
+      <input id="monthly" type="radio" <%= current_user.subscription == "M" ? checked="checked" : "" %>>
+      <label for="monthly" class="subscription-monthly">Mensuel</label>
+      <input id="yearly" type="radio" <%= current_user.subscription != "M" ? checked="checked"  : "" %>>
+      <label for="yearly" class="subscription-yearly">Annuel
+        <div class="yearly-benefit">
+          <span>2 mois gratuits</span>
+          <span class="more">+</span>
+          <i><%= image_tag("macarte_miniature.png") %></i>
+        </div>
+      </label>
+      <span class="slide-button"></span>
+    </div>
+  <div class="container-fluid">
+    <div class="offer-index">
+      <div class="offer-card">
+        <!-- RANGE SLIDER FOR PRICE -->
+        <div class="offer-price">
+          <!-- Slider Monthly -->
+          <input type="range" name="range" id="range" class="<%= current_user.subscription == 'M' ? 'monthly' : 'monthly hidden' %>" min="1" max="50" value="5"/>
+          <!-- Slider Yearly -->
+          <div id="slider" class="<%= current_user.subscription != 'M' ? 'yearly' : 'yearly hidden' %>"></div>
+          <div class="offer-details">
+            <div class="offer-detail">
+              <output class="output-asso">50</output>
+              <p>Reversé à l'association de votre choix</p>
+            </div>
+            <div class="offer-detail">
+              <output class="output-fiscal">50</output>
+              <p>Coût réel de votre don après déduction fiscale</p>
+            </div>
+          </div>
+        </div>
+        <div class="offer-description">
+          <h5>En moyenne, les membres donnent <strong>7</strong> euros !</h5>
+          <p>PS : Ceci est notre seule source de revenu !</p>
+          <p class="comment">Attention, nous sommes encore essentiellement sur Bordeaux, mais ça bouge ! :)</p>
+        </div>
+        <!-- PARTNER CODE -->
+        <%= simple_form_for(current_user, url: member_update_profile_path, method: :put, remote: true, authenticity_token: true, html: { id: "update_subscription" } ) do |f| %>
+          <div class="code-partner">
+            <%= f.input :code_partner, label: "Code Partenaire", input_html: { value: "" } %>
+          </div>
+
+          <div class="offer-btn">
+            <%= f.input :subscription, as: :hidden, input_html: { value: f.object.subscription || 'Y'  } %>
+            <%= f.input :amount, label: false, input_html: { value: f.object.amount || 50 } %>
+          </div>
+
+          <%= f.submit "", class: "btn-subscription", :style => "display: none;"%>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <button class="signup-next">Suivant</button>
+  <%= link_to "Je m'abonnerai plus tard", member_user_dashboard_path(current_user), class: "btn btn-no-subscription after" %>
+  <button class="signup-prev">Retour</button>
+</div>
+
+<% content_for :after_js do %>
+
+  <%= render 'components/js/subscription' %>
+
+<% end %>

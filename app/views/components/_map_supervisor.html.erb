@@ -1,0 +1,114 @@
+<script>
+
+  var geoJson = <%= raw(@geojson.to_json) %>;
+  var markers = geoJson;
+
+  var framesPerSecond = 15;
+  var initialOpacity = 1
+  var opacity = initialOpacity;
+  var initialRadius = 8;
+  var radius = initialRadius;
+  var maxRadius = 18;
+
+  mapboxgl.accessToken = '<%= ENV['MAPBOXGL_TOKEN'] %>';
+
+  var mapCenter = [<%= coordinates[1] %>, <%= coordinates[0] %>];
+
+  var map = new mapboxgl.Map({
+    container: 'map-supervisor',
+    style: 'mapbox://styles/fredpetris/cikporvjj00p8b5lwovwd3kq9',
+    center: mapCenter,
+    zoom: 12
+  });
+
+  var layers = [];
+
+  map.on('style.load', function () {
+
+    // Add marker data as a new GeoJSON source.
+    map.addSource("markers", {
+      "type": "geojson",
+      "data": geoJson
+    });
+
+    markers.features.forEach(function(feature) {
+      var symbol = feature.properties['marker-symbol'];
+      var layerID = 'layer-' + symbol;
+
+      // Add a layer for this symbol type if it hasn't been added already.
+      if (!map.getLayer(layerID)) {
+        // Add layerID in Layers Array
+        layers.push(layerID);
+        // Add Layer
+        map.addLayer({
+          "id": layerID,
+          "type": "symbol",
+          "source": "markers",
+          "interactive": true,
+          "layout": {
+            "icon-image": symbol,
+            "icon-offset": [0,-20],
+            "icon-allow-overlap": true
+          },
+          "filter": ["==", "marker-symbol", symbol]
+        });
+      }
+    });
+
+    // Add a source and layer displaying a point which will be animated in a circle.
+    map.addSource('point', {
+      "type": "geojson",
+      "data": {
+        "type": "Point",
+        "coordinates": [<%= coordinates[1] %>, <%= coordinates[0] %>]
+      }
+    });
+
+    map.addLayer({
+      "id": "point",
+      "source": "point",
+      "type": "circle",
+      "paint": {
+        "circle-radius": initialRadius,
+        "circle-radius-transition": {duration: 0},
+        "circle-opacity-transition": {duration: 0},
+        "circle-color": "#9fd6ae"
+      }
+    });
+
+    map.addLayer({
+      "id": "point1",
+      "source": "point",
+      "type": "circle",
+      "paint": {
+        "circle-radius": initialRadius,
+        "circle-color": "#9fd6ae"
+      }
+    });
+
+
+    function animateMarker(timestamp) {
+        setTimeout(function(){
+            requestAnimationFrame(animateMarker);
+
+            radius += (maxRadius - radius) / framesPerSecond;
+            opacity -= ( .9 / framesPerSecond );
+
+            if (opacity <= 0) {
+                radius = initialRadius;
+                opacity = initialOpacity;
+            }
+
+            map.setPaintProperty('point', 'circle-radius', radius);
+            map.setPaintProperty('point', 'circle-opacity', opacity);
+
+        }, 1000 / framesPerSecond);
+
+    }
+
+    // Start the animation.
+    animateMarker(0);
+  });
+
+
+</script>

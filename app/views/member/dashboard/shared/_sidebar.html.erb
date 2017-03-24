@@ -1,0 +1,179 @@
+<!-- Sidebar desktop -->
+<div class="leftmenu-v2 hidden-xs">
+
+  <!-- USER SIGN IN -->
+  <% if user_signed_in? %>
+
+    <div class="leftmenu-v2-item <%= active_class(member_user_dashboard_path(current_user))%>">
+      <%= link_to member_user_dashboard_path(current_user) do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "autourdemoi.svg" %>)"></div>
+        <div class="left-menu-text">Autour de moi</div>
+      <% end %>
+    </div>
+
+    <div class="leftmenu-v2-item <%= active_class(businesses_path) %>">
+      <%= link_to businesses_path do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "bonplan.svg" %>)"></div>
+        <div class="left-menu-text">Bons plans</div>
+      <% end %>
+    </div>
+
+    <div class="leftmenu-v2-item <%= active_class(causes_path) %>">
+      <%= link_to causes_path do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "association.svg" %>)"></div>
+        <div class="left-menu-text">Associations</div>
+      <% end %>
+    </div>
+
+    <div class="leftmenu-v2-item <%= active_class(member_user_gift_path(current_user)) %>">
+      <%= link_to member_user_gift_path(current_user) do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "present.svg" %>)"></div>
+        <div class="left-menu-text">Plaisir d'offrir</div>
+      <% end %>
+    </div>
+
+    <div class="leftmenu-v2-item <%= active_class(member_user_ambassador_path(current_user)) %>">
+      <%= link_to member_user_ambassador_path(current_user) do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "ambassadeur.svg" %>)"></div>
+        <div class="left-menu-text">Ambassadeur</div>
+      <% end %>
+    </div>
+
+    <div class="leftmenu-v2-item <%= active_class(root_path) %>">
+      <%= link_to root_path do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "icons/signout.png" %>)"></div>
+        <div class="left-menu-text">Plus d'infos ?</div>
+      <% end %>
+    </div>
+
+    <!-- USER NOT SIGN IN -->
+  <% else %>
+
+    <div class="leftmenu-v2-item <%= active_class(map_path) %>">
+      <%= link_to map_path do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "autourdemoi.svg" %>)"></div>
+        <div class="left-menu-text">Autour de moi</div>
+      <% end %>
+    </div>
+
+    <div class="leftmenu-v2-item <%= active_class(businesses_path) %>">
+      <%= link_to businesses_path do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "bonplan.svg" %>)"></div>
+        <div class="left-menu-text">Bon plans</div>
+      <% end %>
+    </div>
+
+    <div class="leftmenu-v2-item <%= active_class(causes_path) %>">
+      <%= link_to causes_path do %>
+        <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "association.svg" %>)"></div>
+        <div class="left-menu-text">Associations</div>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>
+
+<!-- SIDEBAR MOBILE -->
+<div class="leftmenu-animation visible-xs">
+  <ul class="animation-menu-content">
+    <div class="leftmenu-v3 visible-xs">
+
+      <!-- USER SIGN IN -->
+      <% if user_signed_in? %>
+
+        <div class="leftmenu-v3-item <%= active_class(member_user_dashboard_path(current_user))%>">
+          <%= link_to member_user_dashboard_path(current_user) do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "autourdemoi.svg" %>)"></div>
+            <div class="left-menu-text">Autour de moi</div>
+          <% end %>
+        </div>
+
+        <div class="leftmenu-v3-item <%= active_class(businesses_path) %>">
+          <%= link_to businesses_path do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "bonplan.svg" %>)"></div>
+            <div class="left-menu-text">Bons plans</div>
+          <% end %>
+        </div>
+
+        <div class="leftmenu-v3-item <%= active_class(causes_path) %>">
+          <%= link_to causes_path do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "association.svg" %>)"></div>
+            <div class="left-menu-text">Associations</div>
+          <% end %>
+        </div>
+
+        <div class="leftmenu-v3-item <%= active_class(member_user_gift_path(current_user)) %>">
+          <%= link_to member_user_gift_path(current_user) do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "present.svg" %>)"></div>
+            <div class="left-menu-text">Plaisir d'offrir</div>
+          <% end %>
+        </div>
+
+        <div class="leftmenu-v3-item <%= active_class(member_user_ambassador_path(current_user)) %>">
+          <%= link_to member_user_ambassador_path(current_user) do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "ambassadeur.svg" %>)"></div>
+            <div class="left-menu-text">Ambassadeur</div>
+          <% end %>
+        </div>
+
+        <div class="leftmenu-v3-item <%= active_class(root_path) %>">
+          <%= link_to root_path do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "icons/signout.png" %>)"></div>
+            <div class="left-menu-text">Plus d'infos ?</div>
+          <% end %>
+        </div>
+
+        <!-- USER NOT SIGN IN -->
+      <% else %>
+
+        <div class="leftmenu-v3-item <%= active_class(map_path) %>">
+          <%= link_to map_path do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "autourdemoi.svg" %>)"></div>
+            <div class="left-menu-text">Autour de moi</div>
+          <% end %>
+        </div>
+
+        <div class="leftmenu-v3-item <%= active_class(businesses_path) %>">
+          <%= link_to businesses_path do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "bonplan.svg" %>)"></div>
+            <div class="left-menu-text">Bon plans</div>
+          <% end %>
+        </div>
+
+        <div class="leftmenu-v3-item <%= active_class(causes_path) %>">
+          <%= link_to causes_path do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "association.svg" %>)"></div>
+            <div class="left-menu-text">Associations</div>
+          <% end %>
+        </div>
+
+        <div class="leftmenu-v3-item <%= active_class(root_path) %>">
+          <%= link_to root_path do %>
+            <div class="left-menu-svg-container" style="background-image: url(<%= asset_path "icons/signout.png" %>)"></div>
+            <div class="left-menu-text">Plus d'infos ?</div>
+          <% end %>
+        </div>
+
+      <% end %>
+    </div>
+  </ul>
+</div>
+
+<% content_for :after_js do %>
+
+  <script>
+
+    $(document).ready(function(){
+      $('.mobile-dropdown').click(function(event) {
+        $('.mobile-menu').toggleClass('hidden');
+        $('.mobile-menu-overlay').toggleClass('hidden');
+      });
+      $('.mobile-menu-overlay').click(function(event) {
+        $(this).addClass('hidden');
+        $('.mobile-menu').addClass('hidden');
+      });
+    });
+
+  </script>
+
+<% end %>
