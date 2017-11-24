@@ -1,5 +1,8 @@
 # Cforgoodwebsite
 
+## Screenshot
+[<img src="1.png" width="850" />]()
+
 ## Configuration
 
 The app configuration lies in `config/application.yml` and is **not**
